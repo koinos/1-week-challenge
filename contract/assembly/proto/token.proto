@@ -91,6 +91,32 @@ message get_player_info_arguments {
    bytes player = 1 [(koinos.btype) = ADDRESS];
 }
 
+// workshop: add this new entry point
+// @description Return the leaderboard
+// @read-only true
+message get_leaderboard_arguments {
+   leaderboard_key offset_key = 1;
+   uint64 limit = 2 [jstype = JS_STRING];
+   bool descending = 3;
+}
+
+message get_leaderboard_result {
+   repeated leaderboard_key leaderboard = 1;
+}
+
+// workshop: add this new entry point
+// @description Return the past games stats
+// @read-only true
+message get_games_stats_arguments {
+   game_stats_key offset_key = 1;
+   uint64 limit = 2 [jstype = JS_STRING];
+   bool descending = 3;
+}
+
+message get_games_stats_result {
+   repeated game_stats_object games_stats = 1;
+}
+
 // objects
 message balance_object {
    uint64 value = 1 [jstype = JS_STRING];

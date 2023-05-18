@@ -1,6 +1,5 @@
 
-£
-
+é
 assembly/proto/token.prototokenkoinos/options.proto"
 empty_message"
 name_arguments"#
@@ -35,7 +34,26 @@ game_stats (2.token.game_stats_objectR	gameStats"D
 from (B€µRfrom
 value (B0Rvalue"9
 get_player_info_arguments
-player (B€µRplayer"*
+player (B€µRplayer"Œ
+get_leaderboard_arguments5
+
+offset_key (2.token.leaderboard_keyR	offsetKey
+limit (B0Rlimit
+
+descending (R
+descending"R
+get_leaderboard_result8
+leaderboard (2.token.leaderboard_keyRleaderboard"‹
+get_games_stats_arguments4
+
+offset_key (2.token.game_stats_keyR	offsetKey
+limit (B0Rlimit
+
+descending (R
+descending"S
+get_games_stats_result9
+games_stats (2.token.game_stats_objectR
+gamesStats"*
 balance_object
 value (B0Rvalue".
 game_stats_key

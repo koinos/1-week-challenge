@@ -103,4 +103,34 @@ export class Token {
 
     return res;
   }
+
+  get_leaderboard(
+    args: token.get_leaderboard_arguments
+  ): token.get_leaderboard_result {
+    // const offset_key = args.offset_key;
+    // const limit = args.limit;
+    // const descending = args.descending;
+
+    // YOUR CODE HERE
+
+    const res = new token.get_leaderboard_result();
+    // res.leaderboard = ;
+
+    return res;
+  }
+
+  get_games_stats(
+    args: token.get_games_stats_arguments
+  ): token.get_games_stats_result {
+    // const offset_key = args.offset_key;
+    // const limit = args.limit;
+    // const descending = args.descending;
+
+    // YOUR CODE HERE
+
+    const res = new token.get_games_stats_result();
+    // res.games_stats = ;
+
+    return res;
+  }
 }

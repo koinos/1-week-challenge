@@ -132,7 +132,7 @@ export class Token {
     // workshop: add game logic
     // get player object
     const playerObj = this._playersStorage.get(game_stats!.winner)!;
-    
+
     // delete current leaderboard object for this player 
     // since the number of wins is going to change for that player
     let playerLeaderboardKey = new token.leaderboard_key(playerObj.wins, game_stats!.winner);
@@ -189,8 +189,116 @@ export class Token {
   }
 
   get_player_info(args: token.get_player_info_arguments): token.player_object {
+    // workshop: implement below logic
     const player = args.player;
 
     return this._playersStorage.get(player)!;
+  }
+
+  get_leaderboard(args: token.get_leaderboard_arguments): token.get_leaderboard_result {
+    // workshop: impladdement below logic
+    const offset_key = args.offset_key;
+    let limit = args.limit || u64.MAX_VALUE;
+
+    // descending indicates if we want to get the leaderboard
+    // from the player with the least to the most wins
+    // which is the default ordering in the state
+    const descending = args.descending;
+
+    // construct leaderboard key
+    let key = new token.leaderboard_key();
+
+    // if an offset key was provided
+    if (offset_key) {
+      key = offset_key;
+    }
+    // if we want to get the leaderboard from the players with the most wins
+    // then we need to start iterating the state from the "bottom"
+    else if (!descending) {
+      key.wins = u32.MAX_VALUE;
+      key.player = new Uint8Array(25).fill(u8.MAX_VALUE);
+    }
+
+    const res = new token.get_leaderboard_result();
+
+    let obj: System.ProtoDatabaseObject<token.empty_message> | null;
+    let tmpKey: token.leaderboard_key;
+
+    do {
+      obj = descending
+        ? this._leaderboardStorage.getNext(key)
+        : this._leaderboardStorage.getPrev(key);
+
+      if (obj) {
+        // decode key
+        tmpKey = Protobuf.decode<token.leaderboard_key>(
+          obj.key!,
+          token.leaderboard_key.decode
+        );
+
+        // add key to result
+        res.leaderboard.push(tmpKey);
+        
+        // decrease limit
+        limit--;
+
+        key = tmpKey;
+      }
+    } while (obj != null && limit > 0);
+
+    return res;
+  }
+
+  get_games_stats(
+    args: token.get_games_stats_arguments
+  ): token.get_games_stats_result {
+    // workshop: implement below logic
+
+    const offset_key = args.offset_key;
+    let limit = args.limit || u64.MAX_VALUE;
+
+    // descending indicated that we want the games from the oldest to the newest
+    const descending = args.descending;
+
+    // construct leaderboard key
+    let key = new token.game_stats_key();
+
+    // if an offset key was provided
+    if (offset_key) {
+      key = offset_key;
+    }
+    // if no offset key was provided and we want the games stats from the newest to the oldest 
+    else if (!descending) {
+      key.timestamp = u64.MAX_VALUE;
+    }
+
+    const res = new token.get_games_stats_result();
+
+    let obj: System.ProtoDatabaseObject<token.game_stats_object> | null;
+    let tmpKey: token.game_stats_key;
+
+    do {
+      obj = descending
+        ? this._gamesStatsStorage.getNext(key)
+        : this._gamesStatsStorage.getPrev(key);
+
+      if (obj) {
+        // decode key
+        tmpKey = Protobuf.decode<token.game_stats_key>(
+          obj.key!,
+          token.game_stats_key.decode
+        );
+
+        // add game stats object to result
+        res.games_stats.push(obj.value);
+        
+        // decrease limit
+        limit--;
+
+        key = tmpKey;
+      }
+    } while (obj != null && limit > 0);
+
+    return res;
   }
 }

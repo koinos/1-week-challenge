@@ -1,4 +1,4 @@
-import { Base58, MockVM, Arrays, Protobuf, authority, chain, System, system_calls } from "@koinos/sdk-as";
+import { Base58, MockVM, Arrays, Protobuf, authority, chain, System, system_calls, common } from "@koinos/sdk-as";
 import { Token } from "../Token";
 import { token } from "../proto/token";
 import { LeaderboardStorage } from "../state/LeaderboardStorage";
@@ -13,9 +13,11 @@ describe("token", () => {
     MockVM.reset();
     MockVM.setContractId(CONTRACT_ID);
     MockVM.setCaller(new chain.caller_data(new Uint8Array(0), chain.privilege.user_mode));
+    // workshop: add following line
+    MockVM.setHeadInfo(new chain.head_info(null, 123456789));
   });
 
-  xit("should get the name", () => {
+  it("should get the name", () => {
     const tkn = new Token();
 
     const args = new token.name_arguments();
@@ -24,7 +26,7 @@ describe("token", () => {
     expect(res.value).toBe("Token");
   });
 
-  xit("should get the symbol", () => {
+  it("should get the symbol", () => {
     const tkn = new Token();
 
     const args = new token.symbol_arguments();
@@ -33,7 +35,7 @@ describe("token", () => {
     expect(res.value).toBe("TKN");
   });
 
-  xit("should get the decimals", () => {
+  it("should get the decimals", () => {
     const tkn = new Token();
 
     const args = new token.decimals_arguments();
@@ -42,7 +44,7 @@ describe("token", () => {
     expect(res.value).toBe(8);
   });
 
-  xit("should get the max supply", () => {
+  it("should get the max supply", () => {
     const tkn = new Token();
 
     const args = new token.max_supply_arguments();
@@ -51,7 +53,7 @@ describe("token", () => {
     expect(res.value).toBe(0);
   });
 
-  xit("should/not burn tokens", () => {
+  it("should/not burn tokens", () => {
     const tkn = new Token();
 
     MockVM.setContractArguments(new Uint8Array(0));
@@ -67,7 +69,12 @@ describe("token", () => {
     expect(totalSupplyRes.value).toBe(0);
 
     // mint tokens
-    const mintArgs = new token.mint_arguments(MOCK_ACCT1, 123);
+    const mintArgs = new token.mint_arguments(
+      MOCK_ACCT1,
+      123,
+      // workshop: add following line
+      new token.game_stats_object(MOCK_ACCT1)
+    );
     tkn.mint(mintArgs);
 
     auth = new MockVM.MockAuthority(authority.authorization_type.contract_call, MOCK_ACCT1, true);
@@ -135,7 +142,7 @@ describe("token", () => {
     expect(totalSupplyRes.value).toBe(113);
   });
 
-  xit("should mint tokens", () => {
+  it("should mint tokens", () => {
     const tkn = new Token();
 
     // set contract_call authority for CONTRACT_ID to true so that we can mint tokens
@@ -148,7 +155,12 @@ describe("token", () => {
     expect(totalSupplyRes.value).toBe(0);
 
     // mint tokens
-    const mintArgs = new token.mint_arguments(MOCK_ACCT1, 123);
+    const mintArgs = new token.mint_arguments(
+      MOCK_ACCT1,
+      123,
+      // workshop: add following line
+      new token.game_stats_object(MOCK_ACCT1)
+    );
     tkn.mint(mintArgs);
 
     // check events
@@ -172,7 +184,7 @@ describe("token", () => {
     expect(totalSupplyRes.value).toBe(123);
   });
 
-  xit("should not mint tokens if not contract account", () => {
+  it("should not mint tokens if not contract account", () => {
     const tkn = new Token();
 
     // set contract_call authority for MOCK_ACCT1 to true so that we cannot mint tokens
@@ -195,7 +207,12 @@ describe("token", () => {
     expect(() => {
       // try to mint tokens
       const tkn = new Token();
-      const mintArgs = new token.mint_arguments(MOCK_ACCT2, 123);
+      const mintArgs = new token.mint_arguments(
+        MOCK_ACCT2,
+        123,
+        // workshop: add following line
+        new token.game_stats_object(MOCK_ACCT2)
+      );
       tkn.mint(mintArgs);
     }).toThrow();
 
@@ -208,14 +225,19 @@ describe("token", () => {
     expect(totalSupplyRes.value).toBe(0);
   });
 
-  xit("should not mint tokens if new total supply overflows", () => {
+  it("should not mint tokens if new total supply overflows", () => {
     const tkn = new Token();
 
     // set contract_call authority for CONTRACT_ID to true so that we can mint tokens
     const auth = new MockVM.MockAuthority(authority.authorization_type.contract_call, CONTRACT_ID, true);
     MockVM.setAuthorities([auth]);
 
-    let mintArgs = new token.mint_arguments(MOCK_ACCT2, 123);
+    const mintArgs = new token.mint_arguments(
+      MOCK_ACCT2,
+      123,
+      // workshop: add following line
+      new token.game_stats_object(MOCK_ACCT2)
+    );
     tkn.mint(mintArgs);
 
     // check total supply
@@ -229,7 +251,12 @@ describe("token", () => {
     expect(() => {
       // try to mint tokens
       const tkn = new Token();
-      const mintArgs = new token.mint_arguments(MOCK_ACCT2, u64.MAX_VALUE);
+      const mintArgs = new token.mint_arguments(
+        MOCK_ACCT2,
+        u64.MAX_VALUE,
+        // workshop: add following line
+        new token.game_stats_object(MOCK_ACCT2)
+      );
       tkn.mint(mintArgs);
     }).toThrow();
 
@@ -240,14 +267,19 @@ describe("token", () => {
     expect(totalSupplyRes.value).toBe(123);
   });
 
-  xit("should not mint tokens if new total supply overflows max supply", () => {
+  it("should not mint tokens if new total supply overflows max supply", () => {
     const tkn = new Token();
 
     // set contract_call authority for CONTRACT_ID to true so that we can mint tokens
     const auth = new MockVM.MockAuthority(authority.authorization_type.contract_call, CONTRACT_ID, true);
     MockVM.setAuthorities([auth]);
 
-    let mintArgs = new token.mint_arguments(MOCK_ACCT2, 123);
+    const mintArgs = new token.mint_arguments(
+      MOCK_ACCT2,
+      123,
+      // workshop: add following line
+      new token.game_stats_object(MOCK_ACCT2)
+    );
     tkn.mint(mintArgs);
 
     // check total supply
@@ -262,7 +294,12 @@ describe("token", () => {
       // try to mint tokens
       const tkn = new Token();
       tkn._maxSupply = 400;
-      const mintArgs = new token.mint_arguments(MOCK_ACCT2, 500);
+      const mintArgs = new token.mint_arguments(
+        MOCK_ACCT2,
+        500,
+        // workshop: add following line
+        new token.game_stats_object(MOCK_ACCT2)
+      );
       tkn.mint(mintArgs);
     }).toThrow();
 
@@ -273,7 +310,7 @@ describe("token", () => {
     expect(totalSupplyRes.value).toBe(123);
   });
 
-  xit("should transfer tokens", () => {
+  it("should transfer tokens", () => {
     const tkn = new Token();
 
     MockVM.setContractArguments(new Uint8Array(0));
@@ -287,7 +324,12 @@ describe("token", () => {
     MockVM.setAuthorities([authContractId, authMockAcct1]);
 
     // mint tokens
-    const mintArgs = new token.mint_arguments(MOCK_ACCT1, 123);
+    const mintArgs = new token.mint_arguments(
+      MOCK_ACCT1,
+      123,
+      // workshop: add following line
+      new token.game_stats_object(MOCK_ACCT1)
+    );
     tkn.mint(mintArgs);
 
     // transfer tokens
@@ -318,7 +360,7 @@ describe("token", () => {
     expect(transferEvent.value).toBe(10);
   });
 
-  xit("should not transfer tokens without the proper authorizations", () => {
+  it("should not transfer tokens without the proper authorizations", () => {
     const tkn = new Token();
 
     // set contract_call authority for CONTRACT_ID to true so that we can mint tokens
@@ -327,7 +369,12 @@ describe("token", () => {
     MockVM.setAuthorities([authContractId]);
 
     // mint tokens
-    const mintArgs = new token.mint_arguments(MOCK_ACCT1, 123);
+    const mintArgs = new token.mint_arguments(
+      MOCK_ACCT1,
+      123,
+      // workshop: add following line
+      new token.game_stats_object(MOCK_ACCT1)
+    );
     tkn.mint(mintArgs);
 
     // save the MockVM state because the transfer is going to revert the transaction
@@ -352,7 +399,7 @@ describe("token", () => {
     expect(balanceRes.value).toBe(0);
   });
 
-  xit("should not transfer tokens to self", () => {
+  it("should not transfer tokens to self", () => {
     const tkn = new Token();
 
     // set contract_call authority for CONTRACT_ID to true so that we can mint tokens
@@ -363,7 +410,12 @@ describe("token", () => {
     MockVM.setAuthorities([authContractId, authMockAcct1]);
 
     // mint tokens
-    const mintArgs = new token.mint_arguments(MOCK_ACCT1, 123);
+    const mintArgs = new token.mint_arguments(
+      MOCK_ACCT1,
+      123,
+      // workshop: add following line
+      new token.game_stats_object(MOCK_ACCT1)
+    );
     tkn.mint(mintArgs);
 
     // save the MockVM state because the transfer is going to revert the transaction
@@ -384,7 +436,7 @@ describe("token", () => {
     expect(balanceRes.value).toBe(123);
   });
 
-  xit("should not transfer if unsufficient balance", () => {
+  it("should not transfer if unsufficient balance", () => {
     const tkn = new Token();
 
     // set contract_call authority for CONTRACT_ID to true so that we can mint tokens
@@ -395,7 +447,12 @@ describe("token", () => {
     MockVM.setAuthorities([authContractId, authMockAcct1]);
 
     // mint tokens
-    const mintArgs = new token.mint_arguments(MOCK_ACCT1, 123);
+    const mintArgs = new token.mint_arguments(
+      MOCK_ACCT1,
+      123,
+      // workshop: add following line
+      new token.game_stats_object(MOCK_ACCT1)
+    );
     tkn.mint(mintArgs);
 
     // save the MockVM state because the transfer is going to revert the transaction

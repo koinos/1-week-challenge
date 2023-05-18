@@ -597,6 +597,218 @@ export namespace token {
     }
   }
 
+  export class get_leaderboard_arguments {
+    static encode(message: get_leaderboard_arguments, writer: Writer): void {
+      const unique_name_offset_key = message.offset_key;
+      if (unique_name_offset_key !== null) {
+        writer.uint32(10);
+        writer.fork();
+        leaderboard_key.encode(unique_name_offset_key, writer);
+        writer.ldelim();
+      }
+
+      if (message.limit != 0) {
+        writer.uint32(16);
+        writer.uint64(message.limit);
+      }
+
+      if (message.descending != false) {
+        writer.uint32(24);
+        writer.bool(message.descending);
+      }
+    }
+
+    static decode(reader: Reader, length: i32): get_leaderboard_arguments {
+      const end: usize = length < 0 ? reader.end : reader.ptr + length;
+      const message = new get_leaderboard_arguments();
+
+      while (reader.ptr < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1:
+            message.offset_key = leaderboard_key.decode(
+              reader,
+              reader.uint32()
+            );
+            break;
+
+          case 2:
+            message.limit = reader.uint64();
+            break;
+
+          case 3:
+            message.descending = reader.bool();
+            break;
+
+          default:
+            reader.skipType(tag & 7);
+            break;
+        }
+      }
+
+      return message;
+    }
+
+    offset_key: leaderboard_key | null;
+    limit: u64;
+    descending: bool;
+
+    constructor(
+      offset_key: leaderboard_key | null = null,
+      limit: u64 = 0,
+      descending: bool = false
+    ) {
+      this.offset_key = offset_key;
+      this.limit = limit;
+      this.descending = descending;
+    }
+  }
+
+  export class get_leaderboard_result {
+    static encode(message: get_leaderboard_result, writer: Writer): void {
+      const unique_name_leaderboard = message.leaderboard;
+      for (let i = 0; i < unique_name_leaderboard.length; ++i) {
+        writer.uint32(10);
+        writer.fork();
+        leaderboard_key.encode(unique_name_leaderboard[i], writer);
+        writer.ldelim();
+      }
+    }
+
+    static decode(reader: Reader, length: i32): get_leaderboard_result {
+      const end: usize = length < 0 ? reader.end : reader.ptr + length;
+      const message = new get_leaderboard_result();
+
+      while (reader.ptr < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1:
+            message.leaderboard.push(
+              leaderboard_key.decode(reader, reader.uint32())
+            );
+            break;
+
+          default:
+            reader.skipType(tag & 7);
+            break;
+        }
+      }
+
+      return message;
+    }
+
+    leaderboard: Array<leaderboard_key>;
+
+    constructor(leaderboard: Array<leaderboard_key> = []) {
+      this.leaderboard = leaderboard;
+    }
+  }
+
+  @unmanaged
+  export class get_games_stats_arguments {
+    static encode(message: get_games_stats_arguments, writer: Writer): void {
+      const unique_name_offset_key = message.offset_key;
+      if (unique_name_offset_key !== null) {
+        writer.uint32(10);
+        writer.fork();
+        game_stats_key.encode(unique_name_offset_key, writer);
+        writer.ldelim();
+      }
+
+      if (message.limit != 0) {
+        writer.uint32(16);
+        writer.uint64(message.limit);
+      }
+
+      if (message.descending != false) {
+        writer.uint32(24);
+        writer.bool(message.descending);
+      }
+    }
+
+    static decode(reader: Reader, length: i32): get_games_stats_arguments {
+      const end: usize = length < 0 ? reader.end : reader.ptr + length;
+      const message = new get_games_stats_arguments();
+
+      while (reader.ptr < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1:
+            message.offset_key = game_stats_key.decode(reader, reader.uint32());
+            break;
+
+          case 2:
+            message.limit = reader.uint64();
+            break;
+
+          case 3:
+            message.descending = reader.bool();
+            break;
+
+          default:
+            reader.skipType(tag & 7);
+            break;
+        }
+      }
+
+      return message;
+    }
+
+    offset_key: game_stats_key | null;
+    limit: u64;
+    descending: bool;
+
+    constructor(
+      offset_key: game_stats_key | null = null,
+      limit: u64 = 0,
+      descending: bool = false
+    ) {
+      this.offset_key = offset_key;
+      this.limit = limit;
+      this.descending = descending;
+    }
+  }
+
+  export class get_games_stats_result {
+    static encode(message: get_games_stats_result, writer: Writer): void {
+      const unique_name_games_stats = message.games_stats;
+      for (let i = 0; i < unique_name_games_stats.length; ++i) {
+        writer.uint32(10);
+        writer.fork();
+        game_stats_object.encode(unique_name_games_stats[i], writer);
+        writer.ldelim();
+      }
+    }
+
+    static decode(reader: Reader, length: i32): get_games_stats_result {
+      const end: usize = length < 0 ? reader.end : reader.ptr + length;
+      const message = new get_games_stats_result();
+
+      while (reader.ptr < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1:
+            message.games_stats.push(
+              game_stats_object.decode(reader, reader.uint32())
+            );
+            break;
+
+          default:
+            reader.skipType(tag & 7);
+            break;
+        }
+      }
+
+      return message;
+    }
+
+    games_stats: Array<game_stats_object>;
+
+    constructor(games_stats: Array<game_stats_object> = []) {
+      this.games_stats = games_stats;
+    }
+  }
+
   @unmanaged
   export class balance_object {
     static encode(message: balance_object, writer: Writer): void {

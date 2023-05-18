@@ -69,6 +69,20 @@
             "description": "Return a player's info",
             "entry_point": 2950184877,
             "read_only": true
+        },
+        "get_leaderboard": {
+            "argument": "token.get_leaderboard_arguments",
+            "return": "token.get_leaderboard_result",
+            "description": "Return the leaderboard",
+            "entry_point": 2157256597,
+            "read_only": true
+        },
+        "get_games_stats": {
+            "argument": "token.get_games_stats_arguments",
+            "return": "token.get_games_stats_result",
+            "description": "Return the past games stats",
+            "entry_point": 1885616903,
+            "read_only": true
         }
     },
     "types": {
@@ -234,6 +248,62 @@
                                 "options": {
                                     "(koinos.btype)": "ADDRESS"
                                 }
+                            }
+                        }
+                    },
+                    "get_leaderboard_arguments": {
+                        "fields": {
+                            "offset_key": {
+                                "type": "leaderboard_key",
+                                "id": 1
+                            },
+                            "limit": {
+                                "type": "uint64",
+                                "id": 2,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            },
+                            "descending": {
+                                "type": "bool",
+                                "id": 3
+                            }
+                        }
+                    },
+                    "get_leaderboard_result": {
+                        "fields": {
+                            "leaderboard": {
+                                "rule": "repeated",
+                                "type": "leaderboard_key",
+                                "id": 1
+                            }
+                        }
+                    },
+                    "get_games_stats_arguments": {
+                        "fields": {
+                            "offset_key": {
+                                "type": "game_stats_key",
+                                "id": 1
+                            },
+                            "limit": {
+                                "type": "uint64",
+                                "id": 2,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            },
+                            "descending": {
+                                "type": "bool",
+                                "id": 3
+                            }
+                        }
+                    },
+                    "get_games_stats_result": {
+                        "fields": {
+                            "games_stats": {
+                                "rule": "repeated",
+                                "type": "game_stats_object",
+                                "id": 1
                             }
                         }
                     },

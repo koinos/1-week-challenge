@@ -109,6 +109,32 @@ export function main(): i32 {
       break;
     }
 
+    case 0x80951f95: {
+      const args = Protobuf.decode<ProtoNamespace.get_leaderboard_arguments>(
+        contractArgs.args,
+        ProtoNamespace.get_leaderboard_arguments.decode
+      );
+      const res = c.get_leaderboard(args);
+      retbuf = Protobuf.encode(
+        res,
+        ProtoNamespace.get_leaderboard_result.encode
+      );
+      break;
+    }
+
+    case 0x70643b07: {
+      const args = Protobuf.decode<ProtoNamespace.get_games_stats_arguments>(
+        contractArgs.args,
+        ProtoNamespace.get_games_stats_arguments.decode
+      );
+      const res = c.get_games_stats(args);
+      retbuf = Protobuf.encode(
+        res,
+        ProtoNamespace.get_games_stats_result.encode
+      );
+      break;
+    }
+
     default:
       System.exit(1);
       break;
