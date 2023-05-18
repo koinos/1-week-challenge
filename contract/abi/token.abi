@@ -1,0 +1,75 @@
+{
+    "methods": {
+        "name": {
+            "argument": "token.name_arguments",
+            "return": "token.name_result",
+            "description": "Returns the token's name",
+            "entry-point": "0x82a3537f",
+            "read-only": true
+        },
+        "symbol": {
+            "argument": "token.symbol_arguments",
+            "return": "token.symbol_result",
+            "description": "Returns the token's symbol",
+            "entry-point": "0xb76a7ca1",
+            "read-only": true
+        },
+        "decimals": {
+            "argument": "token.decimals_arguments",
+            "return": "token.decimals_result",
+            "description": "Returns the token's decimals precision",
+            "entry-point": "0xee80fd2f",
+            "read-only": true
+        },
+        "total_supply": {
+            "argument": "token.total_supply_arguments",
+            "return": "token.total_supply_result",
+            "description": "Returns the token's total supply",
+            "entry-point": "0xb0da3934",
+            "read-only": true
+        },
+        "max_supply": {
+            "argument": "token.max_supply_arguments",
+            "return": "token.max_supply_result",
+            "description": "Returns the token's max supply",
+            "entry-point": "0x02c683fd",
+            "read-only": true
+        },
+        "balance_of": {
+            "argument": "token.balance_of_arguments",
+            "return": "token.balance_of_result",
+            "description": "Checks the balance at an address",
+            "entry-point": "0x5c721497",
+            "read-only": true
+        },
+        "transfer": {
+            "argument": "token.transfer_arguments",
+            "return": "token.empty_message",
+            "description": "Transfers the token",
+            "entry-point": "0x27f576ca",
+            "read-only": false
+        },
+        "mint": {
+            "argument": "token.mint_arguments",
+            "return": "token.empty_message",
+            "description": "Mints the token",
+            "entry-point": "0xdc6f17bb",
+            "read-only": false
+        },
+        "burn": {
+            "argument": "token.burn_arguments",
+            "return": "token.empty_message",
+            "description": "Burns the token",
+            "entry-point": "0x859facc5",
+            "read-only": false
+        },
+        "get_player_info": {
+            "argument": "token.get_player_info_arguments",
+            "return": "token.player_object",
+            "description": "Return a player's info",
+            "entry-point": "0xafd83fad",
+            "read-only": true
+        }
+    },
+    "types": "CqMKChphc3NlbWJseS9wcm90by90b2tlbi5wcm90bxIFdG9rZW4aFGtvaW5vcy9vcHRpb25zLnByb3RvIg8KDWVtcHR5X21lc3NhZ2UiEAoObmFtZV9hcmd1bWVudHMiIwoLbmFtZV9yZXN1bHQSFAoFdmFsdWUYASABKAlSBXZhbHVlIhIKEHN5bWJvbF9hcmd1bWVudHMiJQoNc3ltYm9sX3Jlc3VsdBIUCgV2YWx1ZRgBIAEoCVIFdmFsdWUiFAoSZGVjaW1hbHNfYXJndW1lbnRzIicKD2RlY2ltYWxzX3Jlc3VsdBIUCgV2YWx1ZRgBIAEoDVIFdmFsdWUiGAoWdG90YWxfc3VwcGx5X2FyZ3VtZW50cyIvChN0b3RhbF9zdXBwbHlfcmVzdWx0EhgKBXZhbHVlGAEgASgEQgIwAVIFdmFsdWUiFgoUbWF4X3N1cHBseV9hcmd1bWVudHMiLQoRbWF4X3N1cHBseV9yZXN1bHQSGAoFdmFsdWUYASABKARCAjABUgV2YWx1ZSIyChRiYWxhbmNlX29mX2FyZ3VtZW50cxIaCgVvd25lchgBIAEoDEIEgLUYBlIFb3duZXIiLQoRYmFsYW5jZV9vZl9yZXN1bHQSGAoFdmFsdWUYASABKARCAjABUgV2YWx1ZSJeChJ0cmFuc2Zlcl9hcmd1bWVudHMSGAoEZnJvbRgBIAEoDEIEgLUYBlIEZnJvbRIUCgJ0bxgCIAEoDEIEgLUYBlICdG8SGAoFdmFsdWUYAyABKARCAjABUgV2YWx1ZSJ5Cg5taW50X2FyZ3VtZW50cxIUCgJ0bxgBIAEoDEIEgLUYBlICdG8SGAoFdmFsdWUYAiABKARCAjABUgV2YWx1ZRI3CgpnYW1lX3N0YXRzGAMgASgLMhgudG9rZW4uZ2FtZV9zdGF0c19vYmplY3RSCWdhbWVTdGF0cyJECg5idXJuX2FyZ3VtZW50cxIYCgRmcm9tGAEgASgMQgSAtRgGUgRmcm9tEhgKBXZhbHVlGAIgASgEQgIwAVIFdmFsdWUiOQoZZ2V0X3BsYXllcl9pbmZvX2FyZ3VtZW50cxIcCgZwbGF5ZXIYASABKAxCBIC1GAZSBnBsYXllciIqCg5iYWxhbmNlX29iamVjdBIYCgV2YWx1ZRgBIAEoBEICMAFSBXZhbHVlIi4KDmdhbWVfc3RhdHNfa2V5EhwKCXRpbWVzdGFtcBgBIAEoBFIJdGltZXN0YW1wIjEKEWdhbWVfc3RhdHNfb2JqZWN0EhwKBndpbm5lchgBIAEoDEIEgLUYBlIGd2lubmVyIj0KD2xlYWRlcmJvYXJkX2tleRISCgR3aW5zGAEgASgNUgR3aW5zEhYKBnBsYXllchgCIAEoDFIGcGxheWVyIiMKDXBsYXllcl9vYmplY3QSEgoEd2lucxgBIAEoDVIEd2lucyI8CgptaW50X2V2ZW50EhQKAnRvGAEgASgMQgSAtRgGUgJ0bxIYCgV2YWx1ZRgCIAEoBEICMAFSBXZhbHVlIkAKCmJ1cm5fZXZlbnQSGAoEZnJvbRgBIAEoDEIEgLUYBlIEZnJvbRIYCgV2YWx1ZRgCIAEoBEICMAFSBXZhbHVlIloKDnRyYW5zZmVyX2V2ZW50EhgKBGZyb20YASABKAxCBIC1GAZSBGZyb20SFAoCdG8YAiABKAxCBIC1GAZSAnRvEhgKBXZhbHVlGAMgASgEQgIwAVIFdmFsdWViBnByb3RvMw=="
+}
