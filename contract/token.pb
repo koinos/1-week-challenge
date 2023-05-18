@@ -77,3 +77,55 @@ burn_event
 from (B€µRfrom
 to (B€µRto
 value (B0Rvaluebproto3
+×	
+"koinos/contracts/token/token.protokoinos.contracts.tokenkoinos/options.proto"
+name_arguments"#
+name_result
+value (	Rvalue"
+symbol_arguments"%
+symbol_result
+value (	Rvalue"
+decimals_arguments"'
+decimals_result
+value (Rvalue"
+total_supply_arguments"/
+total_supply_result
+value (B0Rvalue"2
+balance_of_arguments
+owner (B€µRowner"-
+balance_of_result
+value (B0Rvalue"^
+transfer_arguments
+from (B€µRfrom
+to (B€µRto
+value (B0Rvalue"'
+transfer_result
+value (Rvalue"@
+mint_arguments
+to (B€µRto
+value (B0Rvalue"#
+mint_result
+value (Rvalue"D
+burn_arguments
+from (B€µRfrom
+value (B0Rvalue"#
+burn_result
+value (Rvalue"*
+balance_object
+value (B0Rvalue"y
+mana_balance_object
+balance (B0Rbalance
+mana (B0Rmana,
+last_mana_update (B0RlastManaUpdate"@
+
+burn_event
+from (B€µRfrom
+value (B0Rvalue"<
+
+mint_event
+to (B€µRto
+value (B0Rvalue"Z
+transfer_event
+from (B€µRfrom
+to (B€µRto
+value (B0RvalueB>Z<github.com/koinos/koinos-proto-golang/koinos/contracts/tokenbproto3
