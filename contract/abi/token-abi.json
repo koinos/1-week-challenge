@@ -318,6 +318,14 @@
                             }
                         }
                     },
+                    "metadata_object": {
+                        "fields": {
+                            "last_game_id": {
+                                "type": "uint64",
+                                "id": 1
+                            }
+                        }
+                    },
                     "game_stats_key": {
                         "fields": {
                             "timestamp": {

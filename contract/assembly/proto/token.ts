@@ -846,6 +846,42 @@ export namespace token {
   }
 
   @unmanaged
+  export class metadata_object {
+    static encode(message: metadata_object, writer: Writer): void {
+      if (message.last_game_id != 0) {
+        writer.uint32(8);
+        writer.uint64(message.last_game_id);
+      }
+    }
+
+    static decode(reader: Reader, length: i32): metadata_object {
+      const end: usize = length < 0 ? reader.end : reader.ptr + length;
+      const message = new metadata_object();
+
+      while (reader.ptr < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1:
+            message.last_game_id = reader.uint64();
+            break;
+
+          default:
+            reader.skipType(tag & 7);
+            break;
+        }
+      }
+
+      return message;
+    }
+
+    last_game_id: u64;
+
+    constructor(last_game_id: u64 = 0) {
+      this.last_game_id = last_game_id;
+    }
+  }
+
+  @unmanaged
   export class game_stats_key {
     static encode(message: game_stats_key, writer: Writer): void {
       if (message.timestamp != 0) {

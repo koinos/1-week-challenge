@@ -5,6 +5,7 @@ import { BalancesStorage } from "./state/BalancesStorage";
 import { LeaderboardStorage } from "./state/LeaderboardStorage";
 import { PlayersStorage } from "./state/PlayersStorage";
 import { GamesStatsStorage } from "./state/GamesStatsStorage";
+import { MetadataStorage } from "./state/MetadataStorage";
 
 export class Token {
   // SETTINGS BEGIN
@@ -22,9 +23,10 @@ export class Token {
   _supplyStorage: SupplyStorage = new SupplyStorage(this._contractId);
   _balancesStorage: BalancesStorage = new BalancesStorage(this._contractId);
   // workshop: add the new storages
-  _leaderboardStorage: LeaderboardStorage = new LeaderboardStorage(this._contractId);
+  _metadataStorage: MetadataStorage = new MetadataStorage(this._contractId);
   _playersStorage: PlayersStorage = new PlayersStorage(this._contractId);
   _gamesStatsStorage: GamesStatsStorage = new GamesStatsStorage(this._contractId);
+  _leaderboardStorage: LeaderboardStorage = new LeaderboardStorage(this._contractId);
 
   name(args: token.name_arguments): token.name_result {
     return new token.name_result(this._name);
@@ -146,9 +148,14 @@ export class Token {
     playerLeaderboardKey.wins = playerObj.wins;
     this._leaderboardStorage.put(playerLeaderboardKey, new token.empty_message());
 
+    // increment last game id
+    const metadata = this._metadataStorage.get()!;
+    metadata.last_game_id = SafeMath.add(metadata.last_game_id, 1);
+    this._metadataStorage.put(metadata);
+
     // save game stats
     this._gamesStatsStorage.put(
-      new token.game_stats_key(System.getHeadInfo().head_block_time),
+      new token.game_stats_key(metadata.last_game_id),
       game_stats!
     );
 

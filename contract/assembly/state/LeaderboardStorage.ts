@@ -3,7 +3,7 @@
 import { Storage } from '@koinos/sdk-as';
 import { token } from '../proto/token';
 
-const LEADERBOARD_SPACE_ID = 2;
+const LEADERBOARD_SPACE_ID = 5;
 
 export class LeaderboardStorage extends Storage.ProtoMap<token.leaderboard_key, token.empty_message> {
   constructor(contractId: Uint8Array) {

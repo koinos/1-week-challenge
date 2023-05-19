@@ -477,14 +477,14 @@ describe("token", () => {
     expect(balanceRes.value).toBe(0);
   });
 
-  it("test", () => {
+  it("orders the leaderboard", () => {
     const leaderboard = new LeaderboardStorage(System.getContractId());
 
     leaderboard.put(
       new token.leaderboard_key(1, MOCK_ACCT1),
       new token.empty_message()
     );
-
+ 
     leaderboard.put(
       new token.leaderboard_key(1000000, MOCK_ACCT3),
       new token.empty_message()
@@ -495,19 +495,13 @@ describe("token", () => {
       new token.empty_message()
     );
 
-    leaderboard.put(
-      new token.leaderboard_key(1000000, MOCK_ACCT2),
-      new token.empty_message()
-    );
-
-    // let key = new token.leaderboard_key();
     let key = new token.leaderboard_key(u32.MAX_VALUE, new Uint8Array(25).fill(u8.MAX_VALUE));
 
     let obj: System.ProtoDatabaseObject<token.empty_message> | null;
     let tmpKey: token.leaderboard_key;
 
+    let index = 0;
     do {
-      // obj = leaderboard.getNext(key);
       obj = leaderboard.getPrev(key);
 
       if (obj) {
@@ -518,6 +512,18 @@ describe("token", () => {
 
         System.log(tmpKey.wins.toString() + ':' + Base58.encode(tmpKey.player));
 
+        if (index == 0) {
+          expect(tmpKey.wins).toStrictEqual(1000000);
+          expect(Base58.encode(tmpKey.player)).toStrictEqual(Base58.encode(MOCK_ACCT3));
+        } else if (index == 1) {
+          expect(tmpKey.wins).toStrictEqual(10);
+          expect(Base58.encode(tmpKey.player)).toStrictEqual(Base58.encode(MOCK_ACCT2));
+        } else if (index == 2) {
+          expect(tmpKey.wins).toStrictEqual(1);
+          expect(Base58.encode(tmpKey.player)).toStrictEqual(Base58.encode(MOCK_ACCT1));
+        }
+
+        index++;
         key = tmpKey;
       }
     } while (obj != null);

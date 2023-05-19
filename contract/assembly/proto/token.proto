@@ -123,6 +123,12 @@ message balance_object {
 }
 
 // workshop: add this new proto message
+message metadata_object {
+   uint64 last_game_id = 1;
+   // other fields?
+}
+
+// workshop: add this new proto message
 message game_stats_key {
    uint64 timestamp = 1;
 }

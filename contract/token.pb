@@ -1,5 +1,5 @@
 
-é
+ž
 assembly/proto/token.prototokenkoinos/options.proto"
 empty_message"
 name_arguments"#
@@ -55,7 +55,10 @@ descending"S
 games_stats (2.token.game_stats_objectR
 gamesStats"*
 balance_object
-value (B0Rvalue".
+value (B0Rvalue"3
+metadata_object 
+last_game_id (R
+lastGameId".
 game_stats_key
 	timestamp (R	timestamp"1
 game_stats_object
