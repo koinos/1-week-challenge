@@ -69,12 +69,7 @@ describe("token", () => {
     expect(totalSupplyRes.value).toBe(0);
 
     // mint tokens
-    const mintArgs = new token.mint_arguments(
-      MOCK_ACCT1,
-      123,
-      // workshop: add following line
-      new token.game_stats_object(MOCK_ACCT1)
-    );
+    const mintArgs = new token.mint_arguments(MOCK_ACCT1, 123);
     tkn.mint(mintArgs);
 
     auth = new MockVM.MockAuthority(authority.authorization_type.contract_call, MOCK_ACCT1, true);
@@ -155,12 +150,7 @@ describe("token", () => {
     expect(totalSupplyRes.value).toBe(0);
 
     // mint tokens
-    const mintArgs = new token.mint_arguments(
-      MOCK_ACCT1,
-      123,
-      // workshop: add following line
-      new token.game_stats_object(MOCK_ACCT1)
-    );
+    const mintArgs = new token.mint_arguments(MOCK_ACCT1, 123);
     tkn.mint(mintArgs);
 
     // check events
@@ -207,12 +197,7 @@ describe("token", () => {
     expect(() => {
       // try to mint tokens
       const tkn = new Token();
-      const mintArgs = new token.mint_arguments(
-        MOCK_ACCT2,
-        123,
-        // workshop: add following line
-        new token.game_stats_object(MOCK_ACCT2)
-      );
+      const mintArgs = new token.mint_arguments(MOCK_ACCT2, 123);
       tkn.mint(mintArgs);
     }).toThrow();
 
@@ -232,12 +217,7 @@ describe("token", () => {
     const auth = new MockVM.MockAuthority(authority.authorization_type.contract_call, CONTRACT_ID, true);
     MockVM.setAuthorities([auth]);
 
-    const mintArgs = new token.mint_arguments(
-      MOCK_ACCT2,
-      123,
-      // workshop: add following line
-      new token.game_stats_object(MOCK_ACCT2)
-    );
+    let mintArgs = new token.mint_arguments(MOCK_ACCT2, 123);
     tkn.mint(mintArgs);
 
     // check total supply
@@ -251,12 +231,7 @@ describe("token", () => {
     expect(() => {
       // try to mint tokens
       const tkn = new Token();
-      const mintArgs = new token.mint_arguments(
-        MOCK_ACCT2,
-        u64.MAX_VALUE,
-        // workshop: add following line
-        new token.game_stats_object(MOCK_ACCT2)
-      );
+      const mintArgs = new token.mint_arguments(MOCK_ACCT2, u64.MAX_VALUE);
       tkn.mint(mintArgs);
     }).toThrow();
 
@@ -274,12 +249,7 @@ describe("token", () => {
     const auth = new MockVM.MockAuthority(authority.authorization_type.contract_call, CONTRACT_ID, true);
     MockVM.setAuthorities([auth]);
 
-    const mintArgs = new token.mint_arguments(
-      MOCK_ACCT2,
-      123,
-      // workshop: add following line
-      new token.game_stats_object(MOCK_ACCT2)
-    );
+    let mintArgs = new token.mint_arguments(MOCK_ACCT2, 123);
     tkn.mint(mintArgs);
 
     // check total supply
@@ -294,12 +264,7 @@ describe("token", () => {
       // try to mint tokens
       const tkn = new Token();
       tkn._maxSupply = 400;
-      const mintArgs = new token.mint_arguments(
-        MOCK_ACCT2,
-        500,
-        // workshop: add following line
-        new token.game_stats_object(MOCK_ACCT2)
-      );
+      const mintArgs = new token.mint_arguments(MOCK_ACCT2, 500);
       tkn.mint(mintArgs);
     }).toThrow();
 
@@ -324,12 +289,7 @@ describe("token", () => {
     MockVM.setAuthorities([authContractId, authMockAcct1]);
 
     // mint tokens
-    const mintArgs = new token.mint_arguments(
-      MOCK_ACCT1,
-      123,
-      // workshop: add following line
-      new token.game_stats_object(MOCK_ACCT1)
-    );
+    const mintArgs = new token.mint_arguments(MOCK_ACCT1, 123);
     tkn.mint(mintArgs);
 
     // transfer tokens
@@ -369,12 +329,7 @@ describe("token", () => {
     MockVM.setAuthorities([authContractId]);
 
     // mint tokens
-    const mintArgs = new token.mint_arguments(
-      MOCK_ACCT1,
-      123,
-      // workshop: add following line
-      new token.game_stats_object(MOCK_ACCT1)
-    );
+    const mintArgs = new token.mint_arguments(MOCK_ACCT1, 123);
     tkn.mint(mintArgs);
 
     // save the MockVM state because the transfer is going to revert the transaction
@@ -410,12 +365,7 @@ describe("token", () => {
     MockVM.setAuthorities([authContractId, authMockAcct1]);
 
     // mint tokens
-    const mintArgs = new token.mint_arguments(
-      MOCK_ACCT1,
-      123,
-      // workshop: add following line
-      new token.game_stats_object(MOCK_ACCT1)
-    );
+    const mintArgs = new token.mint_arguments(MOCK_ACCT1, 123);
     tkn.mint(mintArgs);
 
     // save the MockVM state because the transfer is going to revert the transaction
@@ -447,12 +397,7 @@ describe("token", () => {
     MockVM.setAuthorities([authContractId, authMockAcct1]);
 
     // mint tokens
-    const mintArgs = new token.mint_arguments(
-      MOCK_ACCT1,
-      123,
-      // workshop: add following line
-      new token.game_stats_object(MOCK_ACCT1)
-    );
+    const mintArgs = new token.mint_arguments(MOCK_ACCT1, 123);
     tkn.mint(mintArgs);
 
     // save the MockVM state because the transfer is going to revert the transaction

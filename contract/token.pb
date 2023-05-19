@@ -1,5 +1,5 @@
 
-ž
+Û
 assembly/proto/token.prototokenkoinos/options.proto"
 empty_message"
 name_arguments"#
@@ -24,15 +24,16 @@
 transfer_arguments
 from (B€µRfrom
 to (B€µRto
-value (B0Rvalue"y
+value (B0Rvalue"@
 mint_arguments
 to (B€µRto
-value (B0Rvalue7
-
-game_stats (2.token.game_stats_objectR	gameStats"D
+value (B0Rvalue"D
 burn_arguments
 from (B€µRfrom
-value (B0Rvalue"9
+value (B0Rvalue"V
+submit_game_stats_arguments7
+
+game_stats (2.token.game_stats_objectR	gameStats"9
 get_player_info_arguments
 player (B€µRplayer"Œ
 get_leaderboard_arguments5
@@ -60,9 +61,10 @@ gamesStats"*
 last_game_id (R
 lastGameId".
 game_stats_key
-	timestamp (R	timestamp"1
+	timestamp (R	timestamp"O
 game_stats_object
-winner (B€µRwinner"=
+rewards (B0Rrewards
+winner (B€µRwinner"=
 leaderboard_key
 wins (Rwins
 player (Rplayer"#

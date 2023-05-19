@@ -63,6 +63,13 @@
             "entry_point": 2241834181,
             "read_only": false
         },
+        "submit_game_stats": {
+            "argument": "token.submit_game_stats_arguments",
+            "return": "token.empty_message",
+            "description": "Submit game stats",
+            "entry_point": 3589966174,
+            "read_only": false
+        },
         "get_player_info": {
             "argument": "token.get_player_info_arguments",
             "return": "token.player_object",
@@ -215,10 +222,6 @@
                                 "options": {
                                     "jstype": "JS_STRING"
                                 }
-                            },
-                            "game_stats": {
-                                "type": "game_stats_object",
-                                "id": 3
                             }
                         }
                     },
@@ -237,6 +240,14 @@
                                 "options": {
                                     "jstype": "JS_STRING"
                                 }
+                            }
+                        }
+                    },
+                    "submit_game_stats_arguments": {
+                        "fields": {
+                            "game_stats": {
+                                "type": "game_stats_object",
+                                "id": 1
                             }
                         }
                     },
@@ -336,9 +347,16 @@
                     },
                     "game_stats_object": {
                         "fields": {
+                            "rewards": {
+                                "type": "uint64",
+                                "id": 1,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            },
                             "winner": {
                                 "type": "bytes",
-                                "id": 1,
+                                "id": 2,
                                 "options": {
                                     "(koinos.btype)": "ADDRESS"
                                 }

@@ -460,14 +460,6 @@ export namespace token {
         writer.uint32(16);
         writer.uint64(message.value);
       }
-
-      const unique_name_game_stats = message.game_stats;
-      if (unique_name_game_stats !== null) {
-        writer.uint32(26);
-        writer.fork();
-        game_stats_object.encode(unique_name_game_stats, writer);
-        writer.ldelim();
-      }
     }
 
     static decode(reader: Reader, length: i32): mint_arguments {
@@ -485,13 +477,6 @@ export namespace token {
             message.value = reader.uint64();
             break;
 
-          case 3:
-            message.game_stats = game_stats_object.decode(
-              reader,
-              reader.uint32()
-            );
-            break;
-
           default:
             reader.skipType(tag & 7);
             break;
@@ -503,16 +488,10 @@ export namespace token {
 
     to: Uint8Array;
     value: u64;
-    game_stats: game_stats_object | null;
 
-    constructor(
-      to: Uint8Array = new Uint8Array(0),
-      value: u64 = 0,
-      game_stats: game_stats_object | null = null
-    ) {
+    constructor(to: Uint8Array = new Uint8Array(0), value: u64 = 0) {
       this.to = to;
       this.value = value;
-      this.game_stats = game_stats;
     }
   }
 
@@ -559,6 +538,47 @@ export namespace token {
     constructor(from: Uint8Array = new Uint8Array(0), value: u64 = 0) {
       this.from = from;
       this.value = value;
+    }
+  }
+
+  export class submit_game_stats_arguments {
+    static encode(message: submit_game_stats_arguments, writer: Writer): void {
+      const unique_name_game_stats = message.game_stats;
+      if (unique_name_game_stats !== null) {
+        writer.uint32(10);
+        writer.fork();
+        game_stats_object.encode(unique_name_game_stats, writer);
+        writer.ldelim();
+      }
+    }
+
+    static decode(reader: Reader, length: i32): submit_game_stats_arguments {
+      const end: usize = length < 0 ? reader.end : reader.ptr + length;
+      const message = new submit_game_stats_arguments();
+
+      while (reader.ptr < end) {
+        const tag = reader.uint32();
+        switch (tag >>> 3) {
+          case 1:
+            message.game_stats = game_stats_object.decode(
+              reader,
+              reader.uint32()
+            );
+            break;
+
+          default:
+            reader.skipType(tag & 7);
+            break;
+        }
+      }
+
+      return message;
+    }
+
+    game_stats: game_stats_object | null;
+
+    constructor(game_stats: game_stats_object | null = null) {
+      this.game_stats = game_stats;
     }
   }
 
@@ -919,8 +939,13 @@ export namespace token {
 
   export class game_stats_object {
     static encode(message: game_stats_object, writer: Writer): void {
+      if (message.rewards != 0) {
+        writer.uint32(8);
+        writer.uint64(message.rewards);
+      }
+
       if (message.winner.length != 0) {
-        writer.uint32(10);
+        writer.uint32(18);
         writer.bytes(message.winner);
       }
     }
@@ -933,6 +958,10 @@ export namespace token {
         const tag = reader.uint32();
         switch (tag >>> 3) {
           case 1:
+            message.rewards = reader.uint64();
+            break;
+
+          case 2:
             message.winner = reader.bytes();
             break;
 
@@ -945,9 +974,11 @@ export namespace token {
       return message;
     }
 
+    rewards: u64;
     winner: Uint8Array;
 
-    constructor(winner: Uint8Array = new Uint8Array(0)) {
+    constructor(rewards: u64 = 0, winner: Uint8Array = new Uint8Array(0)) {
+      this.rewards = rewards;
       this.winner = winner;
     }
   }

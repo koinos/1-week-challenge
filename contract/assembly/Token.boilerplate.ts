@@ -73,7 +73,6 @@ export class Token {
   mint(args: token.mint_arguments): token.empty_message {
     // const to = args.to;
     // const value = args.value;
-    // const game_stats = args.game_stats;
 
     // YOUR CODE HERE
 
@@ -85,6 +84,18 @@ export class Token {
   burn(args: token.burn_arguments): token.empty_message {
     // const from = args.from;
     // const value = args.value;
+
+    // YOUR CODE HERE
+
+    const res = new token.empty_message();
+
+    return res;
+  }
+
+  submit_game_stats(
+    args: token.submit_game_stats_arguments
+  ): token.empty_message {
+    // const game_stats = args.game_stats;
 
     // YOUR CODE HERE
 

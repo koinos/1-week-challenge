@@ -99,6 +99,16 @@ export function main(): i32 {
       break;
     }
 
+    case 0xd5fa895e: {
+      const args = Protobuf.decode<ProtoNamespace.submit_game_stats_arguments>(
+        contractArgs.args,
+        ProtoNamespace.submit_game_stats_arguments.decode
+      );
+      const res = c.submit_game_stats(args);
+      retbuf = Protobuf.encode(res, ProtoNamespace.empty_message.encode);
+      break;
+    }
+
     case 0xafd83fad: {
       const args = Protobuf.decode<ProtoNamespace.get_player_info_arguments>(
         contractArgs.args,

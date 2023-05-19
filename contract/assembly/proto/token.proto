@@ -71,8 +71,6 @@ message transfer_arguments {
 message mint_arguments {
    bytes to = 1 [(koinos.btype) = ADDRESS];
    uint64 value = 2 [jstype = JS_STRING];
-   // workshop: add this new field to mint_arguments
-   game_stats_object game_stats = 3;
 }
 
 // @description Burns the token
@@ -81,6 +79,14 @@ message mint_arguments {
 message burn_arguments {
    bytes from = 1 [(koinos.btype) = ADDRESS];
    uint64 value = 2 [jstype = JS_STRING];
+}
+
+// workshop: add this new entry point
+// @description Submit game stats
+// @read-only false
+// @result empty_message
+message submit_game_stats_arguments {
+   game_stats_object game_stats = 1;
 }
 
 // workshop: add this new entry point
@@ -135,7 +141,8 @@ message game_stats_key {
 
 // workshop: add this new proto message
 message game_stats_object {
-   bytes winner = 1 [(koinos.btype) = ADDRESS];
+   uint64 rewards = 1 [jstype = JS_STRING];
+   bytes winner = 2 [(koinos.btype) = ADDRESS];
    // other fields?
 }
 

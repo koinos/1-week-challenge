@@ -102,12 +102,7 @@ export class Token {
   mint(args: token.mint_arguments): token.empty_message {
     const to = args.to;
     const value = args.value;
-    const game_stats = args.game_stats;
 
-    // workshop: add following check
-    System.require(game_stats != null, 'missing "game_stats" argument');
-
-    // token minting logic
     System.requireAuthority(authority.authorization_type.contract_call, this._contractId);
 
     const supply = this._supplyStorage.get()!;
@@ -131,7 +126,15 @@ export class Token {
 
     System.event('koinos.contracts.token.mint_event', Protobuf.encode(mintEvent, token.mint_event.encode), impacted);
 
-    // workshop: add game logic
+    return new token.empty_message();
+  }
+
+  // workshop: add following entry point logic
+  submit_game_stats(args: token.submit_game_stats_arguments): token.empty_message {
+    const game_stats = args.game_stats;
+
+    System.require(game_stats != null, 'missing "game_stats" argument');
+
     // get player object
     const playerObj = this._playersStorage.get(game_stats!.winner)!;
 
@@ -158,6 +161,9 @@ export class Token {
       new token.game_stats_key(metadata.last_game_id),
       game_stats!
     );
+
+    // mint token rewards
+    this.mint(new token.mint_arguments(game_stats!.winner, game_stats!.rewards));
 
     return new token.empty_message();
   }
@@ -245,7 +251,7 @@ export class Token {
 
         // add key to result
         res.leaderboard.push(tmpKey);
-        
+
         // decrease limit
         limit--;
 
@@ -298,7 +304,7 @@ export class Token {
 
         // add game stats object to result
         res.games_stats.push(obj.value);
-        
+
         // decrease limit
         limit--;
 
