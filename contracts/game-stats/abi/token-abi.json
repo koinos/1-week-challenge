@@ -1,0 +1,717 @@
+{
+    "methods": {
+        "name": {
+            "argument": "token.name_arguments",
+            "return": "token.name_result",
+            "description": "Returns the token's name",
+            "entry_point": 2191741823,
+            "read_only": true
+        },
+        "symbol": {
+            "argument": "token.symbol_arguments",
+            "return": "token.symbol_result",
+            "description": "Returns the token's symbol",
+            "entry_point": 3077209249,
+            "read_only": true
+        },
+        "decimals": {
+            "argument": "token.decimals_arguments",
+            "return": "token.decimals_result",
+            "description": "Returns the token's decimals precision",
+            "entry_point": 4001430831,
+            "read_only": true
+        },
+        "total_supply": {
+            "argument": "token.total_supply_arguments",
+            "return": "token.total_supply_result",
+            "description": "Returns the token's total supply",
+            "entry_point": 2967091508,
+            "read_only": true
+        },
+        "max_supply": {
+            "argument": "token.max_supply_arguments",
+            "return": "token.max_supply_result",
+            "description": "Returns the token's max supply",
+            "entry_point": 46564349,
+            "read_only": true
+        },
+        "balance_of": {
+            "argument": "token.balance_of_arguments",
+            "return": "token.balance_of_result",
+            "description": "Checks the balance at an address",
+            "entry_point": 1550980247,
+            "read_only": true
+        },
+        "transfer": {
+            "argument": "token.transfer_arguments",
+            "return": "token.empty_message",
+            "description": "Transfers the token",
+            "entry_point": 670398154,
+            "read_only": false
+        },
+        "mint": {
+            "argument": "token.mint_arguments",
+            "return": "token.empty_message",
+            "description": "Mints the token",
+            "entry_point": 3698268091,
+            "read_only": false
+        },
+        "burn": {
+            "argument": "token.burn_arguments",
+            "return": "token.empty_message",
+            "description": "Burns the token",
+            "entry_point": 2241834181,
+            "read_only": false
+        },
+        "submit_game_stats": {
+            "argument": "token.submit_game_stats_arguments",
+            "return": "token.empty_message",
+            "description": "Submit game stats",
+            "entry_point": 3589966174,
+            "read_only": false
+        },
+        "get_player_info": {
+            "argument": "token.get_player_info_arguments",
+            "return": "token.player_object",
+            "description": "Return a player's info",
+            "entry_point": 2950184877,
+            "read_only": true
+        },
+        "get_leaderboard": {
+            "argument": "token.get_leaderboard_arguments",
+            "return": "token.get_leaderboard_result",
+            "description": "Return the leaderboard",
+            "entry_point": 2157256597,
+            "read_only": true
+        },
+        "get_games_stats": {
+            "argument": "token.get_games_stats_arguments",
+            "return": "token.get_games_stats_result",
+            "description": "Return the past games stats",
+            "entry_point": 1885616903,
+            "read_only": true
+        }
+    },
+    "types": {
+        "nested": {
+            "token": {
+                "nested": {
+                    "empty_message": {
+                        "fields": {}
+                    },
+                    "name_arguments": {
+                        "fields": {}
+                    },
+                    "name_result": {
+                        "fields": {
+                            "value": {
+                                "type": "string",
+                                "id": 1
+                            }
+                        }
+                    },
+                    "symbol_arguments": {
+                        "fields": {}
+                    },
+                    "symbol_result": {
+                        "fields": {
+                            "value": {
+                                "type": "string",
+                                "id": 1
+                            }
+                        }
+                    },
+                    "decimals_arguments": {
+                        "fields": {}
+                    },
+                    "decimals_result": {
+                        "fields": {
+                            "value": {
+                                "type": "uint32",
+                                "id": 1
+                            }
+                        }
+                    },
+                    "total_supply_arguments": {
+                        "fields": {}
+                    },
+                    "total_supply_result": {
+                        "fields": {
+                            "value": {
+                                "type": "uint64",
+                                "id": 1,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            }
+                        }
+                    },
+                    "max_supply_arguments": {
+                        "fields": {}
+                    },
+                    "max_supply_result": {
+                        "fields": {
+                            "value": {
+                                "type": "uint64",
+                                "id": 1,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            }
+                        }
+                    },
+                    "balance_of_arguments": {
+                        "fields": {
+                            "owner": {
+                                "type": "bytes",
+                                "id": 1,
+                                "options": {
+                                    "(koinos.btype)": "ADDRESS"
+                                }
+                            }
+                        }
+                    },
+                    "balance_of_result": {
+                        "fields": {
+                            "value": {
+                                "type": "uint64",
+                                "id": 1,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            }
+                        }
+                    },
+                    "transfer_arguments": {
+                        "fields": {
+                            "from": {
+                                "type": "bytes",
+                                "id": 1,
+                                "options": {
+                                    "(koinos.btype)": "ADDRESS"
+                                }
+                            },
+                            "to": {
+                                "type": "bytes",
+                                "id": 2,
+                                "options": {
+                                    "(koinos.btype)": "ADDRESS"
+                                }
+                            },
+                            "value": {
+                                "type": "uint64",
+                                "id": 3,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            }
+                        }
+                    },
+                    "mint_arguments": {
+                        "fields": {
+                            "to": {
+                                "type": "bytes",
+                                "id": 1,
+                                "options": {
+                                    "(koinos.btype)": "ADDRESS"
+                                }
+                            },
+                            "value": {
+                                "type": "uint64",
+                                "id": 2,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            }
+                        }
+                    },
+                    "burn_arguments": {
+                        "fields": {
+                            "from": {
+                                "type": "bytes",
+                                "id": 1,
+                                "options": {
+                                    "(koinos.btype)": "ADDRESS"
+                                }
+                            },
+                            "value": {
+                                "type": "uint64",
+                                "id": 2,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            }
+                        }
+                    },
+                    "submit_game_stats_arguments": {
+                        "fields": {
+                            "game_stats": {
+                                "type": "game_stats_object",
+                                "id": 1
+                            }
+                        }
+                    },
+                    "get_player_info_arguments": {
+                        "fields": {
+                            "player": {
+                                "type": "bytes",
+                                "id": 1,
+                                "options": {
+                                    "(koinos.btype)": "ADDRESS"
+                                }
+                            }
+                        }
+                    },
+                    "get_leaderboard_arguments": {
+                        "fields": {
+                            "offset_key": {
+                                "type": "leaderboard_key",
+                                "id": 1
+                            },
+                            "limit": {
+                                "type": "uint64",
+                                "id": 2,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            },
+                            "descending": {
+                                "type": "bool",
+                                "id": 3
+                            }
+                        }
+                    },
+                    "get_leaderboard_result": {
+                        "fields": {
+                            "leaderboard": {
+                                "rule": "repeated",
+                                "type": "leaderboard_key",
+                                "id": 1
+                            }
+                        }
+                    },
+                    "get_games_stats_arguments": {
+                        "fields": {
+                            "offset_key": {
+                                "type": "game_stats_key",
+                                "id": 1
+                            },
+                            "limit": {
+                                "type": "uint64",
+                                "id": 2,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            },
+                            "descending": {
+                                "type": "bool",
+                                "id": 3
+                            }
+                        }
+                    },
+                    "get_games_stats_result": {
+                        "fields": {
+                            "games_stats": {
+                                "rule": "repeated",
+                                "type": "game_stats_object",
+                                "id": 1
+                            }
+                        }
+                    },
+                    "balance_object": {
+                        "fields": {
+                            "value": {
+                                "type": "uint64",
+                                "id": 1,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            }
+                        }
+                    },
+                    "metadata_object": {
+                        "fields": {
+                            "last_game_id": {
+                                "type": "uint64",
+                                "id": 1
+                            }
+                        }
+                    },
+                    "game_stats_key": {
+                        "fields": {
+                            "timestamp": {
+                                "type": "uint64",
+                                "id": 1
+                            }
+                        }
+                    },
+                    "game_stats_object": {
+                        "fields": {
+                            "rewards": {
+                                "type": "uint64",
+                                "id": 1,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            },
+                            "winner": {
+                                "type": "bytes",
+                                "id": 2,
+                                "options": {
+                                    "(koinos.btype)": "ADDRESS"
+                                }
+                            }
+                        }
+                    },
+                    "leaderboard_key": {
+                        "fields": {
+                            "wins": {
+                                "type": "uint32",
+                                "id": 1
+                            },
+                            "player": {
+                                "type": "bytes",
+                                "id": 2
+                            }
+                        }
+                    },
+                    "player_object": {
+                        "fields": {
+                            "wins": {
+                                "type": "uint32",
+                                "id": 1
+                            }
+                        }
+                    },
+                    "mint_event": {
+                        "fields": {
+                            "to": {
+                                "type": "bytes",
+                                "id": 1,
+                                "options": {
+                                    "(koinos.btype)": "ADDRESS"
+                                }
+                            },
+                            "value": {
+                                "type": "uint64",
+                                "id": 2,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            }
+                        }
+                    },
+                    "burn_event": {
+                        "fields": {
+                            "from": {
+                                "type": "bytes",
+                                "id": 1,
+                                "options": {
+                                    "(koinos.btype)": "ADDRESS"
+                                }
+                            },
+                            "value": {
+                                "type": "uint64",
+                                "id": 2,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            }
+                        }
+                    },
+                    "transfer_event": {
+                        "fields": {
+                            "from": {
+                                "type": "bytes",
+                                "id": 1,
+                                "options": {
+                                    "(koinos.btype)": "ADDRESS"
+                                }
+                            },
+                            "to": {
+                                "type": "bytes",
+                                "id": 2,
+                                "options": {
+                                    "(koinos.btype)": "ADDRESS"
+                                }
+                            },
+                            "value": {
+                                "type": "uint64",
+                                "id": 3,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "koinos": {
+                "nested": {
+                    "contracts": {
+                        "nested": {
+                            "token": {
+                                "options": {
+                                    "go_package": "github.com/koinos/koinos-proto-golang/koinos/contracts/token"
+                                },
+                                "nested": {
+                                    "name_arguments": {
+                                        "fields": {}
+                                    },
+                                    "name_result": {
+                                        "fields": {
+                                            "value": {
+                                                "type": "string",
+                                                "id": 1
+                                            }
+                                        }
+                                    },
+                                    "symbol_arguments": {
+                                        "fields": {}
+                                    },
+                                    "symbol_result": {
+                                        "fields": {
+                                            "value": {
+                                                "type": "string",
+                                                "id": 1
+                                            }
+                                        }
+                                    },
+                                    "decimals_arguments": {
+                                        "fields": {}
+                                    },
+                                    "decimals_result": {
+                                        "fields": {
+                                            "value": {
+                                                "type": "uint32",
+                                                "id": 1
+                                            }
+                                        }
+                                    },
+                                    "total_supply_arguments": {
+                                        "fields": {}
+                                    },
+                                    "total_supply_result": {
+                                        "fields": {
+                                            "value": {
+                                                "type": "uint64",
+                                                "id": 1,
+                                                "options": {
+                                                    "jstype": "JS_STRING"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "balance_of_arguments": {
+                                        "fields": {
+                                            "owner": {
+                                                "type": "bytes",
+                                                "id": 1,
+                                                "options": {
+                                                    "(btype)": "ADDRESS"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "balance_of_result": {
+                                        "fields": {
+                                            "value": {
+                                                "type": "uint64",
+                                                "id": 1,
+                                                "options": {
+                                                    "jstype": "JS_STRING"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "transfer_arguments": {
+                                        "fields": {
+                                            "from": {
+                                                "type": "bytes",
+                                                "id": 1,
+                                                "options": {
+                                                    "(btype)": "ADDRESS"
+                                                }
+                                            },
+                                            "to": {
+                                                "type": "bytes",
+                                                "id": 2,
+                                                "options": {
+                                                    "(btype)": "ADDRESS"
+                                                }
+                                            },
+                                            "value": {
+                                                "type": "uint64",
+                                                "id": 3,
+                                                "options": {
+                                                    "jstype": "JS_STRING"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "transfer_result": {
+                                        "fields": {
+                                            "value": {
+                                                "type": "bool",
+                                                "id": 1
+                                            }
+                                        }
+                                    },
+                                    "mint_arguments": {
+                                        "fields": {
+                                            "to": {
+                                                "type": "bytes",
+                                                "id": 1,
+                                                "options": {
+                                                    "(btype)": "ADDRESS"
+                                                }
+                                            },
+                                            "value": {
+                                                "type": "uint64",
+                                                "id": 2,
+                                                "options": {
+                                                    "jstype": "JS_STRING"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "mint_result": {
+                                        "fields": {
+                                            "value": {
+                                                "type": "bool",
+                                                "id": 1
+                                            }
+                                        }
+                                    },
+                                    "burn_arguments": {
+                                        "fields": {
+                                            "from": {
+                                                "type": "bytes",
+                                                "id": 1,
+                                                "options": {
+                                                    "(btype)": "ADDRESS"
+                                                }
+                                            },
+                                            "value": {
+                                                "type": "uint64",
+                                                "id": 2,
+                                                "options": {
+                                                    "jstype": "JS_STRING"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "burn_result": {
+                                        "fields": {
+                                            "value": {
+                                                "type": "bool",
+                                                "id": 1
+                                            }
+                                        }
+                                    },
+                                    "balance_object": {
+                                        "fields": {
+                                            "value": {
+                                                "type": "uint64",
+                                                "id": 1,
+                                                "options": {
+                                                    "jstype": "JS_STRING"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "mana_balance_object": {
+                                        "fields": {
+                                            "balance": {
+                                                "type": "uint64",
+                                                "id": 1,
+                                                "options": {
+                                                    "jstype": "JS_STRING"
+                                                }
+                                            },
+                                            "mana": {
+                                                "type": "uint64",
+                                                "id": 2,
+                                                "options": {
+                                                    "jstype": "JS_STRING"
+                                                }
+                                            },
+                                            "last_mana_update": {
+                                                "type": "uint64",
+                                                "id": 3,
+                                                "options": {
+                                                    "jstype": "JS_STRING"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "burn_event": {
+                                        "fields": {
+                                            "from": {
+                                                "type": "bytes",
+                                                "id": 1,
+                                                "options": {
+                                                    "(btype)": "ADDRESS"
+                                                }
+                                            },
+                                            "value": {
+                                                "type": "uint64",
+                                                "id": 2,
+                                                "options": {
+                                                    "jstype": "JS_STRING"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "mint_event": {
+                                        "fields": {
+                                            "to": {
+                                                "type": "bytes",
+                                                "id": 1,
+                                                "options": {
+                                                    "(btype)": "ADDRESS"
+                                                }
+                                            },
+                                            "value": {
+                                                "type": "uint64",
+                                                "id": 2,
+                                                "options": {
+                                                    "jstype": "JS_STRING"
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "transfer_event": {
+                                        "fields": {
+                                            "from": {
+                                                "type": "bytes",
+                                                "id": 1,
+                                                "options": {
+                                                    "(btype)": "ADDRESS"
+                                                }
+                                            },
+                                            "to": {
+                                                "type": "bytes",
+                                                "id": 2,
+                                                "options": {
+                                                    "(btype)": "ADDRESS"
+                                                }
+                                            },
+                                            "value": {
+                                                "type": "uint64",
+                                                "id": 3,
+                                                "options": {
+                                                    "jstype": "JS_STRING"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,79 @@
+syntax = "proto3";
+
+package gamestats;
+
+import "koinos/options.proto"; 
+
+message empty_message {}
+
+// @description Initialize the contract
+// @read-only false
+// @result empty_message
+message initialize_arguments {
+   bytes rewards_token_address = 1 [(koinos.btype) = CONTRACT_ID];
+}
+
+// @description Submit game stats
+// @read-only false
+// @result empty_message
+message submit_game_stats_arguments {
+   game_stats_object game_stats = 1;
+}
+
+// @description Return a player's info
+// @read-only true
+// @result player_object
+message get_player_info_arguments {
+   bytes player = 1 [(koinos.btype) = ADDRESS];
+}
+
+// @description Return the leaderboard
+// @read-only true
+message get_leaderboard_arguments {
+   leaderboard_key offset_key = 1;
+   uint64 limit = 2 [jstype = JS_STRING];
+   bool descending = 3;
+}
+
+message get_leaderboard_result {
+   repeated leaderboard_key leaderboard = 1;
+}
+
+// @description Return the past games stats
+// @read-only true
+message get_games_stats_arguments {
+   game_stats_key offset_key = 1;
+   uint64 limit = 2 [jstype = JS_STRING];
+   bool descending = 3;
+}
+
+message get_games_stats_result {
+   repeated game_stats_object games_stats = 1;
+}
+
+// objects
+message metadata_object {
+   bool initialized = 1;
+   bytes rewards_token_address = 2 [(koinos.btype) = ADDRESS];
+   uint64 last_game_id = 3;
+}
+
+message game_stats_key {
+   uint64 timestamp = 1;
+}
+
+message game_stats_object {
+   uint64 rewards = 1 [jstype = JS_STRING];
+   bytes winner = 2 [(koinos.btype) = ADDRESS];
+}
+
+message leaderboard_key {
+   uint32 wins = 1;
+   bytes player = 2;
+}
+
+message player_object {
+   uint32 wins = 1;
+}
+
+// events

@@ -1,0 +1,96 @@
+{
+    "methods": {
+        "name": {
+            "argument": "token.name_arguments",
+            "return": "token.name_result",
+            "description": "Returns the token's name",
+            "entry-point": "0x82a3537f",
+            "read-only": true
+        },
+        "symbol": {
+            "argument": "token.symbol_arguments",
+            "return": "token.symbol_result",
+            "description": "Returns the token's symbol",
+            "entry-point": "0xb76a7ca1",
+            "read-only": true
+        },
+        "decimals": {
+            "argument": "token.decimals_arguments",
+            "return": "token.decimals_result",
+            "description": "Returns the token's decimals precision",
+            "entry-point": "0xee80fd2f",
+            "read-only": true
+        },
+        "total_supply": {
+            "argument": "token.total_supply_arguments",
+            "return": "token.total_supply_result",
+            "description": "Returns the token's total supply",
+            "entry-point": "0xb0da3934",
+            "read-only": true
+        },
+        "max_supply": {
+            "argument": "token.max_supply_arguments",
+            "return": "token.max_supply_result",
+            "description": "Returns the token's max supply",
+            "entry-point": "0x02c683fd",
+            "read-only": true
+        },
+        "balance_of": {
+            "argument": "token.balance_of_arguments",
+            "return": "token.balance_of_result",
+            "description": "Checks the balance at an address",
+            "entry-point": "0x5c721497",
+            "read-only": true
+        },
+        "transfer": {
+            "argument": "token.transfer_arguments",
+            "return": "token.empty_message",
+            "description": "Transfers the token",
+            "entry-point": "0x27f576ca",
+            "read-only": false
+        },
+        "mint": {
+            "argument": "token.mint_arguments",
+            "return": "token.empty_message",
+            "description": "Mints the token",
+            "entry-point": "0xdc6f17bb",
+            "read-only": false
+        },
+        "burn": {
+            "argument": "token.burn_arguments",
+            "return": "token.empty_message",
+            "description": "Burns the token",
+            "entry-point": "0x859facc5",
+            "read-only": false
+        },
+        "submit_game_stats": {
+            "argument": "token.submit_game_stats_arguments",
+            "return": "token.empty_message",
+            "description": "Submit game stats",
+            "entry-point": "0xd5fa895e",
+            "read-only": false
+        },
+        "get_player_info": {
+            "argument": "token.get_player_info_arguments",
+            "return": "token.player_object",
+            "description": "Return a player's info",
+            "entry-point": "0xafd83fad",
+            "read-only": true
+        },
+        "get_leaderboard": {
+            "argument": "token.get_leaderboard_arguments",
+            "return": "token.get_leaderboard_result",
+            "description": "Return the leaderboard",
+            "entry-point": "0x80951f95",
+            "read-only": true
+        },
+        "get_games_stats": {
+            "argument": "token.get_games_stats_arguments",
+            "return": "token.get_games_stats_result",
+            "description": "Return the past games stats",
+            "entry-point": "0x70643b07",
+            "read-only": true
+        }
+    },
+    "types": "CtsOChphc3NlbWJseS9wcm90by90b2tlbi5wcm90bxIFdG9rZW4aFGtvaW5vcy9vcHRpb25zLnByb3RvIg8KDWVtcHR5X21lc3NhZ2UiEAoObmFtZV9hcmd1bWVudHMiIwoLbmFtZV9yZXN1bHQSFAoFdmFsdWUYASABKAlSBXZhbHVlIhIKEHN5bWJvbF9hcmd1bWVudHMiJQoNc3ltYm9sX3Jlc3VsdBIUCgV2YWx1ZRgBIAEoCVIFdmFsdWUiFAoSZGVjaW1hbHNfYXJndW1lbnRzIicKD2RlY2ltYWxzX3Jlc3VsdBIUCgV2YWx1ZRgBIAEoDVIFdmFsdWUiGAoWdG90YWxfc3VwcGx5X2FyZ3VtZW50cyIvChN0b3RhbF9zdXBwbHlfcmVzdWx0EhgKBXZhbHVlGAEgASgEQgIwAVIFdmFsdWUiFgoUbWF4X3N1cHBseV9hcmd1bWVudHMiLQoRbWF4X3N1cHBseV9yZXN1bHQSGAoFdmFsdWUYASABKARCAjABUgV2YWx1ZSIyChRiYWxhbmNlX29mX2FyZ3VtZW50cxIaCgVvd25lchgBIAEoDEIEgLUYBlIFb3duZXIiLQoRYmFsYW5jZV9vZl9yZXN1bHQSGAoFdmFsdWUYASABKARCAjABUgV2YWx1ZSJeChJ0cmFuc2Zlcl9hcmd1bWVudHMSGAoEZnJvbRgBIAEoDEIEgLUYBlIEZnJvbRIUCgJ0bxgCIAEoDEIEgLUYBlICdG8SGAoFdmFsdWUYAyABKARCAjABUgV2YWx1ZSJACg5taW50X2FyZ3VtZW50cxIUCgJ0bxgBIAEoDEIEgLUYBlICdG8SGAoFdmFsdWUYAiABKARCAjABUgV2YWx1ZSJECg5idXJuX2FyZ3VtZW50cxIYCgRmcm9tGAEgASgMQgSAtRgGUgRmcm9tEhgKBXZhbHVlGAIgASgEQgIwAVIFdmFsdWUiVgobc3VibWl0X2dhbWVfc3RhdHNfYXJndW1lbnRzEjcKCmdhbWVfc3RhdHMYASABKAsyGC50b2tlbi5nYW1lX3N0YXRzX29iamVjdFIJZ2FtZVN0YXRzIjkKGWdldF9wbGF5ZXJfaW5mb19hcmd1bWVudHMSHAoGcGxheWVyGAEgASgMQgSAtRgGUgZwbGF5ZXIijAEKGWdldF9sZWFkZXJib2FyZF9hcmd1bWVudHMSNQoKb2Zmc2V0X2tleRgBIAEoCzIWLnRva2VuLmxlYWRlcmJvYXJkX2tleVIJb2Zmc2V0S2V5EhgKBWxpbWl0GAIgASgEQgIwAVIFbGltaXQSHgoKZGVzY2VuZGluZxgDIAEoCFIKZGVzY2VuZGluZyJSChZnZXRfbGVhZGVyYm9hcmRfcmVzdWx0EjgKC2xlYWRlcmJvYXJkGAEgAygLMhYudG9rZW4ubGVhZGVyYm9hcmRfa2V5UgtsZWFkZXJib2FyZCKLAQoZZ2V0X2dhbWVzX3N0YXRzX2FyZ3VtZW50cxI0CgpvZmZzZXRfa2V5GAEgASgLMhUudG9rZW4uZ2FtZV9zdGF0c19rZXlSCW9mZnNldEtleRIYCgVsaW1pdBgCIAEoBEICMAFSBWxpbWl0Eh4KCmRlc2NlbmRpbmcYAyABKAhSCmRlc2NlbmRpbmciUwoWZ2V0X2dhbWVzX3N0YXRzX3Jlc3VsdBI5CgtnYW1lc19zdGF0cxgBIAMoCzIYLnRva2VuLmdhbWVfc3RhdHNfb2JqZWN0UgpnYW1lc1N0YXRzIioKDmJhbGFuY2Vfb2JqZWN0EhgKBXZhbHVlGAEgASgEQgIwAVIFdmFsdWUiMwoPbWV0YWRhdGFfb2JqZWN0EiAKDGxhc3RfZ2FtZV9pZBgBIAEoBFIKbGFzdEdhbWVJZCIuCg5nYW1lX3N0YXRzX2tleRIcCgl0aW1lc3RhbXAYASABKARSCXRpbWVzdGFtcCJPChFnYW1lX3N0YXRzX29iamVjdBIcCgdyZXdhcmRzGAEgASgEQgIwAVIHcmV3YXJkcxIcCgZ3aW5uZXIYAiABKAxCBIC1GAZSBndpbm5lciI9Cg9sZWFkZXJib2FyZF9rZXkSEgoEd2lucxgBIAEoDVIEd2lucxIWCgZwbGF5ZXIYAiABKAxSBnBsYXllciIjCg1wbGF5ZXJfb2JqZWN0EhIKBHdpbnMYASABKA1SBHdpbnMiPAoKbWludF9ldmVudBIUCgJ0bxgBIAEoDEIEgLUYBlICdG8SGAoFdmFsdWUYAiABKARCAjABUgV2YWx1ZSJACgpidXJuX2V2ZW50EhgKBGZyb20YASABKAxCBIC1GAZSBGZyb20SGAoFdmFsdWUYAiABKARCAjABUgV2YWx1ZSJaCg50cmFuc2Zlcl9ldmVudBIYCgRmcm9tGAEgASgMQgSAtRgGUgRmcm9tEhQKAnRvGAIgASgMQgSAtRgGUgJ0bxIYCgV2YWx1ZRgDIAEoBEICMAFSBXZhbHVlYgZwcm90bzMK1wkKImtvaW5vcy9jb250cmFjdHMvdG9rZW4vdG9rZW4ucHJvdG8SFmtvaW5vcy5jb250cmFjdHMudG9rZW4aFGtvaW5vcy9vcHRpb25zLnByb3RvIhAKDm5hbWVfYXJndW1lbnRzIiMKC25hbWVfcmVzdWx0EhQKBXZhbHVlGAEgASgJUgV2YWx1ZSISChBzeW1ib2xfYXJndW1lbnRzIiUKDXN5bWJvbF9yZXN1bHQSFAoFdmFsdWUYASABKAlSBXZhbHVlIhQKEmRlY2ltYWxzX2FyZ3VtZW50cyInCg9kZWNpbWFsc19yZXN1bHQSFAoFdmFsdWUYASABKA1SBXZhbHVlIhgKFnRvdGFsX3N1cHBseV9hcmd1bWVudHMiLwoTdG90YWxfc3VwcGx5X3Jlc3VsdBIYCgV2YWx1ZRgBIAEoBEICMAFSBXZhbHVlIjIKFGJhbGFuY2Vfb2ZfYXJndW1lbnRzEhoKBW93bmVyGAEgASgMQgSAtRgGUgVvd25lciItChFiYWxhbmNlX29mX3Jlc3VsdBIYCgV2YWx1ZRgBIAEoBEICMAFSBXZhbHVlIl4KEnRyYW5zZmVyX2FyZ3VtZW50cxIYCgRmcm9tGAEgASgMQgSAtRgGUgRmcm9tEhQKAnRvGAIgASgMQgSAtRgGUgJ0bxIYCgV2YWx1ZRgDIAEoBEICMAFSBXZhbHVlIicKD3RyYW5zZmVyX3Jlc3VsdBIUCgV2YWx1ZRgBIAEoCFIFdmFsdWUiQAoObWludF9hcmd1bWVudHMSFAoCdG8YASABKAxCBIC1GAZSAnRvEhgKBXZhbHVlGAIgASgEQgIwAVIFdmFsdWUiIwoLbWludF9yZXN1bHQSFAoFdmFsdWUYASABKAhSBXZhbHVlIkQKDmJ1cm5fYXJndW1lbnRzEhgKBGZyb20YASABKAxCBIC1GAZSBGZyb20SGAoFdmFsdWUYAiABKARCAjABUgV2YWx1ZSIjCgtidXJuX3Jlc3VsdBIUCgV2YWx1ZRgBIAEoCFIFdmFsdWUiKgoOYmFsYW5jZV9vYmplY3QSGAoFdmFsdWUYASABKARCAjABUgV2YWx1ZSJ5ChNtYW5hX2JhbGFuY2Vfb2JqZWN0EhwKB2JhbGFuY2UYASABKARCAjABUgdiYWxhbmNlEhYKBG1hbmEYAiABKARCAjABUgRtYW5hEiwKEGxhc3RfbWFuYV91cGRhdGUYAyABKARCAjABUg5sYXN0TWFuYVVwZGF0ZSJACgpidXJuX2V2ZW50EhgKBGZyb20YASABKAxCBIC1GAZSBGZyb20SGAoFdmFsdWUYAiABKARCAjABUgV2YWx1ZSI8CgptaW50X2V2ZW50EhQKAnRvGAEgASgMQgSAtRgGUgJ0bxIYCgV2YWx1ZRgCIAEoBEICMAFSBXZhbHVlIloKDnRyYW5zZmVyX2V2ZW50EhgKBGZyb20YASABKAxCBIC1GAZSBGZyb20SFAoCdG8YAiABKAxCBIC1GAZSAnRvEhgKBXZhbHVlGAMgASgEQgIwAVIFdmFsdWVCPlo8Z2l0aHViLmNvbS9rb2lub3Mva29pbm9zLXByb3RvLWdvbGFuZy9rb2lub3MvY29udHJhY3RzL3Rva2VuYgZwcm90bzM="
+}
