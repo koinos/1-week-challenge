@@ -1,0 +1,40 @@
+{
+    "methods": {
+        "initialize": {
+            "argument": "gamestats.initialize_arguments",
+            "return": "gamestats.empty_message",
+            "description": "Initialize the contract",
+            "entry-point": "0x470ebe82",
+            "read-only": false
+        },
+        "submit_game_stats": {
+            "argument": "gamestats.submit_game_stats_arguments",
+            "return": "gamestats.empty_message",
+            "description": "Submit game stats",
+            "entry-point": "0xd5fa895e",
+            "read-only": false
+        },
+        "get_player_info": {
+            "argument": "gamestats.get_player_info_arguments",
+            "return": "gamestats.player_object",
+            "description": "Return a player's info",
+            "entry-point": "0xafd83fad",
+            "read-only": true
+        },
+        "get_leaderboard": {
+            "argument": "gamestats.get_leaderboard_arguments",
+            "return": "gamestats.get_leaderboard_result",
+            "description": "Return the leaderboard",
+            "entry-point": "0x80951f95",
+            "read-only": true
+        },
+        "get_games_stats": {
+            "argument": "gamestats.get_games_stats_arguments",
+            "return": "gamestats.get_games_stats_result",
+            "description": "Return the past games stats",
+            "entry-point": "0x70643b07",
+            "read-only": true
+        }
+    },
+    "types": "CpAJCh5hc3NlbWJseS9wcm90by9nYW1lc3RhdHMucHJvdG8SCWdhbWVzdGF0cxoUa29pbm9zL29wdGlvbnMucHJvdG8iDwoNZW1wdHlfbWVzc2FnZSJQChRpbml0aWFsaXplX2FyZ3VtZW50cxI4ChVyZXdhcmRzX3Rva2VuX2FkZHJlc3MYASABKAxCBIC1GAVSE3Jld2FyZHNUb2tlbkFkZHJlc3MiWgobc3VibWl0X2dhbWVfc3RhdHNfYXJndW1lbnRzEjsKCmdhbWVfc3RhdHMYASABKAsyHC5nYW1lc3RhdHMuZ2FtZV9zdGF0c19vYmplY3RSCWdhbWVTdGF0cyI5ChlnZXRfcGxheWVyX2luZm9fYXJndW1lbnRzEhwKBnBsYXllchgBIAEoDEIEgLUYBlIGcGxheWVyIpABChlnZXRfbGVhZGVyYm9hcmRfYXJndW1lbnRzEjkKCm9mZnNldF9rZXkYASABKAsyGi5nYW1lc3RhdHMubGVhZGVyYm9hcmRfa2V5UglvZmZzZXRLZXkSGAoFbGltaXQYAiABKARCAjABUgVsaW1pdBIeCgpkZXNjZW5kaW5nGAMgASgIUgpkZXNjZW5kaW5nIlYKFmdldF9sZWFkZXJib2FyZF9yZXN1bHQSPAoLbGVhZGVyYm9hcmQYASADKAsyGi5nYW1lc3RhdHMubGVhZGVyYm9hcmRfa2V5UgtsZWFkZXJib2FyZCKPAQoZZ2V0X2dhbWVzX3N0YXRzX2FyZ3VtZW50cxI4CgpvZmZzZXRfa2V5GAEgASgLMhkuZ2FtZXN0YXRzLmdhbWVfc3RhdHNfa2V5UglvZmZzZXRLZXkSGAoFbGltaXQYAiABKARCAjABUgVsaW1pdBIeCgpkZXNjZW5kaW5nGAMgASgIUgpkZXNjZW5kaW5nIlcKFmdldF9nYW1lc19zdGF0c19yZXN1bHQSPQoLZ2FtZXNfc3RhdHMYASADKAsyHC5nYW1lc3RhdHMuZ2FtZV9zdGF0c19vYmplY3RSCmdhbWVzU3RhdHMijwEKD21ldGFkYXRhX29iamVjdBIgCgtpbml0aWFsaXplZBgBIAEoCFILaW5pdGlhbGl6ZWQSOAoVcmV3YXJkc190b2tlbl9hZGRyZXNzGAIgASgMQgSAtRgGUhNyZXdhcmRzVG9rZW5BZGRyZXNzEiAKDGxhc3RfZ2FtZV9pZBgDIAEoBFIKbGFzdEdhbWVJZCIuCg5nYW1lX3N0YXRzX2tleRIcCgl0aW1lc3RhbXAYASABKARSCXRpbWVzdGFtcCJPChFnYW1lX3N0YXRzX29iamVjdBIcCgdyZXdhcmRzGAEgASgEQgIwAVIHcmV3YXJkcxIcCgZ3aW5uZXIYAiABKAxCBIC1GAZSBndpbm5lciI9Cg9sZWFkZXJib2FyZF9rZXkSEgoEd2lucxgBIAEoDVIEd2lucxIWCgZwbGF5ZXIYAiABKAxSBnBsYXllciIjCg1wbGF5ZXJfb2JqZWN0EhIKBHdpbnMYASABKA1SBHdpbnNiBnByb3RvMw=="
+}
