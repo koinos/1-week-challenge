@@ -150,9 +150,9 @@ export namespace gamestats {
         writer.uint64(message.limit);
       }
 
-      if (message.descending != false) {
+      if (message.least_to_most_wins != false) {
         writer.uint32(24);
-        writer.bool(message.descending);
+        writer.bool(message.least_to_most_wins);
       }
     }
 
@@ -175,7 +175,7 @@ export namespace gamestats {
             break;
 
           case 3:
-            message.descending = reader.bool();
+            message.least_to_most_wins = reader.bool();
             break;
 
           default:
@@ -189,16 +189,16 @@ export namespace gamestats {
 
     offset_key: leaderboard_key | null;
     limit: u64;
-    descending: bool;
+    least_to_most_wins: bool;
 
     constructor(
       offset_key: leaderboard_key | null = null,
       limit: u64 = 0,
-      descending: bool = false
+      least_to_most_wins: bool = false
     ) {
       this.offset_key = offset_key;
       this.limit = limit;
-      this.descending = descending;
+      this.least_to_most_wins = least_to_most_wins;
     }
   }
 
@@ -258,9 +258,9 @@ export namespace gamestats {
         writer.uint64(message.limit);
       }
 
-      if (message.descending != false) {
+      if (message.oldest_to_newest != false) {
         writer.uint32(24);
-        writer.bool(message.descending);
+        writer.bool(message.oldest_to_newest);
       }
     }
 
@@ -280,7 +280,7 @@ export namespace gamestats {
             break;
 
           case 3:
-            message.descending = reader.bool();
+            message.oldest_to_newest = reader.bool();
             break;
 
           default:
@@ -294,16 +294,16 @@ export namespace gamestats {
 
     offset_key: game_stats_key | null;
     limit: u64;
-    descending: bool;
+    oldest_to_newest: bool;
 
     constructor(
       offset_key: game_stats_key | null = null,
       limit: u64 = 0,
-      descending: bool = false
+      oldest_to_newest: bool = false
     ) {
       this.offset_key = offset_key;
       this.limit = limit;
-      this.descending = descending;
+      this.oldest_to_newest = oldest_to_newest;
     }
   }
 

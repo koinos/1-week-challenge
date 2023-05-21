@@ -32,7 +32,7 @@ message get_player_info_arguments {
 message get_leaderboard_arguments {
    leaderboard_key offset_key = 1;
    uint64 limit = 2 [jstype = JS_STRING];
-   bool descending = 3;
+   bool least_to_most_wins = 3;
 }
 
 message get_leaderboard_result {
@@ -44,7 +44,7 @@ message get_leaderboard_result {
 message get_games_stats_arguments {
    game_stats_key offset_key = 1;
    uint64 limit = 2 [jstype = JS_STRING];
-   bool descending = 3;
+   bool oldest_to_newest = 3;
 }
 
 message get_games_stats_result {
