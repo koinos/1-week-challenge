@@ -86,7 +86,7 @@
                                     "jstype": "JS_STRING"
                                 }
                             },
-                            "descending": {
+                            "least_to_most_wins": {
                                 "type": "bool",
                                 "id": 3
                             }
@@ -114,7 +114,7 @@
                                     "jstype": "JS_STRING"
                                 }
                             },
-                            "descending": {
+                            "oldest_to_newest": {
                                 "type": "bool",
                                 "id": 3
                             }

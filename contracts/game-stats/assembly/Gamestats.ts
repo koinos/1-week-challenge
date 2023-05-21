@@ -81,10 +81,10 @@ export class Gamestats {
     const offset_key = args.offset_key;
     let limit = args.limit || u64.MAX_VALUE;
 
-    // descending indicates if we want to get the leaderboard
+    // least_to_most_wins indicates if we want to get the leaderboard
     // from the player with the least to the most wins
     // which is the default ordering in the state
-    const descending = args.descending;
+    const least_to_most_wins = args.least_to_most_wins;
 
     // construct leaderboard key
     let key = new gamestats.leaderboard_key();
@@ -95,7 +95,7 @@ export class Gamestats {
     }
     // if we want to get the leaderboard from the players with the most wins
     // then we need to start iterating the state from the "bottom"
-    else if (!descending) {
+    else if (!least_to_most_wins) {
       key.wins = u32.MAX_VALUE;
       key.player = new Uint8Array(25).fill(u8.MAX_VALUE);
     }
@@ -106,7 +106,7 @@ export class Gamestats {
     let tmpKey: gamestats.leaderboard_key;
 
     do {
-      obj = descending
+      obj = least_to_most_wins
         ? this._leaderboardStorage.getNext(key)
         : this._leaderboardStorage.getPrev(key);
 
@@ -137,8 +137,9 @@ export class Gamestats {
     const offset_key = args.offset_key;
     let limit = args.limit || u64.MAX_VALUE;
 
-    // descending indicated that we want the games from the oldest to the newest
-    const descending = args.descending;
+    // oldest_to_newest indicates that we want the games 
+    // from the oldest to the newest ones
+    const oldest_to_newest = args.oldest_to_newest;
 
     // construct leaderboard key
     let key = new gamestats.game_stats_key();
@@ -148,7 +149,7 @@ export class Gamestats {
       key = offset_key;
     }
     // if no offset key was provided and we want the games stats from the newest to the oldest 
-    else if (!descending) {
+    else if (!oldest_to_newest) {
       key.timestamp = u64.MAX_VALUE;
     }
 
@@ -158,7 +159,7 @@ export class Gamestats {
     let tmpKey: gamestats.game_stats_key;
 
     do {
-      obj = descending
+      obj = oldest_to_newest
         ? this._gamesStatsStorage.getNext(key)
         : this._gamesStatsStorage.getPrev(key);
 

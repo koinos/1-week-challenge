@@ -1,5 +1,5 @@
 
-ê	
+ß	
 assembly/proto/gamestats.proto	gamestatskoinos/options.proto"
 empty_message"P
 initialize_arguments8
@@ -8,23 +8,19 @@
 
 game_stats (2.gamestats.game_stats_objectR	gameStats"9
 get_player_info_arguments
-player (BÄµRplayer"ê
+player (BÄµRplayer"ù
 get_leaderboard_arguments9
 
 offset_key (2.gamestats.leaderboard_keyR	offsetKey
-limit (B0Rlimit
-
-descending (R
-descending"V
+limit (B0Rlimit+
+least_to_most_wins (RleastToMostWins"V
 get_leaderboard_result<
-leaderboard (2.gamestats.leaderboard_keyRleaderboard"è
+leaderboard (2.gamestats.leaderboard_keyRleaderboard"ô
 get_games_stats_arguments8
 
 offset_key (2.gamestats.game_stats_keyR	offsetKey
-limit (B0Rlimit
-
-descending (R
-descending"W
+limit (B0Rlimit(
+oldest_to_newest (RoldestToNewest"W
 get_games_stats_result=
 games_stats (2.gamestats.game_stats_objectR
 gamesStats"è

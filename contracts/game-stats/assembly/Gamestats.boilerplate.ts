@@ -42,7 +42,7 @@ export class Gamestats {
   ): gamestats.get_leaderboard_result {
     // const offset_key = args.offset_key;
     // const limit = args.limit;
-    // const descending = args.descending;
+    // const least_to_most_wins = args.least_to_most_wins;
 
     // YOUR CODE HERE
 
@@ -57,7 +57,7 @@ export class Gamestats {
   ): gamestats.get_games_stats_result {
     // const offset_key = args.offset_key;
     // const limit = args.limit;
-    // const descending = args.descending;
+    // const oldest_to_newest = args.oldest_to_newest;
 
     // YOUR CODE HERE
 
