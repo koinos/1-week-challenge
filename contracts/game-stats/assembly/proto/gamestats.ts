@@ -411,9 +411,9 @@ export namespace gamestats {
   @unmanaged
   export class game_stats_key {
     static encode(message: game_stats_key, writer: Writer): void {
-      if (message.timestamp != 0) {
+      if (message.game_id != 0) {
         writer.uint32(8);
-        writer.uint64(message.timestamp);
+        writer.uint64(message.game_id);
       }
     }
 
@@ -425,7 +425,7 @@ export namespace gamestats {
         const tag = reader.uint32();
         switch (tag >>> 3) {
           case 1:
-            message.timestamp = reader.uint64();
+            message.game_id = reader.uint64();
             break;
 
           default:
@@ -437,22 +437,32 @@ export namespace gamestats {
       return message;
     }
 
-    timestamp: u64;
+    game_id: u64;
 
-    constructor(timestamp: u64 = 0) {
-      this.timestamp = timestamp;
+    constructor(game_id: u64 = 0) {
+      this.game_id = game_id;
     }
   }
 
   export class game_stats_object {
     static encode(message: game_stats_object, writer: Writer): void {
-      if (message.rewards != 0) {
+      if (message.game_id != 0) {
         writer.uint32(8);
+        writer.uint64(message.game_id);
+      }
+
+      if (message.timestamp != 0) {
+        writer.uint32(16);
+        writer.uint64(message.timestamp);
+      }
+
+      if (message.rewards != 0) {
+        writer.uint32(24);
         writer.uint64(message.rewards);
       }
 
       if (message.winner.length != 0) {
-        writer.uint32(18);
+        writer.uint32(34);
         writer.bytes(message.winner);
       }
     }
@@ -465,10 +475,18 @@ export namespace gamestats {
         const tag = reader.uint32();
         switch (tag >>> 3) {
           case 1:
-            message.rewards = reader.uint64();
+            message.game_id = reader.uint64();
             break;
 
           case 2:
+            message.timestamp = reader.uint64();
+            break;
+
+          case 3:
+            message.rewards = reader.uint64();
+            break;
+
+          case 4:
             message.winner = reader.bytes();
             break;
 
@@ -481,10 +499,19 @@ export namespace gamestats {
       return message;
     }
 
+    game_id: u64;
+    timestamp: u64;
     rewards: u64;
     winner: Uint8Array;
 
-    constructor(rewards: u64 = 0, winner: Uint8Array = new Uint8Array(0)) {
+    constructor(
+      game_id: u64 = 0,
+      timestamp: u64 = 0,
+      rewards: u64 = 0,
+      winner: Uint8Array = new Uint8Array(0)
+    ) {
+      this.game_id = game_id;
+      this.timestamp = timestamp;
       this.rewards = rewards;
       this.winner = winner;
     }
