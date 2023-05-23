@@ -1,5 +1,5 @@
 
-ß	
+‚	
 assembly/proto/gamestats.proto	gamestatskoinos/options.proto"
 empty_message"P
 initialize_arguments8
@@ -28,12 +28,14 @@ gamesStats"è
 initialized (Rinitialized8
 rewards_token_address (BÄµRrewardsTokenAddress 
 last_game_id (R
-lastGameId".
-game_stats_key
-	timestamp (R	timestamp"O
-game_stats_object
-rewards (B0Rrewards
-winner (BÄµRwinner"=
+lastGameId")
+game_stats_key
+game_id (RgameId"é
+game_stats_object
+game_id (B0RgameId 
+	timestamp (B0R	timestamp
+rewards (B0Rrewards
+winner (BÄµRwinner"=
 leaderboard_key
 wins (Rwins
 player (Rplayer"#

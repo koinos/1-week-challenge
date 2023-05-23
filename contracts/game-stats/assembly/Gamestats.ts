@@ -55,6 +55,8 @@ export class Gamestats {
     this._metadataStorage.put(metadata);
 
     // save game stats
+    game_stats!.game_id = metadata.last_game_id;
+    game_stats!.timestamp = System.getHeadInfo().head_block_time;
     this._gamesStatsStorage.put(
       new gamestats.game_stats_key(metadata.last_game_id),
       game_stats!
@@ -150,7 +152,7 @@ export class Gamestats {
     }
     // if no offset key was provided and we want the games stats from the newest to the oldest 
     else if (!oldest_to_newest) {
-      key.timestamp = u64.MAX_VALUE;
+      key.game_id = u64.MAX_VALUE;
     }
 
     const res = new gamestats.get_games_stats_result();

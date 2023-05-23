@@ -59,12 +59,14 @@ message metadata_object {
 }
 
 message game_stats_key {
-   uint64 timestamp = 1;
+   uint64 game_id = 1;
 }
 
 message game_stats_object {
-   uint64 rewards = 1 [jstype = JS_STRING];
-   bytes winner = 2 [(koinos.btype) = ADDRESS];
+   uint64 game_id = 1 [jstype = JS_STRING];
+   uint64 timestamp = 2 [jstype = JS_STRING];
+   uint64 rewards = 3 [jstype = JS_STRING];
+   bytes winner = 4 [(koinos.btype) = ADDRESS];
 }
 
 message leaderboard_key {

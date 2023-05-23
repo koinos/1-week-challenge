@@ -150,7 +150,7 @@
                     },
                     "game_stats_key": {
                         "fields": {
-                            "timestamp": {
+                            "game_id": {
                                 "type": "uint64",
                                 "id": 1
                             }
@@ -158,16 +158,30 @@
                     },
                     "game_stats_object": {
                         "fields": {
-                            "rewards": {
+                            "game_id": {
                                 "type": "uint64",
                                 "id": 1,
                                 "options": {
                                     "jstype": "JS_STRING"
                                 }
                             },
+                            "timestamp": {
+                                "type": "uint64",
+                                "id": 2,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            },
+                            "rewards": {
+                                "type": "uint64",
+                                "id": 3,
+                                "options": {
+                                    "jstype": "JS_STRING"
+                                }
+                            },
                             "winner": {
                                 "type": "bytes",
-                                "id": 2,
+                                "id": 4,
                                 "options": {
                                     "(koinos.btype)": "ADDRESS"
                                 }
