@@ -13,5 +13,5 @@ create table if not exists player
 );
 
 -- Restrict API access to query only
-revoke all on table player from anon;
-grant references, select, trigger on table player to anon;
+-- revoke all on table player from anon;
+-- grant references, select, trigger on table player to anon;

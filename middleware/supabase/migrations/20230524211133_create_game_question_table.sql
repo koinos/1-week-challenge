@@ -22,5 +22,5 @@ create table if not exists game_question
 );
 
 -- Restrict API access to query only
-revoke all on table game_question from anon;
-grant references, select, trigger on table game_question to anon;
+-- revoke all on table game_question from anon;
+-- grant references, select, trigger on table game_question to anon;

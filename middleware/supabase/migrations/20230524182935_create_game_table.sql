@@ -7,7 +7,7 @@ create table if not exists game
     id                uuid             DEFAULT gen_random_uuid() not null
         constraint game_pkey
             primary key,
-    start_date        bigint  not null,
+    start_at          bigint  not null,
     active            boolean not null default false,
     price             varchar not null,
     winner_id         uuid,
@@ -22,5 +22,5 @@ comment on constraint game_winner_fkey
     is E'@graphql({"foreign_name": "winner", "local_name": "wonGames"})';
 
 -- Restrict API access to query only
-revoke all on table game from anon;
-grant references, select, trigger on table game to anon;
+-- revoke all on table game from anon;
+-- grant references, select, trigger on table game to anon;
