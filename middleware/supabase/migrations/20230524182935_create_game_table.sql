@@ -4,11 +4,12 @@
 
 create table if not exists game
 (
-    id                uuid DEFAULT gen_random_uuid() not null
+    id                uuid             DEFAULT gen_random_uuid() not null
         constraint game_pkey
             primary key,
-    start_date        bigint                         not null,
-    price             varchar                        not null,
+    start_date        bigint  not null,
+    active            boolean not null default false,
+    price             varchar not null,
     winner_id         uuid,
     constraint game_winner_fkey
         foreign key (winner_id)
