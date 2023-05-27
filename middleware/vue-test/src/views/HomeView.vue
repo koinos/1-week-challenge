@@ -24,15 +24,16 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, onMounted, Ref, ref } from 'vue';
+import { defineComponent, onMounted, onUnmounted, Ref, ref } from 'vue';
 import { supabase } from '../supabase-client.ts';
 import { REALTIME_LISTEN_TYPES } from '@supabase/supabase-js';
 import { countdown } from '@/utils/countdown.ts';
+import { RealtimeChannel } from '@supabase/realtime-js';
 
 export default defineComponent({
   name: 'App',
   setup() {
-    // const session = ref(null)
+    const channel: Ref<RealtimeChannel | undefined> = ref();
     const activeGames: Ref<
       {
         id: string;
@@ -60,7 +61,7 @@ export default defineComponent({
 
     const watchForNewGames = () => {
       // // Supabase client setup
-      const channel = supabase
+      channel.value = supabase
         .channel('schema-db-changes')
         .on(
           `${REALTIME_LISTEN_TYPES.POSTGRES_CHANGES}` as any,
@@ -69,16 +70,10 @@ export default defineComponent({
             schema: 'public'
           } as any,
           (payload) => {
-            console.log({ payload });
-            activeGames.value = {
-              ...activeGames.value,
-              ...(payload as any)
-            };
+            activeGames.value = [...activeGames.value, (payload as any).new];
           }
         )
         .subscribe();
-
-      console.log({ channel });
     };
 
     const updateStartTimes = () => {
@@ -95,6 +90,12 @@ export default defineComponent({
       setInterval(() => {
         updateStartTimes();
       }, 1000);
+    });
+
+    onUnmounted(() => {
+      if (channel.value) {
+        channel.value?.socket.disconnect();
+      }
     });
 
     return {
