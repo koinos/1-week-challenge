@@ -15,6 +15,8 @@ create table if not exists player_game
     constraint player_game_game_fkey
         foreign key (game_id)
             references game (id),
+    constraint player_game_uq
+        unique (player_id, game_id),
     round      smallint not null default 0,
     eliminated boolean  not null default false,
     answers    jsonb    not null default '[]',
