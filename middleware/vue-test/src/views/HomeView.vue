@@ -14,6 +14,7 @@
             Round: {{ activeGame.round > 0 ? activeGame.round : 'Not started' }}
           </li>
           <li v-if="activeGame.round > 0">Players remaining: {{ activeGame.players_remaining }}</li>
+          <li v-if="activeGame.round === 0">Players waiting: {{ activeGame.players_remaining }}</li>
           <li v-if="activeGame.round > 0">Right count: {{ activeGame.right_count }}</li>
           <li v-if="activeGame.round > 0">Wrong count: {{ activeGame.wrong_count }}</li>
         </ul>
@@ -67,10 +68,18 @@ export default defineComponent({
           `${REALTIME_LISTEN_TYPES.POSTGRES_CHANGES}` as any,
           {
             event: '*',
-            schema: 'public'
+            schema: 'public',
+            table: 'active_game'
           } as any,
           (payload) => {
-            activeGames.value = [...activeGames.value, (payload as any).new];
+            const updatedGame = (payload as any).new;
+            const index = activeGames.value.findIndex((x) => updatedGame.id === x.id);
+
+            if (-1 === index) {
+              activeGames.value.push(updatedGame);
+            } else {
+              activeGames.value[index] = updatedGame;
+            }
           }
         )
         .subscribe();
