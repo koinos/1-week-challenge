@@ -1,23 +1,12 @@
 import { serve } from 'std/server';
-import { createClient } from '@supabase/supabase-js';
 import { corsHeaders } from '../_shared/cors.ts';
+import { createSupabaseClient } from '../_shared/supabase-client.ts';
 
 console.log(`🚀 Function "schedule-game" up and running!`);
 
 serve(async (req: Request) => {
   try {
-    const supabase = createClient(
-      Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-      {
-        global: {
-          headers: {
-            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-            Authorization: req.headers.get('Authorization')!,
-          },
-        },
-      }
-    );
+    const supabase = createSupabaseClient(req);
 
     // Fetch inactive games starting within the next hour
     const { data, error } = await supabase
