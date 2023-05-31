@@ -7,9 +7,18 @@ console.log(`🚀 Function "schedule-game" up and running!`);
 
 serve(async (req: Request) => {
   try {
+    const { method } = req;
+
+    // This is needed if you're planning to invoke your function from a browser.
+    if (method === 'OPTIONS') {
+      return new Response('ok', { headers: corsHeaders });
+    }
+
     const supabase = createSupabaseClient(req);
 
-    // Fetch inactive games starting within the next hour
+    /**
+     * Fetch inactive games starting within the next hour
+     */
     const { data, error } = await supabase
       .from<Game>('game')
       .select('id, start_at, price')
@@ -25,18 +34,23 @@ serve(async (req: Request) => {
       for (let i = 0; i < data.length; i++) {
         const game = data[i];
 
-        // Insert new active_game for app to watch realtime
+        /**
+         * Insert new active_game for app to watch realtime
+         */
         const { error: insertError } = await supabase
           .from<ActiveGame>('active_game')
           .insert({
             id: game.id,
             start_at: game.start_at,
             round: 0,
+            round_ends: game.start_at,
             price: game.price,
           });
 
         if (insertError == null) {
-          // Mark game to active
+          /**
+           * Mark game to active
+           */
           const { error: updateError } = await supabase
             .from<Game>('game')
             .update({ active: true })
