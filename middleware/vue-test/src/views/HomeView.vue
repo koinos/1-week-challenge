@@ -21,10 +21,10 @@
             <li v-if="activeGame.round > 0">
               Round: {{ activeGame.round > 0 ? activeGame.round : 'Not started' }}
             </li>
-            <li v-if="activeGame.round > 0">
+            <li v-if="activeGame.starts_in < 0">
               Players remaining: {{ activeGame.players_remaining }}
             </li>
-            <li v-if="activeGame.round === 0">
+            <li v-if="activeGame.starts_in > 0">
               Players waiting: {{ activeGame.players_remaining }}
             </li>
             <li v-if="activeGame.round > 0">Right count: {{ activeGame.right_count }}</li>
@@ -64,7 +64,7 @@ export default defineComponent({
     const activeGamesError = ref();
 
     const getActiveGames = async () => {
-      const { data, error } = await supabase.from('active_game').select('*');
+      const { data, error } = await supabase.from('active_game').select('*').order('start_at');
 
       if (Array.isArray(data)) {
         activeGames.value = data;
