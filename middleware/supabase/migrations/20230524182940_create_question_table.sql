@@ -13,5 +13,5 @@ create table if not exists question
 );
 
 -- Restrict API access to none
-revoke all on table question from anon;
-grant references, trigger on table question to anon;
+-- revoke all on table question from anon;
+-- grant references, trigger on table question to anon;
