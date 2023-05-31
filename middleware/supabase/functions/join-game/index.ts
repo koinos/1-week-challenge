@@ -51,6 +51,11 @@ serve(async (req: Request) => {
 
     const activeGame: ActiveGame = activeGameData[0];
 
+    if (activeGame.start_at < Date.now()) {
+      // Return bad request response
+      throw new Error('Game already started');
+    }
+
     /**
      * Upsert new player to make sure player exists
      */

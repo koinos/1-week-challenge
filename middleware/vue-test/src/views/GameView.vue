@@ -7,7 +7,7 @@
       <li v-else>Starts in {{ startsInText }}</li>
     </ul>
 
-    <ul v-if="activeGame.round === 0">
+    <ul v-if="startsIn > 0">
       <li>Not started</li>
       <li>Players waiting: {{ activeGame.players_remaining }}</li>
       <li>
@@ -20,7 +20,7 @@
       </li>
     </ul>
 
-    <ul v-if="activeGame.round > 0">
+    <ul v-if="startsIn < 0">
       <li>Round: {{ activeGame.round }}</li>
       <li>Question: {{ activeGame.question }}</li>
       <li>Answer: {{ activeGame.answer ?? '...' }}</li>
@@ -31,7 +31,7 @@
 
     <br />
 
-    <div v-if="activeGame.players_remaining > 0">
+    <div>
       <h3 v-if="activeGame.round === 0">Players waiting:</h3>
       <h3 v-else>Players remaining:</h3>
       <ul>
