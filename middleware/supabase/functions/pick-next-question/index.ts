@@ -1,7 +1,11 @@
 import { serve } from 'std/server';
 import { corsHeaders } from '../_shared/cors.ts';
 import { createSupabaseClient } from '../_shared/supabase-client.ts';
-import { type ActiveGame, type Question } from '../../../schema/index.ts';
+import {
+  type ActiveGame,
+  type GameQuestion,
+  type Question,
+} from '../../../schema/index.ts';
 
 console.log(`🚀 Function "pick-next-question-game" up and running!`);
 
@@ -51,7 +55,7 @@ serve(async (req: Request) => {
         }
 
         // Update question for active_game
-        if (data != null) {
+        if (data?.id != null) {
           const randomQuestion: Question = data;
           const fieldsToUpdate = {
             round: activeGame.round + 1,
@@ -61,6 +65,20 @@ serve(async (req: Request) => {
             right_count: 0,
             wrong_count: 0,
           };
+
+          // Insert new game_question
+          const { error: insertError } = await supabase
+            .from<GameQuestion>('game_question')
+            .insert({
+              game_id: activeGame.id,
+              question_id: randomQuestion.id,
+              round: fieldsToUpdate.round,
+              started_count: fieldsToUpdate.players_remaining,
+            });
+
+          if (insertError != null) {
+            throw insertError;
+          }
 
           // Add to response for debugging purpose only (to display in vue-test app)
           response.push({
