@@ -1,26 +1,40 @@
 <template>
   <main>
-    <h1>Active games</h1>
+    <div style="width: 50%; float: left">
+      <h2>Active games</h2>
 
-    <ul>
-      <li v-for="activeGame in activeGames" :key="activeGame.id">
-        <router-link :to="{ name: 'game', params: { id: activeGame.id } }">
-          {{ activeGame.id }}
-        </router-link>
-        <ul>
-          <li v-if="activeGame.starts_in < 0">Started {{ activeGame.starts_in_text }} ago</li>
-          <li v-else>Starts in {{ activeGame.starts_in_text }}</li>
-          <li v-if="activeGame.round > 0">
-            Round: {{ activeGame.round > 0 ? activeGame.round : 'Not started' }}
-          </li>
-          <li v-if="activeGame.round > 0">Players remaining: {{ activeGame.players_remaining }}</li>
-          <li v-if="activeGame.round === 0">Players waiting: {{ activeGame.players_remaining }}</li>
-          <li v-if="activeGame.round > 0">Right count: {{ activeGame.right_count }}</li>
-          <li v-if="activeGame.round > 0">Wrong count: {{ activeGame.wrong_count }}</li>
-        </ul>
-      </li>
-    </ul>
-    <div v-if="activeGamesError">{{ activeGamesError }}</div>
+      <ul>
+        <li v-for="activeGame in activeGames" :key="activeGame.id">
+          <router-link
+            :to="{ name: 'game', params: { id: activeGame.id } }"
+            :style="
+              activeGame.starts_in < 0
+                ? 'color: hsla(160, 100%, 37%, 1); font-weight: bold;'
+                : 'color: grey'
+            "
+          >
+            {{ activeGame.id }}
+          </router-link>
+          <ul>
+            <li v-if="activeGame.starts_in < 0">Started {{ activeGame.starts_in_text }} ago</li>
+            <li v-else>Starts in {{ activeGame.starts_in_text }}</li>
+            <li v-if="activeGame.round > 0">
+              Round: {{ activeGame.round > 0 ? activeGame.round : 'Not started' }}
+            </li>
+            <li v-if="activeGame.round > 0">
+              Players remaining: {{ activeGame.players_remaining }}
+            </li>
+            <li v-if="activeGame.round === 0">
+              Players waiting: {{ activeGame.players_remaining }}
+            </li>
+            <li v-if="activeGame.round > 0">Right count: {{ activeGame.right_count }}</li>
+            <li v-if="activeGame.round > 0">Wrong count: {{ activeGame.wrong_count }}</li>
+          </ul>
+          <br />
+        </li>
+      </ul>
+      <div v-if="activeGamesError">{{ activeGamesError }}</div>
+    </div>
   </main>
 </template>
 

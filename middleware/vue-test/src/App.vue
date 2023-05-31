@@ -1,23 +1,45 @@
 <script setup lang="ts">
 import { RouterLink, RouterView } from 'vue-router';
+import ScheduleGamesButton from '@/components/ScheduleGamesButton.vue';
+import PickNextQuestionButton from '@/components/PickNextQuestion.vue';
 </script>
 
 <template>
-  <header>
-    <div class="wrapper">
-      <nav>
-        <RouterLink to="/">Home</RouterLink>
-      </nav>
-    </div>
-  </header>
+  <RouterLink to="/">Home</RouterLink>
 
-  <RouterView />
+  <br />
+  <br />
+  <br />
+
+  <div style="width: 50%; float: left">
+    <h2>Simulate cronjobs</h2>
+
+    <schedule-games-button />
+    <pick-next-question-button />
+  </div>
+
+  <div style="width: 50%; float: left"><RouterView /></div>
 </template>
 
-<style scoped>
+<style>
 header {
   line-height: 1.5;
   max-height: 100vh;
+}
+
+button {
+  background: #6f00f6;
+  padding: 0.5rem 0.25rem;
+  margin: 0.5rem 0;
+  color: #ffffff;
+  border-radius: 4px;
+}
+
+.clear-button {
+  background: transparent;
+  color: #222222;
+  padding: 0.25rem;
+  margin-left: 1rem;
 }
 
 nav {
@@ -47,24 +69,24 @@ nav a:first-of-type {
 
 @media (min-width: 1024px) {
   header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
+    //display: flex;
+    //place-items: center;
+    //padding-right: calc(var(--section-gap) / 2);
   }
 
   header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
+    //display: flex;
+    //place-items: flex-start;
+    //flex-wrap: wrap;
   }
 
   nav {
-    text-align: left;
-    margin-left: -1rem;
-    font-size: 1rem;
+    //text-align: left;
+    //margin-left: -1rem;
+    //font-size: 1rem;
 
-    padding: 1rem 0;
-    margin-top: 1rem;
+    //padding: 1rem 0;
+    //margin-top: 1rem;
   }
 }
 </style>

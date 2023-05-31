@@ -10,6 +10,14 @@
     <ul v-if="activeGame.round === 0">
       <li>Not started</li>
       <li>Players waiting: {{ activeGame.players_remaining }}</li>
+      <li>
+        Join with player:
+        <ul>
+          <li v-for="eligiblePlayerId in eligiblePlayerIds" :key="eligiblePlayerId">
+            <join-game-button :player-id="eligiblePlayerId" :game-id="activeGame.id" />
+          </li>
+        </ul>
+      </li>
     </ul>
 
     <ul v-if="activeGame.round > 0">
@@ -55,9 +63,12 @@ import { countdown } from '@/utils/countdown.ts';
 import { RealtimeChannel } from '@supabase/realtime-js';
 import { useRoute } from 'vue-router';
 import type { ActiveGame, PlayerGame } from '../../../schema/index.ts';
+import JoinGameButton from '@/components/JoinGame.vue';
+import { playerIds } from '@/components/player-ids.ts';
 
 export default defineComponent({
   name: 'App',
+  components: { JoinGameButton },
   setup() {
     const route = useRoute();
     const id: Ref<string | undefined> = ref();
@@ -167,6 +178,11 @@ export default defineComponent({
       startsInText,
       playerGames,
       playerGamesError,
+      eligiblePlayerIds: computed(() => {
+        return playerIds.filter(
+          (playerId) => !playerGames.value.find((playerGame) => playerGame.player_id === playerId)
+        );
+      }),
       activePlayerGames: computed(() => {
         return playerGames.value.filter((playerGame) => !playerGame.eliminated);
       }),
