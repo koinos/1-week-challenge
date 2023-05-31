@@ -10,8 +10,8 @@ create table if not exists active_game
         constraint active_game_game_fkey
             references game (id),
     start_at          bigint   not null,
-    round             smallint,
-    round_ends        bigint,
+    round             smallint not null default 0,
+    round_ends        bigint not null,
     question          varchar,
     answer            varchar,
     players_remaining smallint not null default 0,
