@@ -54,19 +54,24 @@ serve(async (req: Request) => {
           throw randomQuestionError;
         }
 
-        // Update question for active_game
+        /**
+         * Update question for active_game
+         */
         if (data?.id != null) {
           const randomQuestion: Question = data;
           const fieldsToUpdate = {
             round: activeGame.round + 1,
             round_ends: activeGame.round_ends + roundDuration,
             question: randomQuestion.question,
+            question_id: randomQuestion.id,
             players_remaining: activeGame.right_count,
             right_count: 0,
             wrong_count: 0,
           };
 
-          // Insert new game_question
+          /**
+           * Insert new game_question
+           */
           const { error: insertError } = await supabase
             .from<GameQuestion>('game_question')
             .insert({
