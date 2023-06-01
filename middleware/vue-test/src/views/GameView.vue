@@ -37,18 +37,34 @@
       <ul>
         <li v-for="playerGame in activePlayerGames" :key="playerGame.id">
           {{ playerGame.player_id }}
+
+          <submit-answer-button
+            v-if="activeGame.round > 0"
+            :answer="true"
+            :player-id="playerGame.player_id"
+            :game-id="playerGame.game_id"
+          />
+
+          <submit-answer-button
+            v-if="activeGame.round > 0"
+            :answer="false"
+            :player-id="playerGame.player_id"
+            :game-id="playerGame.game_id"
+          />
         </li>
       </ul>
     </div>
 
     <br />
 
-    <h3 v-if="activeGame.round > 1">Players eliminated:</h3>
-    <ul v-if="activeGame.round > 1">
-      <li v-for="playerGame in eliminatedPlayerGames" :key="playerGame.id">
-        {{ playerGame.player_id }} [{{ playerGame.round }}]
-      </li>
-    </ul>
+    <div v-if="eliminatedPlayerGames.length > 0">
+      <h3>Players eliminated:</h3>
+      <ul>
+        <li v-for="playerGame in eliminatedPlayerGames" :key="playerGame.id">
+          {{ playerGame.player_id }} [Round: {{ playerGame.round }}]
+        </li>
+      </ul>
+    </div>
 
     <div v-if="activeGameError">{{ activeGameError }}</div>
     <div v-if="playerGamesError">{{ playerGamesError }}</div>
@@ -65,10 +81,11 @@ import { useRoute } from 'vue-router';
 import type { ActiveGame, PlayerGame } from '../../../schema/index.ts';
 import JoinGameButton from '@/components/JoinGame.vue';
 import { playerIds } from '@/components/player-ids.ts';
+import SubmitAnswerButton from '@/components/SubmitAnswerButton.vue';
 
 export default defineComponent({
   name: 'App',
-  components: { JoinGameButton },
+  components: { SubmitAnswerButton, JoinGameButton },
   setup() {
     const route = useRoute();
     const id: Ref<string | undefined> = ref();
