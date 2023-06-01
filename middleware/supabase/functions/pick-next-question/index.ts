@@ -30,7 +30,9 @@ serve(async (req: Request) => {
       .from('active_game')
       .select('*')
       .lte('start_at', Date.now())
-      .gte('right_count', 2);
+      // Only pick next question when there are minimal two players remaining or
+      // when it's the first round
+      .or('right_count.gte.2,round.eq.0');
 
     if (activeGamesError != null) {
       throw activeGamesError;
