@@ -19,7 +19,7 @@ create table if not exists player_game
         unique (player_id, game_id),
     round      smallint not null default 0,
     eliminated boolean  not null default false,
-    answers    jsonb    not null default '[]',
+    answers    jsonb    not null default '{}',
     price      varchar
 );
 

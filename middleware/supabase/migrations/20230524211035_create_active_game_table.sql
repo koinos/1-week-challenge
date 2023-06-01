@@ -13,6 +13,7 @@ create table if not exists active_game
     round             smallint not null default 0,
     round_ends        bigint not null,
     question          varchar,
+    question_id       varchar,
     answer            varchar,
     players_remaining smallint not null default 0,
     right_count       smallint not null default 0,
