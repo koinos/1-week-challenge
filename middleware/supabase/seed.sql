@@ -72,9 +72,9 @@ INSERT INTO public.game VALUES (default, (extract(epoch from now()) + (60 * 300)
 -- Name: active_game; Type: TABLE; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.active_game VALUES ('d6b579da-96c6-4d13-b8a2-bad7c23d1711', (extract(epoch from now())) * 1000, 1, (extract(epoch from now()) + 20) * 1000, 'If you Google “cat” and click the paw print button that appears in the sidebar', '174c4770-93c4-46ef-bb69-339aea56adde', NULL, 5, 0, 0, '5000', NULL);
-INSERT INTO public.active_game VALUES ('0d7e96ee-9ed1-4de7-8bee-27225e684d8d', (extract(epoch from now()) + (60 * 5)) * 1000, 0, (extract(epoch from now()) + (60 * 5)) * 1000, NULL, NULL, NULL, 3, 0, 0, '5000', NULL);
-INSERT INTO public.active_game VALUES ('44e3b0bb-a56f-405a-a768-dfb5aab5e57a', (extract(epoch from now()) + (60 * 15)) * 1000, 0, (extract(epoch from now()) + (60 * 15)) * 1000, NULL, NULL, NULL, 5, 0, 0, '5000', NULL);
+INSERT INTO public.active_game VALUES ('d6b579da-96c6-4d13-b8a2-bad7c23d1711', (extract(epoch from now())) * 1000, 1, (extract(epoch from now()) + 20) * 1000, 'If you Google “cat” and click the paw print button that appears in the sidebar', '174c4770-93c4-46ef-bb69-339aea56adde', NULL, NULL, 5, 5, 0, 0, '5000', NULL, default);
+INSERT INTO public.active_game VALUES ('0d7e96ee-9ed1-4de7-8bee-27225e684d8d', (extract(epoch from now()) + (60 * 5)) * 1000, 0, (extract(epoch from now()) + (60 * 5)) * 1000, NULL, NULL, NULL, NULL, 3, 3, 0, 0, '5000', NULL, default);
+INSERT INTO public.active_game VALUES ('44e3b0bb-a56f-405a-a768-dfb5aab5e57a', (extract(epoch from now()) + (60 * 15)) * 1000, 0, (extract(epoch from now()) + (60 * 15)) * 1000, NULL, NULL, NULL, NULL, 5, 5, 0, 0, '5000', NULL, default);
 
 --
 -- Name: player; Type: TABLE; Schema: public; Owner: postgres
