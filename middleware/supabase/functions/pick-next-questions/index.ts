@@ -1,11 +1,7 @@
 import { serve } from 'std/server';
 import { corsHeaders } from '../_shared/cors.ts';
 import { createSupabaseClient } from '../_shared/supabase-client.ts';
-import {
-  type ActiveGame,
-  type GameQuestion,
-  type Question,
-} from '../../../schema/index.ts';
+import { type ActiveGame, type Question } from '../../../schema/index.ts';
 
 console.log(`🚀 Function "pick-next-question-game" up and running!`);
 
@@ -29,10 +25,18 @@ serve(async (req: Request) => {
     const { data: activeGamesData, error: activeGamesError } = await supabase
       .from('active_game')
       .select('*')
+      // Filter for started games
       .lte('start_at', Date.now())
-      // Only pick next question when there are minimal two players remaining or
-      // when it's the first round
-      .or('right_count.gte.2,round.eq.0');
+      // Only pick next question when game hasn't ended yet
+      .eq('ended', false)
+      .or(
+        // Only pick next question when there are minimal two players remaining and answer is null
+        // Only active_games with an answer are ready for the next round
+        // After each round has ended the answer will be added to the active_game
+        `and(right_count.gte.2, answer.not.is.null),` +
+          // Or otherwise when it's the first round
+          `round.eq.0`
+      );
 
     if (activeGamesError != null) {
       throw activeGamesError;
@@ -53,6 +57,7 @@ serve(async (req: Request) => {
         );
 
         if (randomQuestionError != null) {
+          // Return bad request response
           throw randomQuestionError;
         }
 
@@ -66,7 +71,8 @@ serve(async (req: Request) => {
             round_ends: activeGame.round_ends + roundDuration,
             question: randomQuestion.question,
             question_id: randomQuestion.id,
-            players_remaining: activeGame.right_count,
+            answer: null,
+            real_fact_if_fiction: null,
             right_count: 0,
             wrong_count: 0,
           };
@@ -75,15 +81,16 @@ serve(async (req: Request) => {
            * Insert new game_question
            */
           const { error: insertError } = await supabase
-            .from<GameQuestion>('game_question')
+            .from('game_question')
             .insert({
               game_id: activeGame.id,
               question_id: randomQuestion.id,
               round: fieldsToUpdate.round,
-              started_count: fieldsToUpdate.players_remaining,
+              started_count: activeGame.players_remaining,
             });
 
           if (insertError != null) {
+            // Return bad request response
             throw insertError;
           }
 
@@ -94,14 +101,16 @@ serve(async (req: Request) => {
           });
 
           const { error: updateError } = await supabase
-            .from<ActiveGame>('active_game')
+            .from('active_game')
             .update(fieldsToUpdate)
             .eq('id', activeGame.id);
 
           if (updateError != null) {
+            // Return bad request response
             throw new Error('Could not update next question for active game');
           }
         } else {
+          // Return bad request response
           throw new Error('Could not pick next question for active game');
         }
       }

@@ -1,7 +1,6 @@
 import { serve } from 'std/server';
 import { corsHeaders } from '../_shared/cors.ts';
 import { createSupabaseClient } from '../_shared/supabase-client.ts';
-import { type ActiveGame, type Game } from '../../../schema/index.ts';
 
 console.log(`🚀 Function "schedule-game" up and running!`);
 
@@ -20,7 +19,7 @@ serve(async (req: Request) => {
      * Fetch inactive games starting within the next hour
      */
     const { data, error } = await supabase
-      .from<Game>('game')
+      .from('game')
       .select('id, start_at, price')
       .gte('start_at', Date.now())
       .lt('start_at', Date.now() + 3600000)
@@ -38,7 +37,7 @@ serve(async (req: Request) => {
          * Insert new active_game for app to watch realtime
          */
         const { error: insertError } = await supabase
-          .from<ActiveGame>('active_game')
+          .from('active_game')
           .insert({
             id: game.id,
             start_at: game.start_at,
@@ -52,7 +51,7 @@ serve(async (req: Request) => {
            * Mark game to active
            */
           const { error: updateError } = await supabase
-            .from<Game>('game')
+            .from('game')
             .update({ active: true })
             .eq('id', game.id);
 

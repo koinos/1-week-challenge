@@ -40,18 +40,23 @@ serve(async (req: Request) => {
     /**
      * Fetch player_game to verify player is still in the game
      */
-    const { data: playerGameData, error: playerGameError } = await supabase
-      .from<PlayerGame>('player_game')
+    const {
+      data: playerGame,
+      error: playerGameError,
+    }: { data: PlayerGame; error: any } = await supabase
+      .from('player_game')
       .select('*')
       .eq('player_id', playerId)
-      .eq('game_id', gameId);
+      .eq('game_id', gameId)
+      .limit(1)
+      .single();
 
     if (playerGameError != null) {
       // Return bad request response
       throw playerGameError;
     }
 
-    if (playerGameData.length !== 1) {
+    if (playerGame == null) {
       // Return bad request response
       throw new Error('Player did not join this game');
     }
@@ -59,31 +64,28 @@ serve(async (req: Request) => {
     /**
      * Fetch active_game
      */
-    const { data: activeGameData, error: activeGameError } = await supabase
-      .from<ActiveGame>('active_game')
+    const {
+      data: activeGame,
+      error: activeGameError,
+    }: { data: ActiveGame; error: any } = await supabase
+      .from('active_game')
       .select('*')
-      .eq('id', gameId);
+      .eq('id', gameId)
+      // Filter for started games
+      .lte('start_at', Date.now())
+      // Game must still be ongoing
+      .eq('ended', false)
+      .limit(1)
+      .single();
 
-    if (activeGameError != null) {
-      // Return bad request response
-      throw activeGameError;
-    }
-
-    if (
-      activeGameData.length !== 1 ||
-      activeGameData[0].start_at > Date.now()
-    ) {
+    if (activeGameError != null || activeGame == null) {
       // Return bad request response
       throw new Error('Game not active');
     }
 
-    const activeGame: ActiveGame = activeGameData[0];
-
     /**
      * Check if player is still in the game
      */
-    const playerGame: PlayerGame = playerGameData[0];
-
     // When round doesn't match the player has timed out in previous round
     if (playerGame.eliminated) {
       // Return bad request response
@@ -108,22 +110,26 @@ serve(async (req: Request) => {
     /**
      * Get correct answer to question
      */
-    const { data: questionData, error: questionError } = await supabase
-      .from<Question>('question')
+    const {
+      data: question,
+      error: questionError,
+    }: { data: Question; error: any } = await supabase
+      .from('question')
       .select('*')
-      .eq('id', activeGame.question_id);
+      .eq('id', activeGame.question_id)
+      .limit(1)
+      .single();
 
     if (questionError != null) {
       // Return bad request response
       throw questionError;
     }
 
-    if (questionData.length !== 1) {
+    if (question == null) {
       // Return bad request response
       throw new Error('Question not found');
     }
 
-    const question: Question = questionData[0];
     const isRight = question.is_fact === answer;
     const isWrong = question.is_fact !== answer;
 
@@ -175,6 +181,7 @@ serve(async (req: Request) => {
         .update({
           right_count: activeGame.right_count + (isRight ? 1 : 0),
           wrong_count: activeGame.wrong_count + (isWrong ? 1 : 0),
+          players_remaining: activeGame.players_remaining - (isWrong ? 1 : 0),
         })
         .eq('id', activeGame.id);
 

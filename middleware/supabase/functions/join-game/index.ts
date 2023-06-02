@@ -34,22 +34,25 @@ serve(async (req: Request) => {
     /**
      * Fetch active_game
      */
-    const { data: activeGameData, error: activeGameError } = await supabase
-      .from<ActiveGame>('active_game')
+    const {
+      data: activeGame,
+      error: activeGameError,
+    }: { data: ActiveGame; error: any } = await supabase
+      .from('active_game')
       .select('*')
-      .eq('id', gameId);
+      .eq('id', gameId)
+      .limit(1)
+      .single();
 
     if (activeGameError != null) {
       // Return bad request response
       throw activeGameError;
     }
 
-    if (activeGameData.length !== 1) {
+    if (activeGame == null) {
       // Return bad request response
       throw new Error('Game not active');
     }
-
-    const activeGame: ActiveGame = activeGameData[0];
 
     if (activeGame.start_at < Date.now()) {
       // Return bad request response
@@ -94,8 +97,9 @@ serve(async (req: Request) => {
      * Update player count for active_game
      */
     const { error: updateError }: { error: Error } = await supabase
-      .from<ActiveGame>('active_game')
+      .from('active_game')
       .update({
+        participant_count: Number(activeGame.participant_count) + 1,
         players_remaining: Number(activeGame.players_remaining) + 1,
       })
       .eq('id', gameId);
