@@ -1,9 +1,3 @@
-<script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router';
-import ScheduleGamesButton from '@/components/ScheduleGamesButton.vue';
-import PickNextQuestionButton from '@/components/PickNextQuestion.vue';
-</script>
-
 <template>
   <RouterLink to="/">Home</RouterLink>
 
@@ -15,11 +9,19 @@ import PickNextQuestionButton from '@/components/PickNextQuestion.vue';
     <h2>Simulate cronjobs</h2>
 
     <schedule-games-button />
-    <pick-next-question-button />
+    <pick-next-questions-button />
+    <process-results-button />
   </div>
 
   <div style="width: 50%; float: left"><RouterView /></div>
 </template>
+
+<script setup lang="ts">
+import { RouterLink, RouterView } from 'vue-router';
+import ScheduleGamesButton from '@/components/ScheduleGamesButton.vue';
+import PickNextQuestionsButton from '@/components/PickNextQuestionsButton.vue';
+import ProcessResultsButton from '@/components/ProcessResultsButton.vue';
+</script>
 
 <style>
 header {

@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%">
-    <button @click="pickNextQuestion">Pick next question</button>
+    <button @click="pickNextQuestions">Pick next questions</button>
     <button class="clear-button" v-if="lastResponse || lastError" @click="clearData">X</button>
 
     <br />
@@ -20,16 +20,16 @@ import { defineComponent, ref } from 'vue';
 import { supabase } from '../supabase-client.ts';
 
 export default defineComponent({
-  name: 'PickNextQuestionButton',
+  name: 'PickNextQuestionsButton',
   setup() {
     const lastResponse = ref();
     const lastError = ref();
 
-    const pickNextQuestion = async () => {
+    const pickNextQuestions = async () => {
       lastResponse.value = null;
       lastError.value = null;
 
-      const { data, error } = await supabase.functions.invoke('pick-next-question');
+      const { data, error } = await supabase.functions.invoke('pick-next-questions');
 
       lastResponse.value = data;
       lastError.value = error;
@@ -41,7 +41,7 @@ export default defineComponent({
     };
 
     return {
-      pickNextQuestion,
+      pickNextQuestions,
       clearData,
       lastResponse,
       lastError

@@ -24,14 +24,28 @@
       <li>Round: {{ activeGame.round }}</li>
       <li>Question: {{ activeGame.question }}</li>
       <li>Answer: {{ activeGame.answer ?? '...' }}</li>
-      <li>Players remaining: {{ activeGame.players_remaining }}</li>
-      <li>Right count: {{ activeGame.right_count }}</li>
-      <li>Wrong count: {{ activeGame.wrong_count }}</li>
+      <li v-if="activeGame.real_fact_if_fiction">
+        Real answer: {{ activeGame.real_fact_if_fiction ?? '...' }}
+      </li>
+
+      <li>Participants: {{ activeGame.participant_count }}</li>
+      <li v-if="!activeGame.winner_id">Players remaining: {{ activeGame.players_remaining }}</li>
+      <li v-if="!activeGame.winner_id">Right count: {{ activeGame.right_count }}</li>
+      <li v-if="!activeGame.winner_id">Wrong count: {{ activeGame.wrong_count }}</li>
     </ul>
 
     <br />
 
-    <div>
+    <div v-if="activeGame.winner_id">
+      <h3>Winner:</h3>
+      <ul>
+        <li style="font-weight: bold; color: green">
+          {{ activeGame.winner_id }}
+        </li>
+      </ul>
+    </div>
+
+    <div v-if="!activeGame.winner_id && !activeGame.ended">
       <h3 v-if="activeGame.round === 0">Players waiting:</h3>
       <h3 v-else>Players remaining:</h3>
       <ul>
@@ -79,7 +93,7 @@ import { countdown } from '@/utils/countdown.ts';
 import { RealtimeChannel } from '@supabase/realtime-js';
 import { useRoute } from 'vue-router';
 import type { ActiveGame, PlayerGame } from '../../../schema/index.ts';
-import JoinGameButton from '@/components/JoinGame.vue';
+import JoinGameButton from '@/components/JoinGameButton.vue';
 import { playerIds } from '@/components/player-ids.ts';
 import SubmitAnswerButton from '@/components/SubmitAnswerButton.vue';
 
