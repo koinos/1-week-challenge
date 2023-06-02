@@ -73,6 +73,7 @@ serve(async (req: Request) => {
             question_id: randomQuestion.id,
             answer: null,
             real_fact_if_fiction: null,
+            players_remaining: activeGame.right_count,
             right_count: 0,
             wrong_count: 0,
           };
@@ -86,7 +87,7 @@ serve(async (req: Request) => {
               game_id: activeGame.id,
               question_id: randomQuestion.id,
               round: fieldsToUpdate.round,
-              started_count: activeGame.players_remaining,
+              started_count: fieldsToUpdate.players_remaining,
             });
 
           if (insertError != null) {
