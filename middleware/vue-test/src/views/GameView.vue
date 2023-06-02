@@ -36,6 +36,10 @@
 
     <br />
 
+    <div v-if="activeGame.ended && !activeGame.winner_id">
+      <h3 style="font-weight: bold; color: red">Game has ended without a winner</h3>
+    </div>
+
     <div v-if="activeGame.winner_id">
       <h3>Winner:</h3>
       <ul>
