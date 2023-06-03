@@ -18,13 +18,10 @@
           <ul>
             <li v-if="activeGame.starts_in < 0">Started {{ activeGame.starts_in_text }} ago</li>
             <li v-else>Starts in {{ activeGame.starts_in_text }}</li>
-            <li v-if="activeGame.winner_id" style="font-weight: bold; color: green">
-              Winner: {{ activeGame.winner_id }} [{{ activeGame.price }}]
+            <li v-if="activeGame.winner" style="font-weight: bold; color: green">
+              Winner: {{ activeGame.winner }} [{{ activeGame.rewards }}]
             </li>
-            <li
-              v-if="activeGame.ended && !activeGame.winner_id"
-              style="font-weight: bold; color: red"
-            >
+            <li v-if="activeGame.ended && !activeGame.winner" style="font-weight: bold; color: red">
               Game has ended without a winner
             </li>
             <li v-if="activeGame.round > 0">

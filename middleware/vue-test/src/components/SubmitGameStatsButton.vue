@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%">
-    <button @click="submitGameStats">Simulate Schedule Games Cronjob</button>
+    <button @click="submitGameStats">Simulate Submit Game stats trigger</button>
     <button class="clear-button" v-if="lastResponse || lastError" @click="clearData">X</button>
 
     <br />

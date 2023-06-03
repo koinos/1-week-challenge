@@ -29,28 +29,28 @@
       </li>
 
       <li>Participants: {{ activeGame.participant_count }}</li>
-      <li v-if="!activeGame.winner_id">Players remaining: {{ activeGame.players_remaining }}</li>
-      <li v-if="!activeGame.winner_id">Right count: {{ activeGame.right_count }}</li>
-      <li v-if="!activeGame.winner_id">Wrong count: {{ activeGame.wrong_count }}</li>
+      <li v-if="!activeGame.winner">Players remaining: {{ activeGame.players_remaining }}</li>
+      <li v-if="!activeGame.winner">Right count: {{ activeGame.right_count }}</li>
+      <li v-if="!activeGame.winner">Wrong count: {{ activeGame.wrong_count }}</li>
     </ul>
 
     <br />
 
-    <div v-if="activeGame.ended && !activeGame.winner_id">
+    <div v-if="activeGame.ended && !activeGame.winner">
       <h3 style="font-weight: bold; color: red">Game has ended without a winner</h3>
     </div>
 
-    <div v-if="activeGame.winner_id">
+    <div v-if="activeGame.winner">
       <h3>Winner:</h3>
       <ul>
         <li style="font-weight: bold; color: green">
-          {{ activeGame.winner_id }}
+          {{ activeGame.winner }}
         </li>
         <li><submit-game-stats-button :game-id="activeGame.id" /></li>
       </ul>
     </div>
 
-    <div v-if="!activeGame.winner_id && !activeGame.ended">
+    <div v-if="!activeGame.winner && !activeGame.ended">
       <h3 v-if="activeGame.round === 0">Players waiting:</h3>
       <h3 v-else>Players remaining:</h3>
       <ul>
