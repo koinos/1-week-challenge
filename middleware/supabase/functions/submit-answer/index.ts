@@ -84,20 +84,29 @@ serve(async (req: Request) => {
     }
 
     /**
-     * Check if player is still in the game
-     */
-    // When round doesn't match the player has timed out in previous round
-    if (playerGame.eliminated) {
-      // Return bad request response
-      throw new Error('Player is eliminated from this game');
-    }
-
-    /**
      * Check if player hasn't already answered
      */
     if (playerGame.answers[activeGame.round] != null) {
       // Return bad request response
       throw new Error('Player has already answered this round');
+    }
+
+    /**
+     * Check if player has answered within the answering period
+     * If answer is loaded it's too late
+     */
+    if (activeGame.answer != null) {
+      // Return bad request response
+      throw new Error('Player has timed-out');
+    }
+
+    /**
+     * Check if player is still in the game
+     */
+    // When round doesn't match the player has timed out in previous round
+    if (playerGame.eliminated || playerGame.round !== activeGame.round) {
+      // Return bad request response
+      throw new Error('Player is eliminated from this game');
     }
 
     /**

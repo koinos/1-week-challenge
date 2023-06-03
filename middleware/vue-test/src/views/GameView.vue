@@ -58,6 +58,7 @@
 
           <submit-answer-button
             v-if="activeGame.round > 0"
+            :disabled="activeGame.answer != null"
             :answer="true"
             :player-id="playerGame.player_id"
             :game-id="playerGame.game_id"
@@ -65,6 +66,7 @@
 
           <submit-answer-button
             v-if="activeGame.round > 0"
+            :disabled="activeGame.answer != null"
             :answer="false"
             :player-id="playerGame.player_id"
             :game-id="playerGame.game_id"
@@ -80,6 +82,7 @@
       <ul>
         <li v-for="playerGame in eliminatedPlayerGames" :key="playerGame.id">
           {{ playerGame.player_id }} [Round: {{ playerGame.round }}]
+          <span v-if="!playerGame.eliminated">Timed-out</span>
         </li>
       </ul>
     </div>
@@ -219,10 +222,14 @@ export default defineComponent({
         );
       }),
       activePlayerGames: computed(() => {
-        return playerGames.value.filter((playerGame) => !playerGame.eliminated);
+        return playerGames.value.filter(
+          (playerGame) => !playerGame.eliminated && playerGame.round >= activeGame.value?.round
+        );
       }),
       eliminatedPlayerGames: computed(() => {
-        return playerGames.value.filter((playerGame) => playerGame.eliminated);
+        return playerGames.value.filter(
+          (playerGame) => playerGame.eliminated || playerGame.round < activeGame.value?.round
+        );
       })
     };
   }

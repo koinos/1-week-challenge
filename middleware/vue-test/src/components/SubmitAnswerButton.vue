@@ -29,6 +29,10 @@ export default defineComponent({
     answer: {
       type: Boolean,
       required: true
+    },
+    disabled: {
+      type: Boolean,
+      required: false
     }
   },
   setup(props) {

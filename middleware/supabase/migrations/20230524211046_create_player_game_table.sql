@@ -17,7 +17,7 @@ create table if not exists player_game
             references game (id),
     constraint player_game_uq
         unique (player_id, game_id),
-    round      smallint not null default 0,
+    round      smallint not null default 1,
     eliminated boolean  not null default false,
     answers    jsonb    not null default '{}',
     price      varchar

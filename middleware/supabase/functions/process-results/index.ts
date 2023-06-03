@@ -137,6 +137,7 @@ serve(async (req: Request) => {
         const { error: updateAGError } = await supabase
           .from('active_game')
           .update({
+            players_remaining: activeGame.right_count,
             answer: question.is_fact,
             real_fact_if_fiction: question.real_fact_if_fiction,
             winner_id: winnerId,
