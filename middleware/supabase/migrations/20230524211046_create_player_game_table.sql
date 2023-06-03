@@ -20,7 +20,7 @@ create table if not exists player_game
     round      smallint not null default 1,
     eliminated boolean  not null default false,
     answers    jsonb    not null default '{}',
-    price      varchar
+    rewards    varchar
 );
 
 -- Restrict API access to query only

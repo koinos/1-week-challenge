@@ -20,8 +20,8 @@ create table if not exists active_game
     players_remaining    smallint not null default 0,
     right_count          smallint not null default 0,
     wrong_count          smallint not null default 0,
-    price                varchar,
-    winner_id            varchar,
+    rewards              varchar,
+    winner               varchar,
     ended                boolean  not null default false
 );
 

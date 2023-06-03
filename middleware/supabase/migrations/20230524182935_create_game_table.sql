@@ -9,10 +9,10 @@ create table if not exists game
             primary key,
     start_at          bigint  not null,
     active            boolean not null default false,
-    price             varchar not null,
-    winner_id         varchar,
+    rewards           varchar not null,
+    winner            varchar,
     constraint game_winner_fkey
-        foreign key (winner_id)
+        foreign key (winner)
             references player (id),
     participant_count smallint
 );

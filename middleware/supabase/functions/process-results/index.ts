@@ -73,7 +73,7 @@ serve(async (req: Request) => {
         /**
          * We have a winner! Update active_game with winner playerId
          */
-        let winnerId: string | undefined;
+        let winner: string | undefined;
         let ended: boolean | undefined;
 
         if (activeGame.right_count === 1) {
@@ -103,24 +103,24 @@ serve(async (req: Request) => {
             throw new Error('Player game for winner not found');
           }
 
-          winnerId = playerGame.player_id;
+          winner = playerGame.player_id;
           ended = true;
 
           /**
-           * Update price to player_game of winner
+           * Update rewards to player_game of winner
            * This way we have a log of all games a player has won/lost
            */
           const { error: updatePGError }: { error: Error } = await supabase
             .from('player_game')
             .update({
-              price: activeGame.price,
+              rewards: activeGame.rewards,
             })
-            .eq('player_id', winnerId)
+            .eq('player_id', winner)
             .eq('game_id', activeGame.id);
 
           if (updatePGError != null) {
             // Return bad request response
-            throw new Error('Could not update price for player_game');
+            throw new Error('Could not update rewards for player_game');
           }
         }
 
@@ -140,7 +140,7 @@ serve(async (req: Request) => {
             players_remaining: activeGame.right_count,
             answer: question.is_fact,
             real_fact_if_fiction: question.real_fact_if_fiction,
-            winner_id: winnerId,
+            winner,
             ended,
           })
           .eq('id', activeGame.id);
@@ -153,11 +153,11 @@ serve(async (req: Request) => {
         /**
          * Update game (history) with winner + participant_count if game has ended
          */
-        if (winnerId != null || ended === true) {
+        if (winner != null || ended === true) {
           const { error: updateGameError } = await supabase
             .from('game')
             .update({
-              winner_id: winnerId,
+              winner,
               participant_count: activeGame.participant_count,
             })
             .eq('id', activeGame.id);
@@ -175,7 +175,7 @@ serve(async (req: Request) => {
           gameId: activeGame.id,
           round: activeGame.round,
           players_remaining: activeGame.right_count,
-          winnerId,
+          winner,
           ended,
         });
       }

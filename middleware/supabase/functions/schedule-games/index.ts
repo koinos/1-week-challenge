@@ -20,7 +20,7 @@ serve(async (req: Request) => {
      */
     const { data, error } = await supabase
       .from('game')
-      .select('id, start_at, price')
+      .select('id, start_at, rewards')
       .gte('start_at', Date.now())
       .lt('start_at', Date.now() + 3600000)
       .eq('active', false);
@@ -43,7 +43,7 @@ serve(async (req: Request) => {
             start_at: game.start_at,
             round: 0,
             round_ends: game.start_at,
-            price: game.price,
+            rewards: game.rewards,
           });
 
         if (insertError == null) {
