@@ -3,3 +3,4 @@ build
 *.wasm
 *.map
 node_modules
+.env
