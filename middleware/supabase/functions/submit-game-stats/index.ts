@@ -4,7 +4,7 @@ import {
   Provider,
   Contract,
   Signer,
-} from 'https://esm.sh/koilib@v5.5.6?target=deno';
+} from 'https://raw.githubusercontent.com/roaminro/koilib/2e82963ea3b3fa5196fe962a880fa7c126d05242/deno/mod.ts';
 import { type Game } from '../../../schema/index.ts';
 import { createSupabaseClient } from '../_shared/supabase-client.ts';
 import { GamestatsAbi } from './gamestats-abi.ts';
@@ -40,7 +40,7 @@ serve(async (req: Request) => {
       throw gameError;
     }
 
-    if (game == null || game.winner_id == null || game.price == null) {
+    if (game == null || game.winner == null || game.rewards == null) {
       // Return bad request response
       throw new Error('Game for submitting results not found');
     }
@@ -48,16 +48,17 @@ serve(async (req: Request) => {
     /**
      * Submit game stats to Koinos contract
      */
-    const seed = '1234';
-    const contractId = '19JntSm8pSNETT9aHTwAUHC5RMoaSmgZPJ';
+    const pk = Deno.env.get('SIGNER_PRIVATE_KEY');
+    const contractId = Deno.env.get('CONTRACT_ADDRESS');
+    const rpcNodes = [Deno.env.get('RPC_NODE')];
 
     // Define signer + provider
-    const provider = new Provider(['https://api.koinos.io']);
-    const signer = Signer.fromSeed(seed);
+    const provider = new Provider(rpcNodes);
+    const signer = Signer.fromWif(pk);
 
     signer.provider = provider;
 
-    // // Create contract to call
+    // Create contract to call
     const factOrFictionContract = new Contract({
       id: contractId,
       abi: GamestatsAbi,
@@ -67,31 +68,19 @@ serve(async (req: Request) => {
 
     const factOrFiction = factOrFictionContract.functions;
 
-    console.log({
-      factOrFiction,
-      data: {
-        game_id: 1, // game.id,
-        timestamp: Date.now(),
-        rewards: 5000, // game.price,
-        winner: '13KndWFNkxTWmcoUieRndFLspebpr7cPQr', // game.winner_id,
-      },
-    });
-
+    // Call contract
     const { transaction, receipt } = await factOrFiction.submit_game_stats({
-      game_id: 1, // game.id,
-      timestamp: Date.now(),
-      rewards: 5000, // game.price,
-      winner: '13KndWFNkxTWmcoUieRndFLspebpr7cPQr', // game.winner_id,
+      game_stats: {
+        game_id: game.id,
+        timestamp: game.start_at,
+        rewards: game.rewards,
+        winner: game.winner,
+      },
     });
 
     if (transaction == null || transaction.id == null) {
       throw new Error('Could not submit transaction to Koinos blockchain');
     }
-
-    console.log(
-      `Transaction id ${transaction.id as string} submitted. Receipt:`
-    );
-    console.log(receipt);
 
     if (receipt.logs != null) {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
@@ -105,32 +94,16 @@ serve(async (req: Request) => {
       throw new Error('Transaction could not be mined');
     }
 
-    // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-    console.log(`Transaction mined. Block number: ${blockNumber}`);
-
-    // Verify the game stats have been submitted
-    const { result } = await factOrFiction.get_games_stats({
-      offset_key: {
-        game_id: game.id,
-      },
-      limit: 1,
-    });
-
-    if (result == null) {
-      throw new Error('Game has been submitted but could not be verified');
-    }
-
     /**
      * Add to response for debugging purpose only (to display in vue-test app)
      */
     const response = {
       gameId: game.id,
-      stats: result,
       minedInBlock: blockNumber,
       transactionId: transaction.id,
     };
 
-    return new Response(JSON.stringify({ results: response }), {
+    return new Response(JSON.stringify({ ...response }), {
       headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       status: 200,
     });
