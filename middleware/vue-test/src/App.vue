@@ -11,6 +11,15 @@
     <schedule-games-button />
     <pick-next-questions-button />
     <process-results-button />
+
+    <br />
+    <br />
+
+    <a
+      href="https://harbinger.koinosblocks.com/address/16QVzHspCTwzgqdqiAngYCNpdHGVZQP7cg"
+      target="_blank"
+      >Check contract @Koinosblocks</a
+    >
   </div>
 
   <div style="width: 50%; float: left"><RouterView /></div>
