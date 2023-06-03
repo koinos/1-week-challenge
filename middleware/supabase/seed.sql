@@ -79,32 +79,41 @@ INSERT INTO public.active_game VALUES ('44e3b0bb-a56f-405a-a768-dfb5aab5e57a', (
 --
 -- Name: player; Type: TABLE; Schema: public; Owner: postgres
 --
-
-INSERT INTO public.player VALUES ('user1', 0, 0, default);
-INSERT INTO public.player VALUES ('user2', 0, 0, default);
-INSERT INTO public.player VALUES ('user3', 0, 0, default);
-INSERT INTO public.player VALUES ('user4', 0, 0, default);
-INSERT INTO public.player VALUES ('user5', 0, 0, default);
+INSERT INTO public.player VALUES ('1HbdatLeG8jdtLpaTx4xbCj712gzH4jpEx', 0, 0, default);
+INSERT INTO public.player VALUES ('1BqVjefBjoiVo6SGPiSD4evrFzsfk4eY2x', 0, 0, default);
+INSERT INTO public.player VALUES ('1BSPXaxd1jMABizHbYwzpfg1AH5J8g2tDh', 0, 0, default);
+INSERT INTO public.player VALUES ('1NdbGp7iav2VA5xtdfsQBiifunE46JuGKW', 0, 0, default);
+INSERT INTO public.player VALUES ('1C7NUXeCmqP3n3zPQP9NfJRfGYCegLeEL1', 0, 0, default);
+INSERT INTO public.player VALUES ('1QAuyXeVgEwkmnNGpMJgUSMavSV7sy1J48', 0, 0, default);
+INSERT INTO public.player VALUES ('1NQYKwbBqiFhtytnrkGQxFDM45MyeeX85x', 0, 0, default);
+INSERT INTO public.player VALUES ('1KLYJEFbwrrWwSJAD2Lhq78RnMM6AvPEb7', 0, 0, default);
+INSERT INTO public.player VALUES ('17GATfgJmygFLzJF1pY6E3uZfnn7cA1M5t', 0, 0, default);
+INSERT INTO public.player VALUES ('1AeCRQ1cLSYzwKb3ot1UggtWW6AMN3LqGr', 0, 0, default);
 
 --
--- Name: player_game; Type: TABLE; Schema: public; Owner: postgres
+-- Name: player; Type: TABLE; Schema: public; Owner: postgres
 --
 
-INSERT INTO public.player_game VALUES (default, 'user1', 'd6b579da-96c6-4d13-b8a2-bad7c23d1711', 1, default, default, NULL);
-INSERT INTO public.player_game VALUES (default, 'user2', 'd6b579da-96c6-4d13-b8a2-bad7c23d1711', 1, default, default, NULL);
-INSERT INTO public.player_game VALUES (default, 'user3', 'd6b579da-96c6-4d13-b8a2-bad7c23d1711', 1, default, default, NULL);
-INSERT INTO public.player_game VALUES (default, 'user4', 'd6b579da-96c6-4d13-b8a2-bad7c23d1711', 1, default, default, NULL);
-INSERT INTO public.player_game VALUES (default, 'user5', 'd6b579da-96c6-4d13-b8a2-bad7c23d1711', 1, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1HbdatLeG8jdtLpaTx4xbCj712gzH4jpEx', 'd6b579da-96c6-4d13-b8a2-bad7c23d1711', 1, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1BqVjefBjoiVo6SGPiSD4evrFzsfk4eY2x', 'd6b579da-96c6-4d13-b8a2-bad7c23d1711', 1, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1BSPXaxd1jMABizHbYwzpfg1AH5J8g2tDh', 'd6b579da-96c6-4d13-b8a2-bad7c23d1711', 1, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1NdbGp7iav2VA5xtdfsQBiifunE46JuGKW', 'd6b579da-96c6-4d13-b8a2-bad7c23d1711', 1, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1C7NUXeCmqP3n3zPQP9NfJRfGYCegLeEL1', 'd6b579da-96c6-4d13-b8a2-bad7c23d1711', 1, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1QAuyXeVgEwkmnNGpMJgUSMavSV7sy1J48', 'd6b579da-96c6-4d13-b8a2-bad7c23d1711', 1, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1NQYKwbBqiFhtytnrkGQxFDM45MyeeX85x', 'd6b579da-96c6-4d13-b8a2-bad7c23d1711', 1, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1KLYJEFbwrrWwSJAD2Lhq78RnMM6AvPEb7', 'd6b579da-96c6-4d13-b8a2-bad7c23d1711', 1, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '17GATfgJmygFLzJF1pY6E3uZfnn7cA1M5t', 'd6b579da-96c6-4d13-b8a2-bad7c23d1711', 1, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1AeCRQ1cLSYzwKb3ot1UggtWW6AMN3LqGr', 'd6b579da-96c6-4d13-b8a2-bad7c23d1711', 1, default, default, NULL);
 
-INSERT INTO public.player_game VALUES (default, 'user1', '0d7e96ee-9ed1-4de7-8bee-27225e684d8d', default, default, default, NULL);
-INSERT INTO public.player_game VALUES (default, 'user3', '0d7e96ee-9ed1-4de7-8bee-27225e684d8d', default, default, default, NULL);
-INSERT INTO public.player_game VALUES (default, 'user5', '0d7e96ee-9ed1-4de7-8bee-27225e684d8d', default, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1HbdatLeG8jdtLpaTx4xbCj712gzH4jpEx', '0d7e96ee-9ed1-4de7-8bee-27225e684d8d', default, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1BSPXaxd1jMABizHbYwzpfg1AH5J8g2tDh', '0d7e96ee-9ed1-4de7-8bee-27225e684d8d', default, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1C7NUXeCmqP3n3zPQP9NfJRfGYCegLeEL1', '0d7e96ee-9ed1-4de7-8bee-27225e684d8d', default, default, default, NULL);
 
-INSERT INTO public.player_game VALUES (default, 'user1', '44e3b0bb-a56f-405a-a768-dfb5aab5e57a', default, default, default, NULL);
-INSERT INTO public.player_game VALUES (default, 'user2', '44e3b0bb-a56f-405a-a768-dfb5aab5e57a', default, default, default, NULL);
-INSERT INTO public.player_game VALUES (default, 'user3', '44e3b0bb-a56f-405a-a768-dfb5aab5e57a', default, default, default, NULL);
-INSERT INTO public.player_game VALUES (default, 'user4', '44e3b0bb-a56f-405a-a768-dfb5aab5e57a', default, default, default, NULL);
-INSERT INTO public.player_game VALUES (default, 'user5', '44e3b0bb-a56f-405a-a768-dfb5aab5e57a', default, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1HbdatLeG8jdtLpaTx4xbCj712gzH4jpEx', '44e3b0bb-a56f-405a-a768-dfb5aab5e57a', default, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1BqVjefBjoiVo6SGPiSD4evrFzsfk4eY2x', '44e3b0bb-a56f-405a-a768-dfb5aab5e57a', default, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1BSPXaxd1jMABizHbYwzpfg1AH5J8g2tDh', '44e3b0bb-a56f-405a-a768-dfb5aab5e57a', default, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1NdbGp7iav2VA5xtdfsQBiifunE46JuGKW', '44e3b0bb-a56f-405a-a768-dfb5aab5e57a', default, default, default, NULL);
+INSERT INTO public.player_game VALUES (default, '1C7NUXeCmqP3n3zPQP9NfJRfGYCegLeEL1', '44e3b0bb-a56f-405a-a768-dfb5aab5e57a', default, default, default, NULL);
 
 --
 -- Name: game_question; Type: TABLE; Schema: public; Owner: postgres
