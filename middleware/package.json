@@ -12,6 +12,10 @@
     "eslint-plugin-promise": "^6.0.0",
     "prettier": "^2.8.8",
     "supabase": "^1.64.2",
-    "typescript": "*"
+    "typescript": "*",
+    "typescript-deno-plugin": "^1.31.0"
+  },
+  "dependencies": {
+    "koilib": "^5.5.6"
   }
 }

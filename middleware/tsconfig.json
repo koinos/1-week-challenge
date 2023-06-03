@@ -14,7 +14,12 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "strictNullChecks": true
+    "strictNullChecks": true,
+    "plugins": [{
+      "name": "typescript-deno-plugin",
+      "enable": true,
+      "importmap": "supabase/functions/import_map.json"
+    }]
   },
   "exclude": ["node_modules", "tmp"]
 }

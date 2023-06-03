@@ -46,6 +46,7 @@
         <li style="font-weight: bold; color: green">
           {{ activeGame.winner_id }}
         </li>
+        <li><submit-game-stats-button :game-id="activeGame.id" /></li>
       </ul>
     </div>
 
@@ -103,10 +104,11 @@ import type { ActiveGame, PlayerGame } from '../../../schema/index.ts';
 import JoinGameButton from '@/components/JoinGameButton.vue';
 import { playerIds } from '@/components/player-ids.ts';
 import SubmitAnswerButton from '@/components/SubmitAnswerButton.vue';
+import SubmitGameStatsButton from '@/components/SubmitGameStatsButton.vue';
 
 export default defineComponent({
   name: 'App',
-  components: { SubmitAnswerButton, JoinGameButton },
+  components: { SubmitGameStatsButton, SubmitAnswerButton, JoinGameButton },
   setup() {
     const route = useRoute();
     const id: Ref<string | undefined> = ref();
