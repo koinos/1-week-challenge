@@ -34,10 +34,33 @@ supabase db push
 ```
 
 ## Functions
+[Developing functions locally](https://supabase.com/docs/guides/functions/local-development)
+[Functions + env files]https://supabase.com/docs/guides/functions/secrets
+```npm
+# Create a new function
+supabase functions new my-function
+
+# Run functions locally with env file + debug
+supabase functions serve --env-file ./supabase/.env.local --debug
+
+# Deploy functions to Supabase
+supabase functions deploy my-function
+
+
+# For Production copy env file
+cp ./supabase/.env.local ./supabase/.env
+
+# Deploy secrets to Supabase
+supabase secrets set --env-file ./supabase/.env
+
+```
 
 ### Scheduling
 - A cron-based Supabase edge function will query the `game` table each 5 minutes for scheduled games starting within the next hour. 
 - It will create an `active_game` record 1 hour before the start of the game.
+
+### Join game
+- User can join a soon to start game from the `active_game` table that hasn't started yet.
 
 ### Updating game state questions
 A cron-based Supabase edge function will run every X seconds and will update the `active_game` + `game_question` tables before each round:
@@ -63,7 +86,6 @@ A cron-based Supabase edge function will run every X seconds and will update the
     - If the answer is wrong `eliminated` will be set to true
   - After submitting an answer the right + wrong counts of the `active_game` will be updated.
 
-
 ## Client
 The client will query `active_game` for any games starting soon.
  - If 1 game has been found the app will start watching for changes of the `active_game` table.
@@ -71,6 +93,11 @@ The client will query `active_game` for any games starting soon.
  - A player can participate by connecting their wallet.
 
 ## Database
+
+Create migration
+```
+supabase migration new pick_random_question
+```
 
 ### game
 - Contains all scheduled + completed games. Serves as a history of played games. 
@@ -96,3 +123,44 @@ Supabase automatically generates a GraphQL API. For this app it's restricted to 
 revoke all on table game from anon;
 grant references, select, trigger on table game to anon;
 ```
+
+## Other
+Eslint https://dev.to/devland/set-up-a-nodejs-app-with-eslint-and-prettier-4i7p
+
+supabase functions serve --no-verify-jwt --debug
+
+Enable realtime in dashboard: Database -> replication (active_game + player_game)
+
+
+### Generate Types
+generate type
+mkdir schema
+supabase gen types typescript --local --schema public > schema/database.types.ts
+supabase gen types typescript --linked --schema public > ./schema/schema.ts
+
+https://supabase.com/docs/reference/javascript/typescript-support#generating-types
+
+npx better-supabase-types -i ./lib/database-supabase.types.ts -o ./lib/database.types.ts
+
+### Invoke functions
+To invoke:
+
+```
+curl -i --location --request POST 'http://localhost:54321/functions/v1/' \
+   --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
+   --header 'Content-Type: application/json' \
+   --data '{"name":"Functions"}'
+```
+
+Debug functions:
+```
+supabase functions serve --debug
+```
+
+## Caveats
+
+Realtime rate limits
+https://supabase.com/docs/guides/realtime/rate-limits
+
+Deno
+https://deno.com/manual@v1.34.1/getting_started/installation
