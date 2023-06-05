@@ -27,7 +27,7 @@ First create an account at [Supabase](https://supabase.com/) and setup a project
 supabase login
 
 # Link your project
-supabase link --project-ref $PROJECT_ID
+supabase link --project-ref cotxdwwpcndxaijybcen
 
 # Push db migrations to Supabase
 supabase db push
@@ -43,8 +43,11 @@ supabase functions new my-function
 # Run functions locally with env file + debug
 supabase functions serve --env-file ./supabase/.env.local --debug
 
-# Deploy functions to Supabase
-supabase functions deploy my-function
+# Deploy a function to Supabase
+supabase functions deploy submit-game-stats
+
+# Deploy all our created functions at once to Supabase
+npm run deploy:functions
 
 
 # For Production copy env file
@@ -52,6 +55,19 @@ cp ./supabase/.env.local ./supabase/.env
 
 # Deploy secrets to Supabase
 supabase secrets set --env-file ./supabase/.env
+
+
+#Secrets management
+# View all secrets
+
+supabase secrets list 
+
+#Set secrets for your project
+supabase secrets set NAME1=VALUE1 NAME2=VALUE2 
+
+# Unset secrets for your project
+supabase secrets unset NAME1 NAME2 
+
 
 ```
 
