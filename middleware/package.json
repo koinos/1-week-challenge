@@ -2,6 +2,9 @@
   "name": "fact-or-fiction-game-server",
   "description": "Fact or Fiction game server.",
   "version": "0.0.0",
+  "scripts": {
+    "deploy:functions": "supabase functions deploy schedule-games && supabase functions deploy join-game && supabase functions deploy pick-next-questions && supabase functions deploy submit-answer && supabase functions deploy process-results && supabase functions deploy submit-game-stats"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^5.43.0",
     "eslint": "^8.0.1",
