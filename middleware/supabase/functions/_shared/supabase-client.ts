@@ -1,5 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
-import { type Database } from 'schema';
+import { type Database } from '../../../schema/index.ts';
 
 /**
  * Create a Supabase client with the Auth context of the logged-in user.
