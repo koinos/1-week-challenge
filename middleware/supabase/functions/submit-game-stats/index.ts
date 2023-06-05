@@ -50,7 +50,7 @@ serve(async (req: Request) => {
      */
     const pk = Deno.env.get('SIGNER_PRIVATE_KEY');
     const contractId = Deno.env.get('CONTRACT_ADDRESS');
-    const rpcNodes = [Deno.env.get('RPC_NODE')];
+    const rpcNodes = [Deno.env.get('RPC_NODE') ?? 'https://api.koinos.io'];
 
     // Define signer + provider
     const provider = new Provider(rpcNodes);
@@ -82,9 +82,9 @@ serve(async (req: Request) => {
       throw new Error('Could not submit transaction to Koinos blockchain');
     }
 
-    if (receipt.logs != null) {
+    if (receipt?.logs != null) {
       // eslint-disable-next-line @typescript-eslint/restrict-template-expressions
-      throw new Error(`Transfer failed. Logs: ${receipt.logs.join(',')}`);
+      throw new Error(`Transfer failed. Logs: ${receipt?.logs.join(',')}`);
     }
 
     // Wait to be mined
