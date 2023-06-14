@@ -13,6 +13,14 @@
     <process-results-button />
 
     <br />
+
+    <h2>Add game</h2>
+
+    <add-game-button :mins-from-now="1" />
+    <add-game-button :mins-from-now="2" />
+    <add-game-button :mins-from-now="5" />
+    <add-game-button :mins-from-now="15" />
+
     <br />
 
     <a
@@ -30,6 +38,7 @@ import { RouterLink, RouterView } from 'vue-router';
 import ScheduleGamesButton from '@/components/ScheduleGamesButton.vue';
 import PickNextQuestionsButton from '@/components/PickNextQuestionsButton.vue';
 import ProcessResultsButton from '@/components/ProcessResultsButton.vue';
+import AddGameButton from '@/components/AddGameButton.vue';
 </script>
 
 <style>
