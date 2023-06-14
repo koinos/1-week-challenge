@@ -18,7 +18,7 @@ serve(async (req: Request) => {
     }
 
     // TODO: Fetch round duration from setting or env var
-    const roundDuration = 30;
+    const roundDuration = 20;
 
     const supabase = createSupabaseClient(req);
 
