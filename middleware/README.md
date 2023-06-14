@@ -30,7 +30,7 @@ supabase stop
 - We will use the [Supabase isomorphic JS SDK](https://supabase.com/docs/reference/javascript/introduction) to queries + perform actions on our database in both our backend (edge functions) + frontend. Supabase can also auto REST + GraphQL API's automatically but for this app we will not use them.
 - Our application logic will be implemented by using Supabase edge functions.
 - A postgres function will be used to randomly pick questions from our questions table.
-- Postgres cronjobs will be used to
+- Postgres cronjobs will be used to call edge functions to:
   - create active games for soon to start (within 1 hour) games.
   - make the game real-time by updating the active game state before + after each question.
 
