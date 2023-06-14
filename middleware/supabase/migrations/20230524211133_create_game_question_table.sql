@@ -20,7 +20,3 @@ create table if not exists game_question
     right_count   smallint not null default 0,
     wrong_count   smallint not null default 0
 );
-
--- Restrict API access to query only
--- revoke all on table game_question from anon;
--- grant references, select, trigger on table game_question to anon;

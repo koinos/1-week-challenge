@@ -11,7 +11,3 @@ create table if not exists question
     is_fact              boolean                        not null,
     real_fact_if_fiction varchar
 );
-
--- Restrict API access to none
--- revoke all on table question from anon;
--- grant references, trigger on table question to anon;

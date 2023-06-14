@@ -24,7 +24,3 @@ create table if not exists active_game
     winner               varchar,
     ended                boolean  not null default false
 );
-
--- Restrict API access to query only
--- revoke all on table active_game from anon;
--- grant references, select, trigger on table active_game to anon;

@@ -22,7 +22,3 @@ create table if not exists player_game
     answers    jsonb    not null default '{}',
     rewards    varchar
 );
-
--- Restrict API access to query only
--- revoke all on table player_game from anon;
--- grant references, select, trigger on table player_game to anon;

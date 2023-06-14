@@ -16,11 +16,3 @@ create table if not exists game
             references player (id),
     participant_count smallint
 );
-
-comment on constraint game_winner_fkey
-    on game
-    is E'@graphql({"foreign_name": "winner", "local_name": "wonGames"})';
-
--- Restrict API access to query only
--- revoke all on table game from anon;
--- grant references, select, trigger on table game to anon;
