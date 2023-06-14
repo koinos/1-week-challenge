@@ -3,7 +3,10 @@ import { corsHeaders } from '../_shared/cors.ts';
 import { createSupabaseClient } from '../_shared/supabase-client.ts';
 import { type ActiveGame, type Question } from '../../../schema/index.ts';
 
-console.log(`🚀 Function "pick-next-question-game" up and running!`);
+const now = new Date();
+console.log(
+  `🚀 Function "pick-next-question-game" called, at ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
+);
 
 serve(async (req: Request) => {
   try {

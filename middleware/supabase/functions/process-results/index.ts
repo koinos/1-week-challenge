@@ -7,7 +7,10 @@ import {
   type Question,
 } from '../../../schema/index.ts';
 
-console.log(`🚀 Function "process-question" up and running!`);
+const now = new Date();
+console.log(
+  `🚀 Function "process-question" called, at ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
+);
 
 serve(async (req: Request) => {
   try {
