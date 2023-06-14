@@ -43,7 +43,7 @@ supabase stop
   - A player can participate by connecting their wallet. 
 - The client will watch for changes of the `player_game` table to check whether current user is still in the game.
 
-# Database
+## Database
 
 - `./middleware/supabase/migrations` directory creates the SQL scripts to setup our Postgres database.
 - `./middleware/supabase/seed.sql` will be used by Supabase to seed the database when starting Supabase locally. It contains test data with some games + players to make it easier to develop + test locally.
@@ -122,7 +122,7 @@ A cron-based function will run every 30 seconds (20 seconds after the pick-next-
     - If the answer is wrong or the player has timed-out `eliminated` will be set to true.
   - After submitting an answer the right + wrong counts of the `active_game` will be updated.
 
-## Commands
+### Commands
 ```npm
 # Create a new function
 supabase functions new my-function
