@@ -92,8 +92,8 @@ export default defineComponent({
             table: 'active_game'
           } as any,
           (payload: RealtimePostgresChangesPayload<any>) => {
-            const updatedGame = payload.old as any;
-            const index = activeGames.value.findIndex((x) => updatedGame.id === x.id);
+            const updatedGame = payload.new as any;
+            const index = activeGames.value.findIndex((x) => (payload.old as any).id === x.id);
 
             if (payload.eventType === 'DELETE') {
               delete activeGames.value.splice(index, 1);

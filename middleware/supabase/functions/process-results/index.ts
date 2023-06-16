@@ -9,7 +9,7 @@ import {
 
 const now = new Date();
 console.log(
-  `🚀 Function "process-question" called, at ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
+  `🚀 Function "process-results" called, at ${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
 );
 
 serve(async (req: Request) => {
