@@ -1,6 +1,6 @@
 <template>
   <div style="width: 100%">
-    <button @click="scheduleGames">Schedule Games</button>
+    <button @click="cleanupActiveGames">Clean Active Games</button>
     <button class="clear-button" v-if="lastResponse || lastError" @click="clearData">X</button>
 
     <br />
@@ -21,16 +21,16 @@ import { supabase } from '../supabase-client.ts';
 import { FunctionsHttpError } from '@supabase/supabase-js';
 
 export default defineComponent({
-  name: 'ScheduleGamesButton',
+  name: 'CleanupActiveGamesButton',
   setup() {
     const lastResponse = ref();
     const lastError = ref();
 
-    const scheduleGames = async () => {
+    const cleanupActiveGames = async () => {
       lastResponse.value = null;
       lastError.value = null;
 
-      const { data, error } = await supabase.functions.invoke('schedule-games');
+      const { data, error } = await supabase.functions.invoke('cleanup-active-games');
 
       lastResponse.value = data;
       if (error instanceof FunctionsHttpError) {
@@ -44,7 +44,7 @@ export default defineComponent({
     };
 
     return {
-      scheduleGames,
+      cleanupActiveGames,
       clearData,
       lastResponse,
       lastError

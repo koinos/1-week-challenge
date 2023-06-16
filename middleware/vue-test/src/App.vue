@@ -11,6 +11,7 @@
     <schedule-games-button />
     <pick-next-questions-button />
     <process-results-button />
+    <cleanup-active-games-button />
 
     <br />
 
@@ -39,6 +40,7 @@ import ScheduleGamesButton from '@/components/ScheduleGamesButton.vue';
 import PickNextQuestionsButton from '@/components/PickNextQuestionsButton.vue';
 import ProcessResultsButton from '@/components/ProcessResultsButton.vue';
 import AddGameButton from '@/components/AddGameButton.vue';
+import CleanupActiveGamesButton from '@/components/CleanupActiveGamesButton.vue';
 </script>
 
 <style>
