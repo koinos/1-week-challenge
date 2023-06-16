@@ -47,7 +47,7 @@
 <script lang="ts">
 import { defineComponent, onMounted, onUnmounted, Ref, ref } from 'vue';
 import { supabase } from '../supabase-client.ts';
-import { REALTIME_LISTEN_TYPES } from '@supabase/supabase-js';
+import { REALTIME_LISTEN_TYPES, RealtimePostgresChangesPayload } from '@supabase/supabase-js';
 import { countdown } from '@/utils/countdown.ts';
 import { RealtimeChannel } from '@supabase/realtime-js';
 
@@ -91,9 +91,15 @@ export default defineComponent({
             schema: 'public',
             table: 'active_game'
           } as any,
-          (payload) => {
-            const updatedGame = (payload as any).new;
+          (payload: RealtimePostgresChangesPayload<any>) => {
+            const updatedGame = payload.old as any;
             const index = activeGames.value.findIndex((x) => updatedGame.id === x.id);
+
+            if (payload.eventType === 'DELETE') {
+              delete activeGames.value.splice(index, 1);
+
+              return;
+            }
 
             if (-1 === index) {
               activeGames.value.push(updatedGame);
