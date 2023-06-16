@@ -55,7 +55,7 @@ export default defineComponent({
         .single();
 
       lastResponse.value = data;
-      lastError.value = error;
+      lastError.value = await error;
     };
 
     const clearData = () => {

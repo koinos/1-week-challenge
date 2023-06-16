@@ -14,6 +14,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { supabase } from '../supabase-client.ts';
+import { FunctionsHttpError } from '@supabase/supabase-js';
 
 export default defineComponent({
   name: 'SubmitAnswerButton',
@@ -49,7 +50,9 @@ export default defineComponent({
         }
       });
 
-      lastError.value = error;
+      if (error instanceof FunctionsHttpError) {
+        lastError.value = await error.context.json();
+      }
     };
 
     const clearData = () => {

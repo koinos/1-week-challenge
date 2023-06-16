@@ -18,6 +18,7 @@
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
 import { supabase } from '../supabase-client.ts';
+import { FunctionsHttpError } from '@supabase/supabase-js';
 
 export default defineComponent({
   name: 'PickNextQuestionsButton',
@@ -32,7 +33,9 @@ export default defineComponent({
       const { data, error } = await supabase.functions.invoke('pick-next-questions');
 
       lastResponse.value = data;
-      lastError.value = error;
+      if (error instanceof FunctionsHttpError) {
+        lastError.value = await error.context.json();
+      }
     };
 
     const clearData = () => {
