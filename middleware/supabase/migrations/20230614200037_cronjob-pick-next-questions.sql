@@ -14,4 +14,5 @@ END;
 $call_pick_next_questions$ LANGUAGE plpgsql;
 
 SELECT cron.schedule('call_pick_next_questions0', '* * * * *', 'SELECT call_pick_next_questions(0)');
-SELECT cron.schedule('call_pick_next_questions30', '* * * * *', 'SELECT call_pick_next_questions(30)');
+SELECT cron.schedule('call_pick_next_questions20', '* * * * *', 'SELECT call_pick_next_questions(20)');
+SELECT cron.schedule('call_pick_next_questions40', '* * * * *', 'SELECT call_pick_next_questions(40)');

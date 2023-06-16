@@ -17,9 +17,6 @@ serve(async (req: Request) => {
       return new Response('ok', { headers: corsHeaders });
     }
 
-    // TODO: Fetch round duration from setting or env var
-    const roundDuration = 20;
-
     const supabase = createSupabaseClient(req);
 
     /**
@@ -71,7 +68,8 @@ serve(async (req: Request) => {
           const randomQuestion: Question = data;
           const fieldsToUpdate = {
             round: activeGame.round + 1,
-            round_ends: activeGame.round_ends + roundDuration,
+            round_ends:
+              activeGame.round_ends + 15 + (activeGame.round > 1 ? 5 : 0),
             question: randomQuestion.question,
             question_id: randomQuestion.id,
             answer: null,

@@ -13,5 +13,6 @@ BEGIN
 END;
 $call_process_results$ LANGUAGE plpgsql;
 
-SELECT cron.schedule('call_process_results20', '* * * * *', 'SELECT call_process_results(20)');
-SELECT cron.schedule('call_process_results50', '* * * * *', 'SELECT call_process_results(50)');
+SELECT cron.schedule('call_process_results15', '* * * * *', 'SELECT call_process_results(15)');
+SELECT cron.schedule('call_process_results35', '* * * * *', 'SELECT call_process_results(35)');
+SELECT cron.schedule('call_process_results55', '* * * * *', 'SELECT call_process_results(55)');
