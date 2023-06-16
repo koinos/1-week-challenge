@@ -1,45 +1,55 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { NextPage } from "next";
-import { Card, CardBody, CardHeader, Flex, Text } from "@chakra-ui/react";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Flex,
+  Spinner,
+  Text,
+} from "@chakra-ui/react";
 import Head from "next/head";
 import CircleTimer from "../components/CircleTimer";
 import VoteBar from "../components/VoteBar";
 import VoteButton from "../components/VoteButton";
 import AnswerOverlay from "../components/AnswerOverlay";
-
-const QANDA = [
-  {
-    prompt: "Abraham Lincoln was the 12th president of the United States",
-    isFact: false,
-    realFactIfFiction: "Lincoln was the 16th president",
-  },
-  {
-    prompt: 'The brand name Spam is a combination of "spice" and "ham"',
-    isFact: true,
-  },
-  {
-    prompt: "Walt Disney's Snow White was the first animated feature film",
-    isFact: false,
-    realFactIfFiction:
-      "El Apóstol was a 70 minute political satire cartoon made in Argentina in 1917, 20 years before Snow White",
-  },
-  {
-    prompt: "Q is the only letter that doesn't appear in any U.S. state name",
-    isFact: true,
-  },
-  {
-    prompt: "Sudan has more pyramids than any country in the world",
-    isFact: true,
-  },
-];
+import { useRouter } from "next/router";
+import {
+  useAccount,
+  // @ts-ignore
+} from "react-koinos-toolkit";
+import { joinGame, submitAnswer, useActiveGames } from "../utils/useSupabase";
 
 const Play: NextPage = () => {
-  const [isPlaying, setIsPlaying] = useState(true);
+  const {
+    query: { gameId },
+  } = useRouter();
+  const { address } = useAccount();
+  const [isPlaying, setIsPlaying] = useState(false);
   const [answer, setAnswer] = useState<boolean>();
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [showAnswer, setShowAnswer] = useState(false);
 
-  if (!QANDA[currentQuestion]) return <Text>Thanks for playing!</Text>;
+  const { fetching, error, data } = useActiveGames(gameId as string);
+
+  useEffect(() => {
+    if (address && gameId) {
+      joinGame(address, gameId as string).then((result) => {
+        console.log({ action: "join", address, gameId, result });
+        setIsPlaying(true);
+      });
+    }
+  }, [address, gameId]);
+
+  function submit(answer: boolean) {
+    return submitAnswer(address, gameId as string, answer).then((result) => {
+      console.log({ action: "submit", address, gameId, answer, result });
+    });
+  }
+
+  if (fetching) return <Spinner />;
+
+  if (data![0].ended) return <Text>Thanks for playing!</Text>;
 
   return (
     <>
@@ -59,13 +69,13 @@ const Play: NextPage = () => {
               <CircleTimer onTimerEnd={() => setShowAnswer(true)} />
             )}
           </CardHeader>
-          <CardBody>{QANDA[currentQuestion].prompt}</CardBody>
+          <CardBody>{data![0].question}</CardBody>
         </Card>
         <Flex width="100%" gap="8" flex="1" alignItems="flex-end">
           {isPlaying && typeof answer === "undefined" ? (
             <>
-              <VoteButton isFactVote={true} onVote={() => setAnswer(true)} />
-              <VoteButton isFactVote={false} onVote={() => setAnswer(false)} />
+              <VoteButton isFactVote={true} onVote={() => submit(true)} />
+              <VoteButton isFactVote={false} onVote={() => submit(false)} />
             </>
           ) : (
             <>
@@ -84,16 +94,16 @@ const Play: NextPage = () => {
         </Flex>
         {showAnswer && (
           <AnswerOverlay
-            isFact={QANDA[currentQuestion].isFact}
+            isFact={data![0].answer}
             onClose={() => {
               setIsPlaying(
-                isPlaying && QANDA[currentQuestion].isFact === answer
+                isPlaying && data![0].answer === answer
               );
               setAnswer(undefined);
               setCurrentQuestion(currentQuestion + 1);
               setShowAnswer(false);
             }}
-            realFactIfFiction={QANDA[currentQuestion].realFactIfFiction}
+            realFactIfFiction={data![0].real_fact_if_fiction}
           />
         )}
       </Flex>
