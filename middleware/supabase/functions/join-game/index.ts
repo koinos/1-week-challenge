@@ -116,7 +116,7 @@ serve(async (req: Request) => {
       }),
       {
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-        status: 204,
+        status: 200,
       }
     );
   } catch (error) {
