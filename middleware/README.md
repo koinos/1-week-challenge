@@ -14,6 +14,9 @@ See the Supabase documentation for more info about Supabase [CLI commands](https
 
 ### Run Supabase locally
 
+**Note:** To test the cronjobs locally you have to update YOUR_NGROK_ID + YOUR_SUPABASE_ANON_KEY inside the cronjob migrations files (see cronjobs section) before starting supabase.
+**Note:** Ngrok will time out after 2 hours with the free version.
+
 ```npm
 cd ./middleware
 
