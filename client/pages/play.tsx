@@ -5,7 +5,9 @@ import {
   CardBody,
   CardHeader,
   Flex,
+  Heading,
   Spinner,
+  Stack,
   Text,
 } from "@chakra-ui/react";
 import Head from "next/head";
@@ -18,43 +20,77 @@ import {
   useAccount,
   // @ts-ignore
 } from "react-koinos-toolkit";
-import { joinGame, submitAnswer, useActiveGames } from "../utils/useSupabase";
+import {
+  joinGame,
+  submitAnswer,
+  useActiveGames,
+  usePlayerGames,
+} from "../utils/useSupabase";
+import Countdown from "react-countdown";
 
 const Play: NextPage = () => {
   const {
     query: { gameId },
   } = useRouter();
   const { address } = useAccount();
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [answer, setAnswer] = useState<boolean>();
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [submittedAnswer, setSubmittedAnswer] = useState<boolean>();
+  const [isRight, setIsRight] = useState<boolean>();
   const [showAnswer, setShowAnswer] = useState(false);
 
-  const { fetching, error, data } = useActiveGames(gameId as string);
+  const activeGame = useActiveGames(gameId as string);
+  const playerGame = usePlayerGames(address, gameId as string);
 
   useEffect(() => {
-    if (address && gameId) {
-      joinGame(address, gameId as string).then((result) => {
-        console.log({ action: "join", address, gameId, result });
-        setIsPlaying(true);
-      });
+    if (
+      !activeGame.fetching &&
+      activeGame.data &&
+      activeGame.data[0].start_at > Date.now() &&
+      address &&
+      gameId
+    ) {
+      joinGame(address, gameId as string);
     }
-  }, [address, gameId]);
+  }, [activeGame.fetching, activeGame.data, address, gameId]);
 
   function submit(answer: boolean) {
-    return submitAnswer(address, gameId as string, answer).then((result) => {
-      console.log({ action: "submit", address, gameId, answer, result });
-    });
+    if (!playerGame.data.eliminated && address && gameId) {
+      return submitAnswer(address, gameId as string, answer).then((result) => {
+        setSubmittedAnswer(answer);
+        setIsRight(result);
+      });
+    }
   }
 
-  if (fetching) return <Spinner />;
+  if (activeGame.fetching || playerGame.fetching) return <Spinner />;
+  if (!activeGame.data || !playerGame.data)
+    return <Text>Failed to fetch data</Text>;
 
-  if (data![0].ended) return <Text>Thanks for playing!</Text>;
+  if (activeGame.data[0].start_at > Date.now())
+    return (
+      <Stack>
+        <Heading>
+          Game starting in{" "}
+          <Countdown
+            date={activeGame.data[0].start_at}
+            renderer={({ minutes, seconds }) => (
+              <>
+                {minutes}:{seconds.toString().padStart(2, "00")}
+              </>
+            )}
+          />
+        </Heading>
+        <Text>{activeGame.data[0].participant_count} players are waiting</Text>
+      </Stack>
+    );
+  if (playerGame.data.eliminated) return <Text>Thanks for playing!</Text>;
 
   return (
     <>
       <Head>
-        <title>Playing | Fact or Fiction</title>
+        <title>
+          {!playerGame.data.eliminated ? "Playing" : "Watching"} | Fact or
+          Fiction
+        </title>
       </Head>
       <Flex
         width="100%"
@@ -69,10 +105,11 @@ const Play: NextPage = () => {
               <CircleTimer onTimerEnd={() => setShowAnswer(true)} />
             )}
           </CardHeader>
-          <CardBody>{data![0].question}</CardBody>
+          <CardBody>{activeGame.data[0].question}</CardBody>
         </Card>
         <Flex width="100%" gap="8" flex="1" alignItems="flex-end">
-          {isPlaying && typeof answer === "undefined" ? (
+          {!playerGame.data.eliminated &&
+          typeof submittedAnswer === "undefined" ? (
             <>
               <VoteButton isFactVote={true} onVote={() => submit(true)} />
               <VoteButton isFactVote={false} onVote={() => submit(false)} />
@@ -81,29 +118,34 @@ const Play: NextPage = () => {
             <>
               <VoteBar
                 isFactVote={true}
-                numberOfPlayers={1000}
-                numberOfVotes={85}
+                numberOfPlayers={activeGame.data[0].players_remaining}
+                numberOfVotes={
+                  submittedAnswer === isRight
+                    ? activeGame.data[0].right_count
+                    : activeGame.data[0].wrong_count
+                }
               />
               <VoteBar
                 isFactVote={false}
-                numberOfPlayers={1000}
-                numberOfVotes={843}
+                numberOfPlayers={activeGame.data[0].players_remaining}
+                numberOfVotes={
+                  submittedAnswer !== isRight
+                    ? activeGame.data[0].right_count
+                    : activeGame.data[0].wrong_count
+                }
               />
             </>
           )}
         </Flex>
         {showAnswer && (
           <AnswerOverlay
-            isFact={data![0].answer}
+            isFact={activeGame.data[0].answer}
             onClose={() => {
-              setIsPlaying(
-                isPlaying && data![0].answer === answer
-              );
-              setAnswer(undefined);
-              setCurrentQuestion(currentQuestion + 1);
+              setSubmittedAnswer(undefined);
+              setIsRight(undefined);
               setShowAnswer(false);
             }}
-            realFactIfFiction={data![0].real_fact_if_fiction}
+            realFactIfFiction={activeGame.data[0].real_fact_if_fiction}
           />
         )}
       </Flex>

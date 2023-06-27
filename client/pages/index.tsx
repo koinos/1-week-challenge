@@ -15,8 +15,13 @@ import Head from "next/head";
 import Link from "next/link";
 import { useActiveGames } from "../utils/useSupabase";
 import Countdown from "react-countdown";
+import {
+  useAccount,
+  // @ts-ignore
+} from "react-koinos-toolkit";
 
 const Home: NextPage = () => {
+  const { address } = useAccount();
   const { fetching, error, data } = useActiveGames();
 
   const upcomingGames = data?.filter((item) => !item.ended);
@@ -73,10 +78,12 @@ const Home: NextPage = () => {
                         <Button colorScheme="gray" width="100%">
                           Watch
                         </Button>
-                      ) : (
+                      ) : address ? (
                         <Button colorScheme="blue" width="100%">
                           Play
                         </Button>
+                      ) : (
+                        <Button isDisabled width="100%">Connect Wallet to Play</Button>
                       )}
                     </Link>
                   </CardFooter>
