@@ -5,14 +5,21 @@ import { createSupabaseClient } from '../_shared/supabase-client.ts';
 console.log(`🚀 Function "cleanup-active-games" up and running!`);
 
 serve(async (req: Request) => {
+  const { method } = req;
+
+  // This is needed if you're planning to invoke your function from a browser.
+  if (method === 'OPTIONS') {
+    return new Response('ok', { headers: corsHeaders });
+  }
+
+  if (method !== 'POST') {
+    return new Response(JSON.stringify({ error: 'Method not allowed' }), {
+      headers: { ...corsHeaders, 'Content-Type': 'application/json' },
+      status: 405,
+    });
+  }
+
   try {
-    const { method } = req;
-
-    // This is needed if you're planning to invoke your function from a browser.
-    if (method === 'OPTIONS') {
-      return new Response('ok', { headers: corsHeaders });
-    }
-
     const supabase = createSupabaseClient(req);
 
     /**
