@@ -13,7 +13,7 @@ import {
 } from "@chakra-ui/react";
 import Head from "next/head";
 import Link from "next/link";
-import { useActiveGames } from "../utils/useSupabase";
+import { useGames } from "../utils/useSupabase";
 import Countdown from "react-countdown";
 import {
   useAccount,
@@ -22,9 +22,9 @@ import {
 
 const Home: NextPage = () => {
   const { address } = useAccount();
-  const { fetching, error, data } = useActiveGames();
+  const { fetching, error, data } = useGames();
 
-  const upcomingGames = data?.filter((item) => !item.ended);
+  const upcomingGames = data?.filter((item: any) => !item.ended);
 
   return (
     <>
@@ -44,7 +44,7 @@ const Home: NextPage = () => {
           <Text>{error}</Text>
         ) : upcomingGames?.length ? (
           <SimpleGrid width="100%" gap="4" columns={{ base: 1, md: 2 }}>
-            {upcomingGames.map((item) => {
+            {upcomingGames.map((item: any) => {
               const isStarted = item.start_at <= Date.now();
               return (
                 <Card key={item.id}>

@@ -7696,10 +7696,10 @@ react-is@^18.0.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
   integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
-react-koinos-toolkit@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/react-koinos-toolkit/-/react-koinos-toolkit-0.2.0.tgz#87312e997047d4585226765908c40a0d525cad47"
-  integrity sha512-Sao2qa8bRXi2nX2w7sZxc8C5gfwGymUmQ0SVR8hYcrJMB3rCEfGppr85uC/wJWIHIl4g3cRWi/Mhwlu1Hhl86g==
+react-koinos-toolkit@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/react-koinos-toolkit/-/react-koinos-toolkit-0.2.1.tgz#feadb33c0fe5b404ef7c5c8919b04a5723c34a49"
+  integrity sha512-5NEwU1d63cbQVQTr0DbkwN0l5RwSCy451T39R0eBTpu2Bbm9hQ+GaG1D+yhvJgXoUq44+b6tlf9J8XJAfaQVRQ==
   dependencies:
     "@chakra-ui/icons" "^2.0.19"
     "@chakra-ui/react" "^2.6.1"

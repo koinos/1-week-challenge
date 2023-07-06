@@ -20,12 +20,7 @@ import {
   useAccount,
   // @ts-ignore
 } from "react-koinos-toolkit";
-import {
-  joinGame,
-  submitAnswer,
-  useActiveGames,
-  usePlayerGames,
-} from "../utils/useSupabase";
+import { joinGame, submitAnswer, useGame } from "../utils/useSupabase";
 import Countdown from "react-countdown";
 
 const Play: NextPage = () => {
@@ -36,24 +31,29 @@ const Play: NextPage = () => {
   const [submittedAnswer, setSubmittedAnswer] = useState<boolean>();
   const [isRight, setIsRight] = useState<boolean>();
   const [showAnswer, setShowAnswer] = useState(false);
+  const [joined, setJoined] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
 
-  const activeGame = useActiveGames(gameId as string);
-  const playerGame = usePlayerGames(address, gameId as string);
+  const { fetching, error, playerGame, activeGame } = useGame(
+    address,
+    gameId as string
+  );
 
   useEffect(() => {
     if (
-      !activeGame.fetching &&
-      activeGame.data &&
-      activeGame.data[0].start_at > Date.now() &&
+      !joined &&
+      !fetching &&
+      activeGame &&
+      activeGame.start_at > Date.now() &&
       address &&
       gameId
     ) {
-      joinGame(address, gameId as string);
+      joinGame(address, gameId as string).then(() => setJoined(true));
     }
-  }, [activeGame.fetching, activeGame.data, address, gameId]);
+  }, [joined, fetching, activeGame, address, gameId]);
 
   function submit(answer: boolean) {
-    if (!playerGame.data.eliminated && address && gameId) {
+    if (!playerGame.eliminated && address && gameId) {
       return submitAnswer(address, gameId as string, answer).then((result) => {
         setSubmittedAnswer(answer);
         setIsRight(result);
@@ -61,17 +61,19 @@ const Play: NextPage = () => {
     }
   }
 
-  if (activeGame.fetching || playerGame.fetching) return <Spinner />;
-  if (!activeGame.data || !playerGame.data)
-    return <Text>Failed to fetch data</Text>;
+  if (fetching) return <Spinner />;
 
-  if (activeGame.data[0].start_at > Date.now())
+  if (!activeGame) return <Text>Game not found</Text>;
+
+  if (!playerGame) return <Text>Joining game...</Text>;
+
+  if (activeGame.start_at > Date.now())
     return (
       <Stack>
         <Heading>
           Game starting in{" "}
           <Countdown
-            date={activeGame.data[0].start_at}
+            date={activeGame.start_at}
             renderer={({ minutes, seconds }) => (
               <>
                 {minutes}:{seconds.toString().padStart(2, "00")}
@@ -79,17 +81,29 @@ const Play: NextPage = () => {
             )}
           />
         </Heading>
-        <Text>{activeGame.data[0].participant_count} players are waiting</Text>
+        <Text>{activeGame.participant_count} players are waiting</Text>
       </Stack>
     );
-  if (playerGame.data.eliminated) return <Text>Thanks for playing!</Text>;
+
+  if (gameOver)
+    return playerGame.eliminated ? (
+      <Text>Better luck next time!</Text>
+    ) : (
+      <Text>You won {playerGame.rewards}!</Text>
+    );
 
   return (
     <>
       <Head>
         <title>
-          {!playerGame.data.eliminated ? "Playing" : "Watching"} | Fact or
-          Fiction
+          {!joined
+            ? "Watching"
+            : playerGame.rewards
+            ? "Winner"
+            : playerGame.eliminated
+            ? "Loser"
+            : "Playing"}{" "}
+          | Fact or Fiction
         </title>
       </Head>
       <Flex
@@ -105,10 +119,11 @@ const Play: NextPage = () => {
               <CircleTimer onTimerEnd={() => setShowAnswer(true)} />
             )}
           </CardHeader>
-          <CardBody>{activeGame.data[0].question}</CardBody>
+          <CardBody>{activeGame.question}</CardBody>
         </Card>
         <Flex width="100%" gap="8" flex="1" alignItems="flex-end">
-          {!playerGame.data.eliminated &&
+          {!playerGame.eliminated &&
+          !playerGame.rewards &&
           typeof submittedAnswer === "undefined" ? (
             <>
               <VoteButton isFactVote={true} onVote={() => submit(true)} />
@@ -118,20 +133,20 @@ const Play: NextPage = () => {
             <>
               <VoteBar
                 isFactVote={true}
-                numberOfPlayers={activeGame.data[0].players_remaining}
+                numberOfPlayers={activeGame.players_remaining}
                 numberOfVotes={
                   submittedAnswer === isRight
-                    ? activeGame.data[0].right_count
-                    : activeGame.data[0].wrong_count
+                    ? activeGame.right_count
+                    : activeGame.wrong_count
                 }
               />
               <VoteBar
                 isFactVote={false}
-                numberOfPlayers={activeGame.data[0].players_remaining}
+                numberOfPlayers={activeGame.players_remaining}
                 numberOfVotes={
                   submittedAnswer !== isRight
-                    ? activeGame.data[0].right_count
-                    : activeGame.data[0].wrong_count
+                    ? activeGame.right_count
+                    : activeGame.wrong_count
                 }
               />
             </>
@@ -139,13 +154,16 @@ const Play: NextPage = () => {
         </Flex>
         {showAnswer && (
           <AnswerOverlay
-            isFact={activeGame.data[0].answer}
+            isFact={submittedAnswer === isRight}
             onClose={() => {
               setSubmittedAnswer(undefined);
               setIsRight(undefined);
               setShowAnswer(false);
+              if (playerGame.eliminated || playerGame.rewards) {
+                setGameOver(true);
+              }
             }}
-            realFactIfFiction={activeGame.data[0].real_fact_if_fiction}
+            realFactIfFiction={activeGame.real_fact_if_fiction}
           />
         )}
       </Flex>
