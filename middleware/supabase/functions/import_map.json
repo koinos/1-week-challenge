@@ -1,0 +1,7 @@
+{
+  "imports": {
+    "std/server": "https://deno.land/std@0.177.0/http/server.ts",
+    "@supabase/supabase-js": "https://esm.sh/@supabase/supabase-js@2.7.1",
+    "koilib": "https://raw.githubusercontent.com/roaminro/koilib/2e82963ea3b3fa5196fe962a880fa7c126d05242/deno/mod.ts"
+  }
+}

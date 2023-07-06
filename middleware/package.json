@@ -1,0 +1,24 @@
+{
+  "name": "fact-or-fiction-game-server",
+  "description": "Fact or Fiction game server.",
+  "version": "0.0.0",
+  "scripts": {
+    "deploy:functions": "supabase functions deploy schedule-games && supabase functions deploy join-game && supabase functions deploy pick-next-questions && supabase functions deploy submit-answer && supabase functions deploy process-results && supabase functions deploy submit-game-stats && supabase functions deploy cleanup-active-games"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.43.0",
+    "eslint": "^8.0.1",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-config-standard-with-typescript": "^34.0.1",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0",
+    "prettier": "^2.8.8",
+    "supabase": "^1.64.2",
+    "typescript": "*",
+    "typescript-deno-plugin": "^1.31.0"
+  },
+  "dependencies": {
+    "koilib": "^5.5.6"
+  }
+}
