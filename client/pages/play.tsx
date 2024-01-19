@@ -1,50 +1,110 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { NextPage } from "next";
-import { Card, CardBody, CardHeader, Flex, Text } from "@chakra-ui/react";
+import {
+  Card,
+  CardBody,
+  CardHeader,
+  Flex,
+  Heading,
+  Spinner,
+  Stack,
+  Text,
+} from "@chakra-ui/react";
 import Head from "next/head";
 import CircleTimer from "../components/CircleTimer";
 import VoteBar from "../components/VoteBar";
 import VoteButton from "../components/VoteButton";
 import AnswerOverlay from "../components/AnswerOverlay";
-
-const QANDA = [
-  {
-    prompt: "Abraham Lincoln was the 12th president of the United States",
-    isFact: false,
-    realFactIfFiction: "Lincoln was the 16th president",
-  },
-  {
-    prompt: 'The brand name Spam is a combination of "spice" and "ham"',
-    isFact: true,
-  },
-  {
-    prompt: "Walt Disney's Snow White was the first animated feature film",
-    isFact: false,
-    realFactIfFiction:
-      "El Apóstol was a 70 minute political satire cartoon made in Argentina in 1917, 20 years before Snow White",
-  },
-  {
-    prompt: "Q is the only letter that doesn't appear in any U.S. state name",
-    isFact: true,
-  },
-  {
-    prompt: "Sudan has more pyramids than any country in the world",
-    isFact: true,
-  },
-];
+import { useRouter } from "next/router";
+import {
+  useAccount,
+  // @ts-ignore
+} from "react-koinos-toolkit";
+import { joinGame, submitAnswer, useGame } from "../utils/useSupabase";
+import Countdown from "react-countdown";
 
 const Play: NextPage = () => {
-  const [isPlaying, setIsPlaying] = useState(true);
-  const [answer, setAnswer] = useState<boolean>();
-  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const {
+    query: { gameId },
+  } = useRouter();
+  const { address } = useAccount();
+  const [submittedAnswer, setSubmittedAnswer] = useState<boolean>();
+  const [isRight, setIsRight] = useState<boolean>();
   const [showAnswer, setShowAnswer] = useState(false);
+  const [joined, setJoined] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
 
-  if (!QANDA[currentQuestion]) return <Text>Thanks for playing!</Text>;
+  const { fetching, error, playerGame, activeGame } = useGame(
+    address,
+    gameId as string
+  );
+
+  useEffect(() => {
+    if (
+      !joined &&
+      !fetching &&
+      activeGame &&
+      activeGame.start_at > Date.now() &&
+      address &&
+      gameId
+    ) {
+      joinGame(address, gameId as string).then(() => setJoined(true));
+    }
+  }, [joined, fetching, activeGame, address, gameId]);
+
+  function submit(answer: boolean) {
+    if (!playerGame.eliminated && address && gameId) {
+      return submitAnswer(address, gameId as string, answer).then((result) => {
+        setSubmittedAnswer(answer);
+        setIsRight(result);
+      });
+    }
+  }
+
+  if (fetching) return <Spinner />;
+
+  if (!activeGame) return <Text>Game not found</Text>;
+
+  if (!playerGame) return <Text>Joining game...</Text>;
+
+  if (activeGame.start_at > Date.now())
+    return (
+      <Stack>
+        <Heading>
+          Game starting in{" "}
+          <Countdown
+            date={activeGame.start_at}
+            renderer={({ minutes, seconds }) => (
+              <>
+                {minutes}:{seconds.toString().padStart(2, "00")}
+              </>
+            )}
+          />
+        </Heading>
+        <Text>{activeGame.participant_count} players are waiting</Text>
+      </Stack>
+    );
+
+  if (gameOver)
+    return playerGame.eliminated ? (
+      <Text>Better luck next time!</Text>
+    ) : (
+      <Text>You won {playerGame.rewards}!</Text>
+    );
 
   return (
     <>
       <Head>
-        <title>Playing | Fact or Fiction</title>
+        <title>
+          {!joined
+            ? "Watching"
+            : playerGame.rewards
+            ? "Winner"
+            : playerGame.eliminated
+            ? "Loser"
+            : "Playing"}{" "}
+          | Fact or Fiction
+        </title>
       </Head>
       <Flex
         width="100%"
@@ -59,41 +119,51 @@ const Play: NextPage = () => {
               <CircleTimer onTimerEnd={() => setShowAnswer(true)} />
             )}
           </CardHeader>
-          <CardBody>{QANDA[currentQuestion].prompt}</CardBody>
+          <CardBody>{activeGame.question}</CardBody>
         </Card>
         <Flex width="100%" gap="8" flex="1" alignItems="flex-end">
-          {isPlaying && typeof answer === "undefined" ? (
+          {!playerGame.eliminated &&
+          !playerGame.rewards &&
+          typeof submittedAnswer === "undefined" ? (
             <>
-              <VoteButton isFactVote={true} onVote={() => setAnswer(true)} />
-              <VoteButton isFactVote={false} onVote={() => setAnswer(false)} />
+              <VoteButton isFactVote={true} onVote={() => submit(true)} />
+              <VoteButton isFactVote={false} onVote={() => submit(false)} />
             </>
           ) : (
             <>
               <VoteBar
                 isFactVote={true}
-                numberOfPlayers={1000}
-                numberOfVotes={85}
+                numberOfPlayers={activeGame.players_remaining}
+                numberOfVotes={
+                  submittedAnswer === isRight
+                    ? activeGame.right_count
+                    : activeGame.wrong_count
+                }
               />
               <VoteBar
                 isFactVote={false}
-                numberOfPlayers={1000}
-                numberOfVotes={843}
+                numberOfPlayers={activeGame.players_remaining}
+                numberOfVotes={
+                  submittedAnswer !== isRight
+                    ? activeGame.right_count
+                    : activeGame.wrong_count
+                }
               />
             </>
           )}
         </Flex>
         {showAnswer && (
           <AnswerOverlay
-            isFact={QANDA[currentQuestion].isFact}
+            isFact={submittedAnswer === isRight}
             onClose={() => {
-              setIsPlaying(
-                isPlaying && QANDA[currentQuestion].isFact === answer
-              );
-              setAnswer(undefined);
-              setCurrentQuestion(currentQuestion + 1);
+              setSubmittedAnswer(undefined);
+              setIsRight(undefined);
               setShowAnswer(false);
+              if (playerGame.eliminated || playerGame.rewards) {
+                setGameOver(true);
+              }
             }}
-            realFactIfFiction={QANDA[currentQuestion].realFactIfFiction}
+            realFactIfFiction={activeGame.real_fact_if_fiction}
           />
         )}
       </Flex>

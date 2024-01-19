@@ -13,7 +13,11 @@ import Header from "../components/Header";
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
-      <KoinosAccountProvider>
+      <KoinosAccountProvider
+        defaultRpcUrl={process.env.NEXT_PUBLIC_KOINOS_RPC_URL}
+        kapNameServiceAddress={process.env.NEXT_PUBLIC_NAME_SERVICE_ADDR}
+        kapProfileAddress={process.env.NEXT_PUBLIC_PROFILE_ADDR}
+      >
         <ChakraProvider theme={theme}>
           <Head>
             <meta
